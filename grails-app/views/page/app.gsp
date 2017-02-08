@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="${asset.assetPath(src: "favicon.ico")}" type="image/x-icon">
   <script type="text/javascript">
-    window.upstream = '${grailsApplication.config.errbuddy.upstream ?: "http://${grailsApplication.config.server.host ?: 'localhost'}:${grailsApplication.config.server.port ?: 9000}"}'
+    window.upstream = '${grailsApplication.config.grails.serverURL}';
   </script>
   <babel:webpack src="app.es6"/>
 </head>
