@@ -1,0 +1,45 @@
+version: '2'
+services:
+  app:
+    container_name: erbuddy-app
+    env_file: .env
+    mem_limit: 3g
+    image: openjdk:8-jdk
+    ports:
+    - 9000:9000
+    depends_on:
+    - redis
+    - elasticsearch
+    - mariadb
+    dns: 8.8.8.8
+    links:
+     - mariadb
+     - redis
+     - elasticsearch
+    volumes:
+      - .:/opt/app
+      - ./default-config.groovy:/opt/errbuddy/errbuddy.groovy
+      - .data/.gradle:/root/.gradle:rw
+      - .data/build:/opt/app/build:rw
+      - .data/nodejs:/opt/app/.nodejs:rw
+      - .data/node_moudels:/opt/app/node_modules:rw
+      #TODO: find out how to have a seperate volume for scaled servers
+    command: /bin/bash -c "cd /opt/app/ && mkdir -p build/nothing && ./gradlew -Dgrails.env=prod -Derrbuddy.mysql.password=${MYSQL_PASSWORD} :npmInstall :bootRun"
+  redis:
+    container_name: errbuddy_redis
+    image: redis
+  elasticsearch:
+    container_name: errbuddy_es
+    image: elasticsearch:1.7.5
+    volumes:
+      - .data/elasticsearch:/usr/share/elasticsearch/data:rw
+  mariadb:
+    container_name: errbuddy_mariadb
+    env_file: .env
+    image: mariadb:10.0
+    volumes:
+      - .data/mysql:/var/lib/mysql:rw
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=errbuddy
+      - MYSQL_USER=errbuddy

@@ -1,0 +1,118 @@
+---
+hibernate:
+    cache:
+        queries: false
+        use_second_level_cache: true
+        use_query_cache: false
+        region.factory_class: 'org.hibernate.cache.ehcache.EhCacheRegionFactory'
+
+dataSource:
+    pooled: true
+    jmxExport: true
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+grails:
+    plugin:
+        errbuddy:
+            enabled: true
+            host: http://localhost:9000
+            apiKey: 9hSsjixHbPI64bjgwkUPXrxVXfpitxM6f9ZRyT06OGdxjDumNhD4gemO3cN6vDr
+            exceptionsOnly: false
+---
+grails:
+    profile: web
+    codegen:
+        defaultPackage: errbuddy
+    spring:
+        transactionManagement:
+            proxies: false
+info:
+    app:
+        name: '@info.app.name@'
+        version: '@info.app.version@'
+        grailsVersion: '@info.app.grailsVersion@'
+spring:
+    groovy:
+        template:
+            check-template-location: false
+
+---
+grails:
+    mime:
+        disable:
+            accept:
+                header:
+                    userAgents:
+                        - Gecko
+                        - WebKit
+                        - Presto
+                        - Trident
+        types:
+            all: '*/*'
+            atom: application/atom+xml
+            css: text/css
+            csv: text/csv
+            form: application/x-www-form-urlencoded
+            html:
+              - text/html
+              - application/xhtml+xml
+            js: text/javascript
+            json:
+              - application/json
+              - text/json
+            multipartForm: multipart/form-data
+            pdf: application/pdf
+            rss: application/rss+xml
+            text: text/plain
+            hal:
+              - application/hal+json
+              - application/hal+xml
+            xml:
+              - text/xml
+              - application/xml
+    urlmapping:
+        cache:
+            maxsize: 1000
+    controllers:
+        defaultScope: singleton
+    converters:
+        encoding: UTF-8
+    views:
+        default:
+            codec: html
+        gsp:
+            encoding: UTF-8
+            htmlcodec: xml
+            codecs:
+                expression: html
+                scriptlets: html
+                taglib: none
+                staticparts: none
+endpoints:
+    jmx:
+        unique-names: true
+---
+server:
+  port: 9000
+---
+environments:
+    development:
+        grails:
+            assets:
+                babel:
+                    enabled: true
+                    processor: 'webpack-dev-server'
+                    processJsFiles: false
+                    nodeExec: ./.nodejs/node-v7.4.0-darwin-x64/bin/node
+                    externalWebpackConfig: webpack.dev.config.js
+    production:
+            grails:
+                assets:
+                    babel:
+                        enabled: true
+                        processor: 'webpack'
+                        processJsFiles: false
+                        nodeExec: ./.nodejs/node-v7.4.0-linux-x64/bin/node
+                        externalWebpackConfig: webpack.prod.config.js

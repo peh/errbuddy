@@ -1,0 +1,37 @@
+$pagination-color: #337ab7;
+
+.pagination {
+  &.disabled {
+    a {
+      color: #999 !important;
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+  li.break {
+    a {
+      color: #999 !important;
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+  li {
+    a {
+      color: $pagination-color;
+      transition: border $glow-transition-length, background $glow-transition-length, box-shadow $glow-transition-length;
+      border-color: rgba($pagination-color, 0.3);
+      cursor: pointer;
+      &:focus {
+        background: rgba($pagination-color, 0.7);
+      }
+    }
+    &.active, &:focus {
+      a {
+
+        background: rgba($pagination-color, 0.7);
+        border-color: rgba($pagination-color, 0.6);
+      }
+    }
+  }
+
+}

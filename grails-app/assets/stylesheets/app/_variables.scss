@@ -1,0 +1,72 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+$base-font: 'Open Sans', sans-serif !important;
+$errbuddy-blue: #2C3E50;
+$brand-primary: $errbuddy-blue;
+
+$navbar-border-color: #A9A9A9;
+$apps-color: #64c6c9;
+$pagination-active-bg: $errbuddy-blue;
+$pagination-hover-bg: lighten($errbuddy-blue, 50%);
+$pager-border-radius: 0px;
+$selected-table-row-color: #2d2d69;
+
+$required-color: #a94442;
+
+// Basics of a navbar
+$navbar-default-color: #777;
+$navbar-default-bg: $errbuddy-blue;
+$navbar-default-border: transparent;
+
+// Navbar links
+$navbar-default-link-color: #fff;
+$navbar-default-link-hover-color: $navbar-default-link-color;
+$navbar-default-link-hover-bg: lighten($navbar-default-bg, 10%);
+$navbar-default-link-hover-border: #d9c065;
+$navbar-default-link-active-color: #fff;
+$navbar-default-link-active-bg: darken($navbar-default-bg, 10%);
+$navbar-default-link-active-border: #D93D3D;
+$navbar-default-link-disabled-color: #ccc;
+$navbar-default-link-disabled-bg: transparent;
+
+$nav-pills-active-link-hover-bg: $errbuddy-blue;
+$nav-link-hover-bg: lighten($errbuddy-blue, 50%);
+
+// Navbar brand label
+$navbar-default-brand-color: $navbar-default-link-color;
+$navbar-default-brand-hover-color: $navbar-default-link-hover-color;
+$navbar-default-brand-hover-bg: transparent;
+
+// Navbar toggle
+$navbar-default-toggle-hover-bg: darken($navbar-default-bg, 10%);
+$navbar-default-toggle-icon-bar-bg: #fff;
+$navbar-default-toggle-border-color: darken($navbar-default-bg, 10%);
+
+$similar-danger-bg: rgba(169, 68, 68, 0.7);
+$similar-danger-hover-bg: rgba($similar-danger-bg, 0.9);
+$similar-danger-text: rgba(255,255,255,0.9); // lighten($similar-danger-bg, 50%);
+
+$similar-warning-bg: rgba(226, 157, 63, 0.7);
+$similar-warning-hover-bg: rgba($similar-warning-bg, 0.9);
+$similar-warning-text: rgba(255,255,255,0.9); // lighten($similar-warning-bg, 50%);
+
+$similar-okay-bg: rgba(86, 169, 87, 0.7);
+$similar-okay-hover-bg: rgba($similar-okay-bg, 0.9);
+$similar-okay-text: rgba(255,255,255,0.9); // lighten($similar-okay-bg, 50%);
+
+$glow-transition-length: 0.3s;
+
+$entry-details-resolved-background: lighten($similar-okay-bg, 30%);
+
+$sidebar-background: lighten($navbar-default-bg, 10%);
+$sidebar-color: #fff;
+$sidebar-button-color: lighten($sidebar-background, 10%);
+$sidebar-button-hover-color: lighten($sidebar-button-color, 20%);
+$sidebar-button-active-color: lighten($sidebar-button-color, 40%);
+$sidebar-tooltip-background: $navbar-default-bg;
+$sidebar-tooltip-opacity: 0.95;
+$sidebar-width: 80px;
+
+$error-list-border-color: #e5e5e5;
+$error-list-background-color: #fff;
+$error-list-success-background-color: lighten($state-success-bg, 4%);

@@ -1,0 +1,85 @@
+@import "../variables";
+
+
+.list-row {
+  padding: 3px;
+  transition: border $glow-transition-length, background $glow-transition-length;
+  margin-bottom: 10px;
+  border-bottom: 2px solid $error-list-border-color;
+  cursor: pointer;
+  background: $error-list-background-color;
+  &:hover {
+    background: darken($error-list-background-color, 5%);
+    border-bottom: 2px solid darken($error-list-border-color, 25%);
+    .head {
+      .similar {
+        &.danger {
+          background: $similar-danger-hover-bg;
+        }
+        &.warn {
+          background: $similar-warning-hover-bg;
+        }
+        &.okay {
+          background: $similar-okay-hover-bg;
+        }
+      }
+    }
+  }
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    font-weight: lighter;
+    font-size: 1em;
+    .similar-column {
+      flex: 2;
+      margin-bottom: 2px;
+    }
+    .time {
+      flex: 5;
+      text-align: left;
+    }
+    .similar {
+      flex: 4;
+    }
+  }
+  .body {
+    .main {
+      font-size: 1.2em;
+    }
+    .sub {
+      font-size: 1em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .similar {
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 0;
+    margin-left: auto;
+    display: block;
+    text-align: center;
+    width: 150px;
+    max-width: 150px;
+    border-radius: 3px;
+    padding: 3px 10px;
+    &.danger {
+      background: $similar-danger-bg;
+      color: $similar-danger-text;
+    }
+    &.warn {
+      background: $similar-warning-bg;
+      color: $similar-warning-text;
+    }
+    &.okay {
+      background: $similar-okay-bg;
+      color: $similar-okay-text;
+    }
+    &.details-pill {
+      margin-bottom: 2px;
+    }
+  }
+}

@@ -1,0 +1,158 @@
+buildscript {
+	ext {
+		grailsVersion = project.grailsVersion
+	}
+	repositories {
+		mavenLocal()
+		maven { url "https://repo.grails.org/grails/core" }
+		maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+		classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.7.4"
+		classpath 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
+		classpath "org.grails.plugins:hibernate4:5.0.2"
+		classpath 'org.grails.plugins:database-migration:2.0.0.RC4'
+		classpath "com.moowork.gradle:gradle-node-plugin:1.0.1"
+	}
+}
+
+version "2.0.0"
+group "errbuddy"
+
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "war"
+apply plugin: "org.grails.grails-web"
+apply plugin: "org.grails.grails-gsp"
+apply plugin: "asset-pipeline"
+apply plugin: "com.moowork.node"
+
+ext {
+	grailsVersion = project.grailsVersion
+	gradleWrapperVersion = project.gradleWrapperVersion
+}
+
+repositories {
+	mavenLocal()
+	maven { url "http://dl.bintray.com/uberall/plugins" }
+	maven { url "http://dl.bintray.com/errbuddy/plugins" }
+	maven { url "https://repo.grails.org/grails/core" }
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.grails:grails-bom:$grailsVersion"
+	}
+	applyMavenExclusions false
+}
+
+dependencies {
+	compile "org.springframework.boot:spring-boot-starter-logging"
+	compile "org.springframework.boot:spring-boot-autoconfigure"
+	compile "org.grails:grails-core"
+	compile "org.springframework.boot:spring-boot-starter-actuator"
+	compile "org.springframework.boot:spring-boot-starter-tomcat"
+	compile "org.grails:grails-dependencies"
+	compile "org.grails:grails-web-boot"
+	compile "org.grails.plugins:cache"
+	compile "org.grails.plugins:scaffolding"
+	compile "org.grails.plugins:hibernate4"
+	compile "org.hibernate:hibernate-ehcache"
+	console "org.grails:grails-console"
+	profile "org.grails.profiles:web:3.1.4"
+	runtime "com.h2database:h2"
+	compile 'org.grails.plugins:database-migration:2.0.0.RC4'
+
+	testCompile "org.grails:grails-plugin-testing"
+	testCompile "org.grails.plugins:geb"
+	testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
+	testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+
+	runtime "org.grails.plugins:asset-pipeline"
+	runtime 'mysql:mysql-connector-java:5.1.36'
+	assets "com.bertramlabs.plugins:less-asset-pipeline:2.7.4"
+
+	compile 'org.grails.plugins:redis:2.0.4'
+	compile "org.grails.plugins:spring-security-rest-redis:2.0.0.M2"
+	compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
+	compile "org.grails.plugins:spring-security-core:3.0.4"
+	compile "com.sendgrid:sendgrid-java:2.2.1"
+	compile 'org.jodd:jodd-http:3.6.6'
+	compile 'org.grails.plugins:joda-time:2.0.0'
+
+//	runtime "org.grails.plugins:spring-session:2.0.0-RC1"
+//
+	compile "org.grails.plugins:errbuddy:2.1.0"
+	compile "com.uberall.plugins:uber-doc:2.0.4"
+	compile 'org.grails.plugins:elasticsearch:1.0.0.2'
+	compile 'org.grails.plugins:grails-jesque-admin:0.1.5'
+	compile 'org.grails.plugins:jesque:1.1.9'
+
+	compile 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
+
+	compile 'org.jadira.usertype:usertype.jodatime:2.0.1'
+
+}
+
+sourceSets {
+	main {
+		resources {
+			srcDir 'grails-app/migrations'
+		}
+	}
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = gradleWrapperVersion
+}
+
+assets {
+	minifyJs = false
+	minifyCss = false
+	enableSourceMaps = false
+	excludes = ['app/**.js', 'app/**.jsx', 'app/**.scss'] //Example Exclude GLOB pattern
+	configOptions = [
+		less : [
+			compiler: 'standard',
+		],
+		babel: [
+			enabled              : false,
+			processor            : 'webpack',
+			processJsFiles       : false,
+			nodeExec             : "./.nodejs/node-v7.4.0-darwin-x64/bin/node",
+			externalWebpackConfig: "webpack.prod.config.js"
+		]
+	]
+}
+
+buildscript {
+	ext {
+		grailsVersion = project.grailsVersion
+	}
+	repositories {
+		mavenLocal()
+		maven { url "https://repo.grails.org/grails/core" }
+	}
+	dependencies {
+		classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+	}
+}
+
+bootRun {
+	jvmArgs = ["-Xms2G", "-Xmx2G"]
+}
+
+node {
+	version = '7.4.0'
+	download = true
+	workDir = file("${project.projectDir}/.nodejs")
+	npmWorkDir = file("${project.projectDir}/.npm")
+	nodeModulesDir = file("${project.projectDir}")
+}
+
+tasks.withType(JavaExec).each { task ->
+	task.systemProperties System.properties
+}
+
+// grails prod package -Dgradle.node.exec="/Users/philipp/.nvm/versions/node/v5.6.0/bin/node"
