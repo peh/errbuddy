@@ -71,8 +71,8 @@ export default class ErrorList extends BaseComponent {
   }
 
   componentWillMount() {
-    this.getApplicationService().list(0, 10000, (applications) => {
-      this.setState(_.assign(this.state, {applications: applications}));
+    this.getApplicationService().list(0, 10000).then(applications => {
+      this.setState(_.assign({}, this.state, {applications: applications.applications}));
     })
   }
 
@@ -80,10 +80,7 @@ export default class ErrorList extends BaseComponent {
     if (this.state.selectedApplication === appId) {
       appId = null
     }
-    let selectedApp = this.getConfigurationService().set('selectedApp', appId);
-
-    let filters = {application: appId}
-    this.setState(_.assign(this.state, {filters: filters}))
+    this.setState(_.assign(this.state, {selectedApplication: appId}))
     this.loadObjectsFromServer(true)
   }
 
@@ -114,7 +111,7 @@ export default class ErrorList extends BaseComponent {
     const {list, total} = this.state;
     let offset = this.getOffset();
     let max = this.getMax();
-    if (!list || list.length < 1) {
+    if (!list) {
       return <LoadingHero />
     }
 

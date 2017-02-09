@@ -2,7 +2,6 @@
 
 var AppEvents = require('../events/application-events');
 var LocalStore = require('../tools/local-storage');
-import _ from "lodash";
 import BaseService from "./base-service";
 const querystring = require('querystring');
 
@@ -17,7 +16,7 @@ export default class ApplicationService extends BaseService {
   list(offset, max) {
     return fetch(`${this.baseUrl}${PATH}?${querystring.stringify({max: max, offset: offset})}`, {
       headers: this.getHeaders()
-    }).then((resp)=> {
+    }).then((resp) => {
       return resp.json()
     })
   }
@@ -25,7 +24,7 @@ export default class ApplicationService extends BaseService {
   get(id) {
     return fetch(`${this.baseUrl}${PATH}${id}`, {
       headers: this.getHeaders()
-    }).then((resp)=> {
+    }).then((resp) => {
       return resp.json()
     });
   }
@@ -37,21 +36,21 @@ export default class ApplicationService extends BaseService {
       headers: headers,
       method: application.id ? 'PUT' : 'POST',
       body: JSON.stringify(application)
-    }).then((resp)=> {
+    }).then((resp) => {
       return resp.json()
     })
   }
 
   clear(application) {
     return fetch(this.getRequest(`${this.baseUrl}${PATH}${application.id}/clear`, 'POST'))
-      .then((resp)=> {
+      .then((resp) => {
         return resp.json();
       });
   }
 
   del(application) {
     return fetch(this.getRequest(`${this.baseUrl}${PATH}${application.id}`, 'DELETE'))
-      .then((resp)=> {
+      .then((resp) => {
         return resp.json();
       });
   }
