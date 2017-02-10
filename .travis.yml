@@ -24,8 +24,8 @@ deploy:
   provider: releases
   api_key:
     secure: Whm7sb51c7Nttal0/sH8sj8pvMx3hcb8wBkmUNJxsBnsEsq4sQwtw8w9ul0LiV4V/k42xW5N0LYHAvYvHFqPxpM7XblpDMzi2NDqFlVqKrixycaIKAK7+fJx57bw16Ew3pvzjC25YWvlyJDt6pJJ3Y4R0VY1RNp3Vze+JtwXMFri5bBj/T5vWJA00ReLB0vnWkyeqx8lqaRWZpH7z4ap3f4tsy1Sr0bKiJNiwVmvdmHYKGwFAqYsTcIPhZxTVo+rZoNLKHQ5NNUCg5xEof+QP8SE20+q8vVmR80g2ZB3G4HLXKUPVI8RMlBcxiBmpu0HYVXTgcMLZxlSJxfhJ22bDIYQTpNGIHJCmp3b/6vAUYIDyRvQELx0jQ6CYVILChngZtLfAseej3Wz89BL6A/cx8/H1u6dBrsBFouQ5xWvjcYtZaqj5Ztw4bLTt2R+HiEsbKVxI5xWN16dt5wAqDH1uiGh7Oc/5jGr2U34CjQdXpCqvVNeVpHTSK76NNJCIWZSR8i4liD9k5jb3ZuKPu7mMS/8VcBmP05nEUDo3d87aC4BJJjyIje+w6C+zWBfE8epxARpYITEQGvNY4iZDMwW9g/k9N58hnjChqkVqF3HAARsnxT31NVKXNT3maKkunFjg8hECdSw7SJLzBDwrAss97CkZ5tMNh/yY0uZTb1Zfp8=
-  file: build/libs/**.war
+  file_glob: true
+  file: build/libs/*.war
   on:
     repo: peh/errbuddy
-  on:
     tags: true
