@@ -11,8 +11,10 @@ cache:
 jdk:
 - oraclejdk8
 before_script:
-- rm -rf build
-script: rm -f .asscache && ./gradlew -Dgrails.babel.node.path=.nodejs/node-v7.4.0-linux-x64/bin/node -Dgrails.env=prod :clean :npmInstall :assetCompile :war
+- rm -rf build/
+- rm -rf .asscache
+install: ./gradlew npmInstall
+script: gradle -Dgrails.babel.node.path=.nodejs/node-v7.4.0-linux-x64/bin/node -Dgrails.env=prod :clean :npmInstall :assetCompile :war
 env:
   global:
   - GIT_NAME="Philipp Eschenbach"
