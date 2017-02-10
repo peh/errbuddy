@@ -7,9 +7,9 @@ import ReactPaginate from "react-paginate";
 import FormatedDate from "../tools/formated-date";
 import FromNow from "../tools/from-now";
 import EntryLocationItem from "./entry-location-item";
+import * as _ from "lodash";
 const cx = require('classnames');
 const querystring = require('querystring');
-
 export default class EntryDetailsTable extends BaseComponent {
 
   constructor(props) {
@@ -24,7 +24,7 @@ export default class EntryDetailsTable extends BaseComponent {
       'warning': e.id == entry.id
     });
     return (
-      <tr className={rowClasses} onClick={()=> {
+      <tr className={rowClasses} onClick={() => {
         this.navigate(`/errors/${entryGroup.entryGroupId}/${e.id}?${querystring.stringify({max, offset})}`)
       }} key={e.id}>
         <td>
@@ -45,7 +45,7 @@ export default class EntryDetailsTable extends BaseComponent {
     if (!list) {
       return <LoadingHero />
     }
-    let rows = _.map(list, e=> {
+    let rows = _.map(list, e => {
       return this.getTableRow(e)
     });
     return (

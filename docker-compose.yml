@@ -24,7 +24,7 @@ services:
       - .data/nodejs:/opt/app/.nodejs:rw
       - .data/node_moudels:/opt/app/node_modules:rw
       #TODO: find out how to have a seperate volume for scaled servers
-    command: /bin/bash -c "cd /opt/app/ && mkdir -p build/nothing && ./gradlew -Dgrails.env=prod -Derrbuddy.mysql.password=${MYSQL_PASSWORD} -Derrbuddy.serverUrl=${SERVER_URL} :npmInstall :bootRun"
+    command: /bin/bash -c "cd /opt/app/ && mkdir -p build/nothing && rm -f .asscache && ./gradlew -Dgrails.env=prod -Derrbuddy.mysql.password=${MYSQL_PASSWORD} -Derrbuddy.serverUrl=${SERVER_URL} :npmInstall :bootRun"
   redis:
     container_name: errbuddy_redis
     image: redis
