@@ -1,4 +1,4 @@
-import _ from "lodash";
+import * as  _ from "lodash";
 import FromNow from "../tools/from-now";
 import FormatedDate from "../tools/formated-date";
 import React from "react";

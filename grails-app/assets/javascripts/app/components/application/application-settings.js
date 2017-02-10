@@ -2,7 +2,7 @@
 import React from "react";
 import LoadingHero from "../tools/loading-hero";
 import BaseComponent from "../tools/base-component.js";
-import _ from "lodash";
+import * as  _ from "lodash";
 import DeploymentList from "./deployment-list";
 var ApplicationService = require('../../services/application-service');
 var cx = require('classnames');

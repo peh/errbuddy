@@ -1,5 +1,5 @@
 import React from "react";
-import _ from "lodash";
+import * as  _ from "lodash";
 var cx = require('classnames');
 
 export default class ValidateableInput extends React.Component {

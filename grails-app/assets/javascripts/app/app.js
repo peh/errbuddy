@@ -17,7 +17,7 @@ const querystring = require('querystring');
 export default class App {
   constructor() {
 
-    this.baseUrl = window.upstream || 'http://internal.errbuddy.net';
+    this.baseUrl = window.upstream;
     this.showRefind = LocalStore.get('errbuddy.refind.show') === 'true';
     this.action = null;
     this.paused = false;

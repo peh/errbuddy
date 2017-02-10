@@ -1,7 +1,7 @@
 const swal = require('sweetalert');
 const querystring = require('querystring');
 const cx = require('classnames')
-import _ from "lodash";
+import * as  _ from "lodash";
 import ObjectDL from "../tools/object-dl";
 import SimilarPill from "./common/similar-pill";
 import EntryDeleteButton from "./entry-delete-button";

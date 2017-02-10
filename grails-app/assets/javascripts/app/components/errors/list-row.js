@@ -2,7 +2,7 @@ import React from "react";
 import SimilarPill from "./common/similar-pill";
 import FromNow from "../tools/from-now";
 import BaseComponent from "../tools/base-component";
-import _ from "lodash";
+import * as  _ from "lodash";
 
 export default class EntryGroupTableRow extends BaseComponent {
 

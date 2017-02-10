@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+import * as  _ from 'lodash';
 
 var cx = require('classnames');
 

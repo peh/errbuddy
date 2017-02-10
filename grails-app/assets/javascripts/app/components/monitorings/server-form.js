@@ -1,5 +1,5 @@
 import React from "react";
-import _ from "lodash";
+import * as  _ from "lodash";
 const cx = require('classnames');
 
 export default class ServerForm extends React.Component {

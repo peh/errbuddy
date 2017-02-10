@@ -116,3 +116,5 @@ environments:
                         processJsFiles: false
                         nodeExec: ./.nodejs/node-v7.4.0-linux-x64/bin/node
                         externalWebpackConfig: webpack.prod.config.js
+                resources:
+                    cachePeriod: 21600

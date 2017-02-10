@@ -1,7 +1,7 @@
 'use strict';
 
 import React from "react";
-import _ from "lodash";
+import * as  _ from "lodash";
 import BaseComponent from "../tools/base-component";
 import LoadingHero from "../tools/loading-hero";
 import EntryGroupTableRow from "./list-row";

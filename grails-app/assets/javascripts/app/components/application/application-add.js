@@ -3,7 +3,7 @@
 var cx = require('classnames');
 import BaseComponent from "../tools/base-component";
 import React from "react";
-import _ from "lodash";
+import * as  _ from "lodash";
 
 export default class ApplicationAdd extends BaseComponent {
 

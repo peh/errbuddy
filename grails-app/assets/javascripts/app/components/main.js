@@ -19,7 +19,7 @@ import Sidebar from "./navbar/sidebar";
 import UserList from "./users/user-list";
 import UserDetails from "./users/user-details";
 import ApplicationList from "./application/list";
-import _ from "lodash";
+import * as  _ from "lodash";
 
 const querystring = require('querystring')
 

@@ -6,7 +6,7 @@ var AppEvents = require('../../events/application-events');
 
 import React from "react";
 import BaseComponent from "../tools/base-component";
-import _ from "lodash";
+import * as  _ from "lodash";
 
 export default class NavbarSearchForm extends BaseComponent {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React from "react";
 import BaseComponent from "../tools/base-component";
-import _ from "lodash";
+import * as  _ from "lodash";
 import LoadingHero from "../tools/loading-hero";
 
 export default class ApplicationList extends BaseComponent {

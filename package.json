@@ -6,10 +6,9 @@
   "author": "Philipp Eschenbach",
   "license": "MIT",
   "scripts": {
-    "hot": "webpack-dev-server --config ./webpack.dev.config.js"
   },
   "dependencies": {
-    "bootstrap-loader": "^2.0.0-beta.20",
+    "bootstrap-loader": "^1.3.3",
     "chartist": "^0.10.1",
     "classnames": "^2.2.5",
     "csshake": "^1.5.1",

@@ -1,5 +1,5 @@
 import React from "react";
-import _ from "lodash";
+import * as  _ from "lodash";
 const AppEvents = require('../../events/application-events');
 const querystring = require('querystring');
 

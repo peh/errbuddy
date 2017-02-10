@@ -1,6 +1,6 @@
 import React from "react";
 import BaseComponent from "../tools/base-component";
-import _ from 'lodash';
+import * as  _ from 'lodash';
 
 export default class LoginView extends BaseComponent {
   constructor(props) {

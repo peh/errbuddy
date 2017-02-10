@@ -15,13 +15,13 @@ module.exports = function (entry, output) {
       filename: fileName,
       path: dirName,
     },
-    devtool: 'eval-cheap-module-source-map',
+    devtool: 'cheap-module-source-map',
     module: {
       loaders: [
         {
           test: /\.jsx|\.js|\.es6?$/,
           exclude: /node_modules/,
-          loaders: ['babel?presets[]=es2015&presets[]=react&presets[]=stage-0&plugins[]=lodash&sourceMap=inline'],
+          loaders: ['babel'],
         },
         {
           test: /\.eot(\?\S*)?$/,
@@ -48,11 +48,29 @@ module.exports = function (entry, output) {
 
     plugins: [
       new webpack.ProvidePlugin({
-        jQuery: 'jquery',
         $: 'jquery'
       }),
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production')
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+        comments: false, // remove comments
+        compress: {
+          unused: true,
+          dead_code: true, // big one--strip code that will never execute
+          warnings: false, // good for prod apps so users can't peek behind curtain
+          drop_debugger: true,
+          conditionals: true,
+          evaluate: true,
+          drop_console: true, // strips console statements
+          sequences: true,
+          booleans: true,
+        }
+      }),
+      new webpack.optimize.DedupePlugin()
     ],
+    target: 'node',
     resolve: {
       extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx", ".es6"]
     }

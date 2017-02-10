@@ -4,7 +4,7 @@ var swal = require('sweetalert');
 import BaseComponent from "../tools/base-component";
 import ValidateableInput from "../tools/validateable-input";
 import React from "react";
-import _ from "lodash";
+import * as  _ from "lodash";
 
 const POSSIBLE_ROLES = {
   ROLE_ROOT: 'ROOT',

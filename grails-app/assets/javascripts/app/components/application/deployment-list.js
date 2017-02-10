@@ -5,7 +5,7 @@ var Pager = require('../pager/main.jsx');
 
 import React from "react";
 import BaseComponent from "../tools/base-component";
-import _ from 'lodash'
+import * as  _ from 'lodash'
 export default class DeploymentList extends BaseComponent {
   constructor(props) {
     super(props);

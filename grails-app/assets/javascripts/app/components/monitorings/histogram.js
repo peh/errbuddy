@@ -2,7 +2,7 @@
 
 import React from "react";
 import FromNow from "../tools/from-now";
-var _ = require('lodash');
+import * as  _ from 'lodash';
 var LineChart = require('react-chartjs').Line;
 
 var ServerHistorgram = React.createClass({

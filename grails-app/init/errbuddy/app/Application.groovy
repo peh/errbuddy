@@ -30,7 +30,9 @@ class Application extends GrailsAutoConfiguration implements EnvironmentAware {
 	}
 
 	private static String getExternalConfigLocation() {
-		if (env.isDevelopmentMode() || env == grails.util.Environment.TEST) {
+		if (System.getProperty('errbuddy.config.location')) {
+			System.getProperty('errbuddy.config.location')
+		} else if (env.isDevelopmentMode() || env == grails.util.Environment.TEST) {
 			'local/errbuddy-config.groovy'
 		} else {
 			'/opt/errbuddy/errbuddy.groovy'

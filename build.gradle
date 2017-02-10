@@ -10,7 +10,7 @@ buildscript {
 	dependencies {
 		classpath "org.grails:grails-gradle-plugin:$grailsVersion"
 		classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.7.4"
-		classpath 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
+//		classpath 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
 		classpath "org.grails.plugins:hibernate4:5.0.2"
 		classpath 'org.grails.plugins:database-migration:2.0.0.RC4'
 		classpath "com.moowork.gradle:gradle-node-plugin:1.0.1"
@@ -53,6 +53,8 @@ dependencies {
 	compile "org.grails:grails-core"
 	compile "org.springframework.boot:spring-boot-starter-actuator"
 	compile "org.springframework.boot:spring-boot-starter-tomcat"
+// include this and exclude the one above if you want to build a deployable war file
+//	provided "org.springframework.boot:spring-boot-starter-tomcat"
 	compile "org.grails:grails-dependencies"
 	compile "org.grails:grails-web-boot"
 	compile "org.grails.plugins:cache"
@@ -62,6 +64,7 @@ dependencies {
 	console "org.grails:grails-console"
 	profile "org.grails.profiles:web:3.1.4"
 	runtime "com.h2database:h2"
+
 	compile 'org.grails.plugins:database-migration:2.0.0.RC4'
 
 	testCompile "org.grails:grails-plugin-testing"
@@ -89,7 +92,7 @@ dependencies {
 	compile 'org.grails.plugins:grails-jesque-admin:0.1.5'
 	compile 'org.grails.plugins:jesque:1.1.9'
 
-	compile 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
+	assets 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
 
 	compile 'org.jadira.usertype:usertype.jodatime:2.0.1'
 
@@ -112,16 +115,18 @@ assets {
 	minifyCss = false
 	enableSourceMaps = false
 	excludes = ['app/**.js', 'app/**.jsx', 'app/**.scss'] //Example Exclude GLOB pattern
+	minifyOptions = [
+		languageMode     : 'ES6',
+		targetLanguage   : 'ES5', //Can go from ES6 to ES5 for those bleeding edgers
+		optimizationLevel: 'SIMPLE',
+	]
 	configOptions = [
-		less : [
-			compiler: 'standard',
-		],
 		babel: [
-			enabled              : false,
+			enabled              : true,
 			processor            : 'webpack',
 			processJsFiles       : false,
-			nodeExec             : "./.nodejs/node-v7.4.0-darwin-x64/bin/node",
-			externalWebpackConfig: "webpack.prod.config.js"
+			externalWebpackConfig: "webpack.prod.config.js",
+			nodeExec             : System.getProperty('grails.babel.node.path') ?: ".nodejs/node-v7.4.0-linux-x64/bin/node"
 		]
 	]
 }
