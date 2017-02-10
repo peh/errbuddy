@@ -14,8 +14,8 @@ jdk:
 before_script:
 - rm -rf build/
 - rm -rf .asscache
-install: gradle npmInstall
-script: gradle -Dgrails.babel.node.path=.nodejs/node-v7.4.0-linux-x64/bin/node -Dgrails.env=prod :clean :npmInstall :assetCompile :war
+install: bash gradlew npmInstall
+script: bash gradlew -Dgrails.babel.node.path=.nodejs/node-v7.4.0-linux-x64/bin/node -Dgrails.env=prod :clean :npmInstall :assetCompile :bootRepackage
 env:
   global:
   - GIT_NAME="Philipp Eschenbach"
