@@ -48,6 +48,7 @@ module.exports = function (entry, output) {
 
     plugins: [
       new webpack.ProvidePlugin({
+        jQuery: 'jquery',
         $: 'jquery'
       }),
       new webpack.HotModuleReplacementPlugin(),
@@ -70,7 +71,6 @@ module.exports = function (entry, output) {
       }),
       new webpack.optimize.DedupePlugin()
     ],
-    target: 'node',
     resolve: {
       extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx", ".es6"]
     }
