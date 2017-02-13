@@ -14,7 +14,7 @@ docker-compose up
 ```
 
 You should now be able to point your Browser to http://localhost:9000 and login with username `admin` and password `admin`.
-To Change the URL the app is using you can add `SERVER_URL=https://errbuddy.company.com` to `env`.
+To Change the URL the app is using you can add `SERVER_URL=https://errbuddy.company.com` to `.env`.
 
 This way all needed Databases are started in docker.
 

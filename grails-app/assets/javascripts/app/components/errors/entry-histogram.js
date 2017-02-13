@@ -3,6 +3,7 @@ const moment = require('moment');
 import React from "react";
 import ReactDOM from "react-dom";
 import BaseComponent from "../tools/base-component";
+import * as _ from 'lodash';
 
 export default class EntryHistogram extends BaseComponent {
 
