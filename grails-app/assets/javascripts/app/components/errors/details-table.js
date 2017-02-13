@@ -69,9 +69,9 @@ export default class EntryDetailsTable extends BaseComponent {
         <div className="row">
           <div className="col-sm-12">
             <ReactPaginate
-              pageNum={Math.ceil(total / max)}
+              pageCount={Math.ceil(total / max)}
               forceSelected={Math.floor(offset / max)}
-              clickCallback={this.props.changePage}
+              onPageChange={this.props.changePage}
               previousLabel="&laquo;"
               nextLabel="&raquo;"
               breakLabel={<a href="">...</a>}
