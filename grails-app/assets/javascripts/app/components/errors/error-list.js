@@ -140,26 +140,24 @@ export default class ErrorList extends BaseComponent {
     return (
       <div className="entry-list-container">
         <div className="head">
-            <div className="btn-group application-chooser" role="group">
-              {buttons}
-            </div>
-            <ReactPaginate
-              pageCount={Math.ceil(total / max)}
-              pageRangeDisplayed={4}
-              marginPagesDisplayed={1}
-              forceSelected={Math.floor(offset / max)}
-              onPageChange={this.changePage}
-              previousLabel="&laquo;"
-              nextLabel="&raquo;"
-              breakLabel={<a href="">...</a>}
-              activeClassName="active"
-              containerClassName="pagination"
-            />
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            {rows}
+          <div className="btn-group application-chooser" role="group">
+            {buttons}
           </div>
+          <ReactPaginate
+            pageCount={Math.ceil(total / max)}
+            pageRangeDisplayed={4}
+            marginPagesDisplayed={1}
+            forceSelected={Math.floor(offset / max)}
+            onPageChange={this.changePage}
+            previousLabel="&laquo;"
+            nextLabel="&raquo;"
+            breakLabel={<a href="">...</a>}
+            activeClassName="active"
+            containerClassName="pagination"
+          />
+        </div>
+        <div className="list">
+          {rows}
         </div>
 
       </div>

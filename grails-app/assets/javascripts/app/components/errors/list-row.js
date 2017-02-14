@@ -22,9 +22,9 @@ export default class EntryGroupTableRow extends BaseComponent {
       return <div />
     }
 
-    var message = (<span>{newest.message}</span>);
+    let message = "";
     if (!newest.exception) {
-      message = (<span>&nbsp;</span>)
+      message = (<div className="sub">{newest.message}</div>)
     }
     return (
       <div className="list-row" onClick={()=> {
@@ -34,9 +34,8 @@ export default class EntryGroupTableRow extends BaseComponent {
           <div className="main">
             {newest.exception || newest.message}
           </div>
-          <div className="sub">
+
             {message}
-          </div>
         </div>
         <div className="head">
           <div className="time">
