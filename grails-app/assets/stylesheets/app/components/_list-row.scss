@@ -32,23 +32,24 @@
     font-weight: lighter;
     font-size: 1em;
     .similar-column {
-      flex: 2;
+      display: flex;
+      justify-content: flex-end;
       margin-bottom: 2px;
     }
     .time {
-      flex: 5;
+      flex: 1;
       text-align: left;
     }
     .similar {
-      flex: 4;
+      flex: 0 0;
     }
   }
   .body {
     .main {
-      font-size: 1.2em;
+      font-size: 16px;
     }
     .sub {
-      font-size: 1em;
+      font-size: 12px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
