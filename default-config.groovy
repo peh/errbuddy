@@ -1,6 +1,3 @@
-import errbuddy.CustomExceptionHandler
-import grails.plugins.jesque.admin.JesqueJobStatisticsCollectingWorkerImpl
-
 String mysqlHost = System.getProperty('errbuddy.mysql.host') ?: "mariadb"
 String mysqlDatabase = System.getProperty('errbuddy.mysql.database') ?: "errbuddy"
 String mysqlUser = System.getProperty('errbuddy.mysql.user') ?: "errbuddy"
@@ -64,29 +61,6 @@ grails {
 			maxTotal = 500
 		}
 		timeout = 2000 //default in milliseconds
-	}
-
-	jesque {
-		enabled = true
-		pruneWorkersOnStartup = true
-		createWorkersOnStartup = true
-		schedulerThreadActive = true
-		delayedJobThreadActive = true
-		startPaused = true
-		autoFlush = true
-		statistics {
-			enabled = true
-			max = 100
-		}
-		custom {
-			worker.clazz = JesqueJobStatisticsCollectingWorkerImpl
-			jobThrowableHandler.clazz = CustomExceptionHandler
-		}
-	}
-	plugin {
-		databasemigration {
-			updateOnStart = true
-		}
 	}
 }
 
