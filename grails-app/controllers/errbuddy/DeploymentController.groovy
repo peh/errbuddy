@@ -1,6 +1,6 @@
 package errbuddy
 
-class AppApiDeploymentController extends AbstractAppApiController {
+class DeploymentController extends AbstractApiController {
 
 	static allowedMethods = [list: 'GET', delete: 'DELETE']
 

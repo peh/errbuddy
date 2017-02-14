@@ -1,5 +1,6 @@
 package errbuddy
 
+import grails.converters.JSON
 import grails.transaction.Transactional
 import org.springframework.http.HttpStatus
 
@@ -52,9 +53,9 @@ class ApiController {
 	}
 
 	def ping() {
-		render(contentType: 'application/json') {
-			[success: "ok"]
-		}
+		render([success: "ok"] as JSON)
+		return
+		render(contentType: 'application/json', text: (([success: 'ok']) as JSON).toString())
 	}
 
 	/**
@@ -66,7 +67,7 @@ class ApiController {
 		}
 	}
 
-	private def getRequestSource() {
+	private getRequestSource() {
 		request.getHeader('X-Real-IP') ?: request.remoteHost
 	}
 }

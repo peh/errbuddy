@@ -1,8 +1,8 @@
 'use strict';
 
+import 'whatwg-fetch';
 import BaseService from "./base-service";
-var AppEvents = require('../events/application-events');
-
+const AppEvents = require('../events/application-events');
 const PATH = '/api/app/users/';
 
 export default class UserService extends BaseService {

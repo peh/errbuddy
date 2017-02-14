@@ -1,8 +1,10 @@
-@import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,700);
-
-$base-font: 'Open Sans', sans-serif !important;
+$base-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $errbuddy-blue: #2C3E50;
 $brand-primary: $errbuddy-blue;
+
+$danger-base: rgba(169, 68, 68, 0.7);
+$warning-base: rgba(226, 157, 63, 0.7);
+$ok-base: rgba(86, 169, 87, 0.7);
 
 $navbar-border-color: #A9A9A9;
 $apps-color: #64c6c9;
@@ -42,17 +44,17 @@ $navbar-default-toggle-hover-bg: darken($navbar-default-bg, 10%);
 $navbar-default-toggle-icon-bar-bg: #fff;
 $navbar-default-toggle-border-color: darken($navbar-default-bg, 10%);
 
-$similar-danger-bg: rgba(169, 68, 68, 0.7);
+$similar-danger-bg: $danger-base;
 $similar-danger-hover-bg: rgba($similar-danger-bg, 0.9);
-$similar-danger-text: rgba(255,255,255,0.9); // lighten($similar-danger-bg, 50%);
+$similar-danger-text: rgba(255, 255, 255, 0.9); // lighten($similar-danger-bg, 50%);
 
-$similar-warning-bg: rgba(226, 157, 63, 0.7);
+$similar-warning-bg: $warning-base;
 $similar-warning-hover-bg: rgba($similar-warning-bg, 0.9);
-$similar-warning-text: rgba(255,255,255,0.9); // lighten($similar-warning-bg, 50%);
+$similar-warning-text: rgba(255, 255, 255, 0.9); // lighten($similar-warning-bg, 50%);
 
-$similar-okay-bg: rgba(86, 169, 87, 0.7);
+$similar-okay-bg: $ok-base;
 $similar-okay-hover-bg: rgba($similar-okay-bg, 0.9);
-$similar-okay-text: rgba(255,255,255,0.9); // lighten($similar-okay-bg, 50%);
+$similar-okay-text: rgba(255, 255, 255, 0.9); // lighten($similar-okay-bg, 50%);
 
 $glow-transition-length: 0.3s;
 

@@ -1,5 +1,5 @@
 @import "../variables";
-
+@import "similar";
 
 .list-row {
   padding: 3px;
@@ -55,31 +55,4 @@
     }
   }
 
-  .similar {
-    font-weight: bold;
-    font-size: 15px;
-    margin-right: 0;
-    margin-left: auto;
-    display: block;
-    text-align: center;
-    width: 150px;
-    max-width: 150px;
-    border-radius: 3px;
-    padding: 3px 10px;
-    &.danger {
-      background: $similar-danger-bg;
-      color: $similar-danger-text;
-    }
-    &.warn {
-      background: $similar-warning-bg;
-      color: $similar-warning-text;
-    }
-    &.okay {
-      background: $similar-okay-bg;
-      color: $similar-okay-text;
-    }
-    &.details-pill {
-      margin-bottom: 2px;
-    }
-  }
 }

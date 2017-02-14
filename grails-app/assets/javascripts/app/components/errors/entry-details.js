@@ -267,7 +267,7 @@ export default class EntryDetails extends BaseComponent {
                   <h3>Actions</h3>
                   <EntryResolveButton entryGroup={entryGroup} withText={true} onClick={this.onResolveClicked}/>
                   <EntryDeleteButton entryGroup={entryGroup} withText={true} onClick={this.onDeleteClicked}/>
-                  <EntryReportButton entryGroup={entryGroup} withText={true} onClick={this.onReportClicked}/>
+                  {/*<EntryReportButton entryGroup={entryGroup} withText={true} onClick={this.onReportClicked}/>*/}
                 </div>
               </div>
             </section>

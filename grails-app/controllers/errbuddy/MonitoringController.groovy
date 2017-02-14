@@ -2,7 +2,7 @@ package errbuddy
 
 import org.springframework.http.HttpStatus
 
-class AppApiMonitoringController extends AbstractAppApiController {
+class MonitoringController extends AbstractApiController {
 
 	static allowedMethods = [list: 'GET', servers: 'GET', get: 'GET', update: 'PUT', create: 'POST', delete: 'DELETE', checks: 'GET', stats: 'GET']
 

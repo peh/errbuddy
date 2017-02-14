@@ -42,7 +42,7 @@ export default class BaseComponent extends React.Component {
     let url = "";
     if (params) {
       let cleanParams = {};
-      _.each(params, (v, k)=> {
+      _.each(params, (v, k) => {
         if (v !== null && v !== "") {
           cleanParams[k] = v
         }
@@ -73,7 +73,7 @@ export default class BaseComponent extends React.Component {
   }
 
   setInterval(fn, int) {
-    this.interval = setInterval(()=> {
+    this.interval = setInterval(() => {
       this.doInterval(fn)
     }, int)
   }

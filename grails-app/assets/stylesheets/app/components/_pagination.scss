@@ -1,6 +1,7 @@
 $pagination-color: #337ab7;
 
 .pagination {
+  margin: 0;
   &.disabled {
     a {
       color: #999 !important;

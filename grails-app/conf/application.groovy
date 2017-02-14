@@ -1,3 +1,5 @@
+import grails.plugins.jesque.admin.JesqueJobStatisticsCollectingWorkerImpl
+
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.password.algorithm = 'bcrypt'
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'errbuddy.User'
@@ -43,4 +45,36 @@ grails.gorm.default.constraints = {
 grails.gorm.default.mapping = {
 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentDateTime, class: org.joda.time.DateTime
 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentLocalDate, class: org.joda.time.LocalDate
+}
+grails {
+	redis {
+		poolConfig {
+			// jedis pool specific tweaks here, see jedis docs & src
+			testWhileIdle = true
+			maxTotal = 500
+		}
+		timeout = 2000 //default in milliseconds
+	}
+	jesque {
+		enabled = true
+		pruneWorkersOnStartup = true
+		createWorkersOnStartup = true
+		schedulerThreadActive = true
+		delayedJobThreadActive = true
+		startPaused = true
+		autoFlush = true
+		statistics {
+			enabled = true
+			max = 100
+		}
+		custom {
+			worker.clazz = JesqueJobStatisticsCollectingWorkerImpl
+			listener.clazz = [net.greghaines.jesque.worker.LoggingWorkerListener]
+		}
+	}
+	plugin {
+		databasemigration {
+			updateOnStart = true
+		}
+	}
 }

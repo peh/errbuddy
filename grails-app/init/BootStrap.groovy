@@ -3,7 +3,6 @@ import grails.converters.JSON
 import grails.plugins.errbuddy.ErrbuddyLogAppender
 import grails.plugins.errbuddy.ErrbuddyService
 import grails.plugins.jesque.JesqueService
-import org.apache.commons.lang.RandomStringUtils
 
 class BootStrap {
 
@@ -91,6 +90,7 @@ class BootStrap {
 			applicationService.create(app)
 		}
 
+//		if (System.getProperty('errbuddy.worker.skip') != 'true') {
 		new Timer().runAfter(10000) {
 			log.info "starting workers"
 			WORKERS.each { workerConfig ->
@@ -110,6 +110,7 @@ class BootStrap {
 			jesqueService.enqueue('generic', RefindFromCollectorJob)
 			log.info "workers started"
 		}
+//		}
 	}
 
 	def destroy = {

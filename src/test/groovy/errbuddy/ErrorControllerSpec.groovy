@@ -6,8 +6,8 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
-@TestFor(ShortlinkController)
-class ShortlinkControllerSpec extends Specification {
+@TestFor(ErrorController)
+class ErrorControllerSpec extends Specification {
 
     def setup() {
     }

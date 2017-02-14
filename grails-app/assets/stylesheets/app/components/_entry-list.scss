@@ -1,0 +1,30 @@
+@import "../variables";
+@import "similar";
+
+.entry-list-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 0 0;
+    margin-bottom: 10px;
+    .application-chooser {
+      button.btn {
+        font-weight: 400;
+        &:active, &.active {
+          box-shadow: none;
+        }
+        &.active {
+          background: $ok-base;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .list {
+    flex: 0 1;
+  }
+}

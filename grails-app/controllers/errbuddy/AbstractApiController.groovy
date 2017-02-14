@@ -4,7 +4,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.http.HttpStatus
 
-abstract class AbstractAppApiController {
+abstract class AbstractApiController {
 	def configurationService
 	def entryGroupService
 	def userService

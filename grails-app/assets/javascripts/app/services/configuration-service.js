@@ -1,6 +1,5 @@
 /* globals localStorage */
-
-const INSTANCE = null
+const INSTANCE = null;
 
 export default class ConfigurationService {
   constructor() {

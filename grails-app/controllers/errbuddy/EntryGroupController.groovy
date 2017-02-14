@@ -4,7 +4,7 @@ import grails.transaction.Transactional
 import org.springframework.http.HttpStatus
 
 @Transactional(readOnly = true)
-class AppApiEntryGroupController extends AbstractAppApiController {
+class EntryGroupController extends AbstractApiController {
 
 	static allowedMethods = [list: ['GET'], delete: 'DELETE']
 

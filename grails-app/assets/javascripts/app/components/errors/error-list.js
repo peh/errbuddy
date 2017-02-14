@@ -6,7 +6,6 @@ import BaseComponent from "../tools/base-component";
 import LoadingHero from "../tools/loading-hero";
 import EntryGroupTableRow from "./list-row";
 import ReactPaginate from "react-paginate";
-
 const cx = require('classnames');
 const querystring = require('querystring');
 
@@ -16,26 +15,47 @@ export default class ErrorList extends BaseComponent {
 
     let params = props.urlParameters || {};
 
+    let selectedApplication = this.getConfigurationService().get('errbuddy.applicaiton.selected');
+
     this.state = {
       list: [],
       total: 0,
       query: props.query || params.query || "",
       applications: null,
-      selectedApplication: null,
+      selectedApplication: selectedApplication || null,
       loading: false
     };
 
     this._bindThis('loadObjectsFromServer',
       'handlePausedChange',
-      'setPage',
-      'searchQueryChanged',
-      '_toggleApplicationFilter',
-      'updateHistory',
+      'toggleApplicationFilter',
       'changePage',
       'getMax',
       'getOffset',
       'doLoad'
     );
+
+  }
+
+  componentWillMount() {
+    this.getApplicationService().list(0, 10000).then(applications => {
+      this.setState(_.assign({}, this.state, {applications: applications.applications}));
+    })
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (!this.props.urlParameters || _.get(newProps.urlParameters, 'offset') !== `${this.getOffset()}`) {
+      this.loadObjectsFromServer(newProps.urlParameters)
+    }
+  }
+
+  componentWillUnmount() {
+    this.stopInterval();
+  }
+
+  componentDidMount() {
+    this.loadObjectsFromServer(true);
+    this.setInterval(this.loadObjectsFromServer, 2000);
   }
 
   handlePausedChange(paused) {
@@ -70,33 +90,13 @@ export default class ErrorList extends BaseComponent {
       });
   }
 
-  componentWillMount() {
-    this.getApplicationService().list(0, 10000).then(applications => {
-      this.setState(_.assign({}, this.state, {applications: applications.applications}));
-    })
-  }
-
-  _toggleApplicationFilter(appId) {
+  toggleApplicationFilter(appId) {
     if (this.state.selectedApplication === appId) {
       appId = null
     }
-    this.setState(_.assign(this.state, {selectedApplication: appId}))
+    this.getConfigurationService().set('errbuddy.applicaiton.selected', appId);
+    this.setState(_.assign(this.state, {selectedApplication: appId}));
     this.loadObjectsFromServer(true)
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (!this.props.urlParameters || _.get(newProps.urlParameters, 'offset') !== `${this.getOffset()}`) {
-      this.loadObjectsFromServer(newProps.urlParameters)
-    }
-  }
-
-  componentWillUnmount() {
-    this.stopInterval();
-  }
-
-  componentDidMount() {
-    this.loadObjectsFromServer(true);
-    this.setInterval(this.loadObjectsFromServer, 2000);
   }
 
   changePage(pageObj) {
@@ -129,25 +129,20 @@ export default class ErrorList extends BaseComponent {
     let buttons = _.map(this.state.applications, (app) => {
       let buttonClasses = cx('btn', {
         'btn-default': app.id !== toggledApplication,
-        'btn-success': app.id === toggledApplication,
+        'active': app.id === toggledApplication,
       });
       return (
         <button key={`app-choose-${app.id}`} type="button" className={buttonClasses} onClick={() => {
-          this._toggleApplicationFilter(app.id)
+          this.toggleApplicationFilter(app.id)
         }}>{app.name}</button>
       )
     });
     return (
-      <div>
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="btn-group" role="group">
+      <div className="entry-list-container">
+        <div className="head">
+            <div className="btn-group application-chooser" role="group">
               {buttons}
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
             <ReactPaginate
               pageCount={Math.ceil(total / max)}
               pageRangeDisplayed={4}
@@ -160,7 +155,6 @@ export default class ErrorList extends BaseComponent {
               activeClassName="active"
               containerClassName="pagination"
             />
-          </div>
         </div>
         <div className="row">
           <div className="col-sm-12">
