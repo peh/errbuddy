@@ -1,7 +1,7 @@
 version: '2'
 services:
   app:
-    container_name: erbuddy-app
+    container_name: errbuddy-app
     env_file: .env
     mem_limit: 3g
     image: openjdk:8-jdk
