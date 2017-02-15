@@ -7,6 +7,7 @@ import ErrorService from "./services/error-service";
 import ConfigurationService from "./services/configuration-service";
 import DeploymentService from "./services/deployment-service";
 import MonitoringService from "./services/monitoring-service";
+import SettingsService from "./services/settings-service";
 
 const EventEmitter = require('events').EventEmitter;
 const LocalStore = require('./tools/local-storage');
@@ -38,6 +39,7 @@ export default class App {
     this.errorService = new ErrorService(this.emitter, this.baseUrl);
     this.deploymentService = new DeploymentService(this.emitter, this.baseUrl);
     this.monitoringService = new MonitoringService(this.emitter, this.baseUrl);
+    this.settingsService = new SettingsService(this.emitter, this.baseUrl);
 
     this.configurationService = new ConfigurationService();
 

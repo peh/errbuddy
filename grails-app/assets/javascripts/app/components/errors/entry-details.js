@@ -1,12 +1,12 @@
 const swal = require('sweetalert');
 const querystring = require('querystring');
-const cx = require('classnames')
+
 import * as  _ from "lodash";
+import EntryRefindButton from "./entry-refind-button";
 import ObjectDL from "../tools/object-dl";
 import SimilarPill from "./common/similar-pill";
 import EntryDeleteButton from "./entry-delete-button";
 import EntryResolveButton from "./entry-resolve-button";
-import EntryReportButton from "./entry-report-button";
 import EntryHistogram from "./entry-histogram";
 import FormatedDate from "../tools/formated-date";
 import EntryDetailsTable from "./details-table";
@@ -24,15 +24,17 @@ export default class EntryDetails extends BaseComponent {
       entry: {},
       similar: [],
       total: 0,
+      refindSwal: ""
     };
 
-    this._bindThis('loadEntryGroup', 'onReportClicked', 'onDeleteClicked', 'onResolveClicked', 'changePage', 'getMax', 'loadSimilar', 'getOffset')
+    this._bindThis('loadEntryGroup', 'onReportClicked', 'onDeleteClicked', 'onResolveClicked', 'changePage', 'getMax', 'loadSimilar', 'getOffset', 'onRefindClicked')
+
   }
 
   loadEntryGroup(props) {
     const {entryGroupId, entryId} = props || this.props;
     this.getErrorService().get(entryGroupId, entryId)
-      .then(json=> {
+      .then(json => {
         const {entryGroup, entry} = json;
         this.setState(_.assign(this.state, {entryGroup, entry}), this.loadSimilar);
       })
@@ -42,7 +44,7 @@ export default class EntryDetails extends BaseComponent {
     let offset = _.get(props, 'offset') || this.getOffset();
     let max = _.get(props, 'max') || this.getMax();
 
-    this.getErrorService().similar(this.state.entryGroup, {max, offset}).then(json=> {
+    this.getErrorService().similar(this.state.entryGroup, {max, offset}).then(json => {
       this.setState({
         similar: json.similar,
         total: json.total
@@ -50,8 +52,31 @@ export default class EntryDetails extends BaseComponent {
     });
   }
 
+  onRefindClicked() {
+
+    swal({
+        title: 'You are about to delete this Error group',
+        text: `All Items of this group will be rechecked for similar objects`,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No!',
+        closeOnConfirm: false
+      },
+      () => {
+        this.getErrorService().refind(this.state.entryGroup);
+        swal({
+          title: 'Started',
+          text: 'A background Job was started.',
+          type: 'success'
+        }, () => {
+          this.navigate('/')
+        })
+      });
+  }
+
   onResolveClicked() {
-    this.getErrorService().resolve(this.state.entryGroup).then(()=> {
+    this.getErrorService().resolve(this.state.entryGroup).then(() => {
       this.loadEntryGroup();
     });
   }
@@ -67,14 +92,14 @@ export default class EntryDetails extends BaseComponent {
         cancelButtonText: 'No!',
         closeOnConfirm: false
       },
-      ()=> {
+      () => {
         this.getErrorService().del(entryGroup);
         swal({
           title: 'Started',
           text: 'A background Job was started which handles the deletion. This can take a few minutes depending on how many Errors have to be deleted.',
           type: 'success'
-        }, ()=> {
-          this.navigate('/errors/')
+        }, () => {
+          this.navigate('/')
         })
       });
   }
@@ -265,8 +290,10 @@ export default class EntryDetails extends BaseComponent {
               <div className="row">
                 <div className="col-sm-12">
                   <h3>Actions</h3>
-                  <EntryResolveButton entryGroup={entryGroup} withText={true} onClick={this.onResolveClicked}/>
-                  <EntryDeleteButton entryGroup={entryGroup} withText={true} onClick={this.onDeleteClicked}/>
+                  <EntryResolveButton entryGroup={entryGroup} onClick={this.onResolveClicked}/>
+                  <EntryDeleteButton onClick={this.onDeleteClicked}/>
+                  <EntryRefindButton onClick={this.onRefindClicked}/>
+                  {this.state.refindSwal}
                   {/*<EntryReportButton entryGroup={entryGroup} withText={true} onClick={this.onReportClicked}/>*/}
                 </div>
               </div>

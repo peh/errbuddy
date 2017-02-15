@@ -1,5 +1,6 @@
 package errbuddy
 
+import grails.plugins.elasticsearch.ElasticSearchService
 import grails.transaction.Transactional
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.client.Client
@@ -109,7 +110,11 @@ class EntryGroupService {
 			musts << QueryBuilders.termQuery("actionName", entry.actionName.toLowerCase())
 		}
 
-		QueryBuilder boolQuery = QueryBuilders.boolQuery().should(QueryBuilders.moreLikeThisFieldQuery("message").likeText(entry.message.toLowerCase()).minTermFreq(1).maxQueryTerms(12).percentTermsToMatch(0.9F).minDocFreq(1).minWordLength(3)).minimumShouldMatch("1")
+		QueryBuilder boolQuery = QueryBuilders.boolQuery()
+		if(entry.message) {
+			boolQuery = boolQuery.should(QueryBuilders.moreLikeThisFieldQuery("message").likeText(entry.message.toLowerCase()).minTermFreq(1).maxQueryTerms(12).percentTermsToMatch(0.9F).minDocFreq(1).minWordLength(3)).minimumShouldMatch("1")
+		}
+
 		musts.each {
 			boolQuery = boolQuery.must(it)
 		}
@@ -121,8 +126,6 @@ class EntryGroupService {
 				.setQuery(boolQuery)
 				.addField('id')
 				.addAggregation(AggregationBuilders.terms('eg_agg').field('entryGroup.entryGroupId'))
-
-//            log.info response.toString()
 
 			response = response.execute().actionGet()
 			groups = response.aggregations.get('eg_agg').buckets

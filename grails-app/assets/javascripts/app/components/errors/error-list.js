@@ -13,14 +13,11 @@ export default class ErrorList extends BaseComponent {
   constructor(props) {
     super(props);
 
-    let params = props.urlParameters || {};
-
     let selectedApplication = this.getConfigurationService().get('errbuddy.applicaiton.selected');
 
     this.state = {
       list: [],
       total: 0,
-      query: props.query || params.query || "",
       applications: null,
       selectedApplication: selectedApplication || null,
       loading: false
@@ -44,7 +41,10 @@ export default class ErrorList extends BaseComponent {
   }
 
   componentWillReceiveProps(newProps) {
-    if (!this.props.urlParameters || _.get(newProps.urlParameters, 'offset') !== `${this.getOffset()}`) {
+    if (
+      !this.props.urlParameters ||
+      _.get(newProps.urlParameters, 'offset') !== `${this.getOffset()}` ||
+      _.get(this.props.urlParameters, 'query') != _.get(newProps.urlParameters, 'query')) {
       this.loadObjectsFromServer(newProps.urlParameters)
     }
   }
@@ -70,9 +70,10 @@ export default class ErrorList extends BaseComponent {
   }
 
   doLoad(props) {
-    const {query, selectedApplication} = this.state;
+    const {selectedApplication} = this.state;
     let offset = _.get(props, 'offset') || this.getOffset();
     let max = _.get(props, 'max') || this.getMax();
+    let query = _.get(this.props.urlParameters, 'query') || "";
     this.getErrorService().list(max, offset, query, selectedApplication)
       .then((json) => {
         let list = json.result;

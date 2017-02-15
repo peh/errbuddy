@@ -8,13 +8,26 @@ export default class EntryGroupTableRow extends BaseComponent {
 
   constructor(props) {
     super(props)
+
+    this._bindThis('onClick')
+  }
+
+  onClick(e) {
+    let entryGroup = this.props.entryGroup;
+    let newest = entryGroup.newest;
+    let target = `/errors/${entryGroup.entryGroupId}/${newest.id}`
+    if (e.metaKey || e.ctrlKey || e.which === 2) {
+      window.open(target);
+    } else {
+      this.navigate(target);
+    }
   }
 
   render() {
     let entryGroup = this.props.entryGroup;
     let newest = entryGroup.newest;
 
-    let app = _.find(this.props.applications, a=> {
+    let app = _.find(this.props.applications, a => {
       return entryGroup.application === a.id
     });
 
@@ -22,20 +35,18 @@ export default class EntryGroupTableRow extends BaseComponent {
       return <div />
     }
 
-    let message = "";
-    if (!newest.exception) {
-      message = (<div className="sub">{newest.message}</div>)
-    }
+    // let message = "";
+    let exception = newest.exception || newest.message
+    let message = newest.exception ? newest.message : newest.stackTrace[0];
     return (
-      <div className="list-row" onClick={()=> {
-        this.navigate(`/errors/${entryGroup.entryGroupId}/${newest.id}`)
-      }}>
+      <div className="list-row" onClick={this.onClick}>
         <div className="body">
           <div className="main">
-            {newest.exception || newest.message}
+            {exception}
           </div>
-
+          <div className="sub">
             {message}
+          </div>
         </div>
         <div className="head">
           <div className="time">

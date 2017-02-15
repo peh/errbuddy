@@ -11,14 +11,14 @@ export default class ErrorService extends BaseService {
 
   list(max, offset, query, application) {
     return fetch(this.getRequest(`${this.buildPath()}?${this.createQueryString({offset: offset || 0, max: max || 20, query: query, applications: application})}`))
-      .then((resp)=> {
+      .then((resp) => {
         return resp.json()
       })
   }
 
   get(entryGroupId, entryId) {
     return fetch(this.getRequest(`${this.buildPath(entryGroupId)}/${entryId}`))
-      .then((resp)=> {
+      .then((resp) => {
         return resp.json()
       })
     // this.superagent.get(this.baseUrl + PATH + entryGroupId + '/' + entryId)
@@ -34,14 +34,14 @@ export default class ErrorService extends BaseService {
   similar(entryGroup, params) {
     let q = this.createQueryString(params);
     return fetch(this.getRequest(`${this.buildPath(entryGroup.entryGroupId)}/similar?${q}`))
-      .then((resp)=> {
+      .then((resp) => {
         return resp.json()
       });
   }
 
   resolve(entryGroup) {
     return fetch(this.getRequest(`${this.buildPath(entryGroup.entryGroupId)}/resolve`))
-      .then((resp)=> {
+      .then((resp) => {
         return resp.json()
       });
   }
@@ -52,19 +52,16 @@ export default class ErrorService extends BaseService {
     return fetch(`${this.buildPath(entryGroup.entryGroupId)}`, {
       headers: headers,
       method: 'DELETE'
-    }).then((resp)=> {
+    }).then((resp) => {
       return resp.json()
     });
   }
 
-  refind(entryGroup, successCallback, errorCallback, completeCallback) {
-    //TODO: WTF M8?
-    $.ajax({
-      url: this.baseUrl + PATH + entryGroup.entryGroupId + '/refind',
-      success: successCallback,
-      error: errorCallback,
-      complete: completeCallback
-    });
+  refind(entryGroup) {
+    return fetch(this.getRequest(`${this.buildPath(entryGroup.entryGroupId)}/refind`))
+      .then((resp) => {
+        return resp.json()
+      });
   }
 
   buildPath(entryGroupId) {
@@ -73,7 +70,7 @@ export default class ErrorService extends BaseService {
 
   histogram(entryGroup) {
     return fetch(this.getRequest(`${this.buildPath(entryGroup.entryGroupId)}/histogram`))
-      .then((resp)=> {
+      .then((resp) => {
         return resp.json()
       });
   }

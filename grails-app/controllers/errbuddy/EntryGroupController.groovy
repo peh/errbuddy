@@ -9,7 +9,7 @@ class EntryGroupController extends AbstractApiController {
 	static allowedMethods = [list: ['GET'], delete: 'DELETE']
 
 	@Transactional
-	def resolve() {
+	resolve() {
 		withEntryGroup(params.id.toString()) { EntryGroup entryGroup ->
 			def ret = entryGroupService.resolve(entryGroup, currentUser)
 			renderJson([success: true, entryGroup: ret])

@@ -20,7 +20,7 @@ export default class Navbar extends React.Component {
               </button>
             </div>
             <div id="nav-collapse" className="collapse navbar-collapse">
-              <NavbarSearchForm errbuddyApp={this.props.errbuddyApp}/>
+              <NavbarSearchForm errbuddyApp={this.props.errbuddyApp} urlParameters={this.props.urlParameters}/>
             </div>
           </div>
         </div>

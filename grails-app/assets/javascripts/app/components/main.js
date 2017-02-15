@@ -5,6 +5,7 @@ const AppEvents = require('../events/application-events');
 
 // const EntryDetails = require('./entry-groups/entry-details.jsx');
 import React from "react";
+import AppSettings from "./settings/settings";
 import MonitoringDetails from "./monitorings/monitoring-details";
 import MonitoringAdd from "./monitorings/monitoring-add";
 import MonitoringList from "./monitorings/monitoring-list";
@@ -41,12 +42,13 @@ var Main = React.createClass({
   },
 
   routes: {
-    '/errors/': 'errorsWithPage',
+    '/errors/': 'redirectToErrors',
+    '/errors/:id': 'redirectToErrors',
     '/errors/:entryGroupId/:entry': 'errorDetails',
     '/': 'errorsWithPage',
     '/login': 'login',
     '/logout': 'logout',
-    '/settings/:id/:page*': 'appSettings',
+    '/settings/': 'appSettings',
     '/applications/': 'applications',
     '/applications/add': 'addApp',
     '/applications/:id': 'applicationDetails',
@@ -57,6 +59,14 @@ var Main = React.createClass({
     '/monitorings/add': 'monitoringsAdd',
     '/monitorings/:id': 'monitoringsDetails',
     '/monitorings': 'monitoringList',
+  },
+
+
+  redirectToErrors() {
+    setTimeout(()=>{
+      this.props.app.navigate('/')
+    }, 500);
+    return (<div>Redirecting</div>)
   },
 
   errorDetails: function (entryGroupId, entryId, page) {
@@ -78,7 +88,7 @@ var Main = React.createClass({
   },
 
   appSettings: function (id) {
-    this.setAction('applications');
+    this.setAction('settings');
     return <AppSettings appId={id} urlParameters={this.getUrlParameters()} errbuddyApp={this.props.app}/>;
   },
 
@@ -184,7 +194,7 @@ var Main = React.createClass({
       .then((user)=> {
         this.userLoggedIn(user);
         setTimeout(()=> {
-          this.getApp().navigate('/errors/1')
+          this.getApp().navigate('/')
         }, 200)
       })
       .catch((err)=> {

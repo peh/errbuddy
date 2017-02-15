@@ -33,8 +33,9 @@ class UrlMappings {
 
 		"/api/app/applications/$id"(controller: 'application', action: [GET: "details", PUT: "update", DELETE: "delete"])
 		"/api/app/applications/$id/clear"(controller: 'application', action: 'clear')
-
 		"/api/app/applications/$appId/deployments"(controller: 'deployment', action: [GET: "list", DELETE: "delete"])
+
+		"/api/app/settings/reindex"(controller: 'settings', action: [POST: "reindex"])
 
 		"/api/app/filter/$id"(controller: 'appFilter', action: 'execute')
 

@@ -150,6 +150,10 @@ export default class BaseComponent extends React.Component {
     return this.getApp().monitoringService
   }
 
+  getSettingsService() {
+    return this.getApp().settingsService
+  }
+
   showError(message) {
     this.getApp().emitter.emit(AppEvents.THROW_ERROR, message)
   }
@@ -164,6 +168,12 @@ export default class BaseComponent extends React.Component {
 
   getOffset() {
     return _.get(this.props.urlParameters, 'offset') || 0;
+  }
+
+  updateState(stateAddition) {
+    return new Promise(res => {
+      this.setState(_.assign({}, this.state, stateAddition), res)
+    })
   }
 
 }
