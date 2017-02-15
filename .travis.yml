@@ -21,11 +21,21 @@ env:
   - GIT_NAME="Philipp Eschenbach"
   - GIT_EMAIL="philipp@errbuddy.net"
 deploy:
-  provider: releases
-  api_key:
-    secure: Whm7sb51c7Nttal0/sH8sj8pvMx3hcb8wBkmUNJxsBnsEsq4sQwtw8w9ul0LiV4V/k42xW5N0LYHAvYvHFqPxpM7XblpDMzi2NDqFlVqKrixycaIKAK7+fJx57bw16Ew3pvzjC25YWvlyJDt6pJJ3Y4R0VY1RNp3Vze+JtwXMFri5bBj/T5vWJA00ReLB0vnWkyeqx8lqaRWZpH7z4ap3f4tsy1Sr0bKiJNiwVmvdmHYKGwFAqYsTcIPhZxTVo+rZoNLKHQ5NNUCg5xEof+QP8SE20+q8vVmR80g2ZB3G4HLXKUPVI8RMlBcxiBmpu0HYVXTgcMLZxlSJxfhJ22bDIYQTpNGIHJCmp3b/6vAUYIDyRvQELx0jQ6CYVILChngZtLfAseej3Wz89BL6A/cx8/H1u6dBrsBFouQ5xWvjcYtZaqj5Ztw4bLTt2R+HiEsbKVxI5xWN16dt5wAqDH1uiGh7Oc/5jGr2U34CjQdXpCqvVNeVpHTSK76NNJCIWZSR8i4liD9k5jb3ZuKPu7mMS/8VcBmP05nEUDo3d87aC4BJJjyIje+w6C+zWBfE8epxARpYITEQGvNY4iZDMwW9g/k9N58hnjChqkVqF3HAARsnxT31NVKXNT3maKkunFjg8hECdSw7SJLzBDwrAss97CkZ5tMNh/yY0uZTb1Zfp8=
-  file_glob: true
-  file: build/libs/*.war
-  on:
-    repo: peh/errbuddy
-    tags: true
+  - provider: releases
+    api_key:
+      secure: Whm7sb51c7Nttal0/sH8sj8pvMx3hcb8wBkmUNJxsBnsEsq4sQwtw8w9ul0LiV4V/k42xW5N0LYHAvYvHFqPxpM7XblpDMzi2NDqFlVqKrixycaIKAK7+fJx57bw16Ew3pvzjC25YWvlyJDt6pJJ3Y4R0VY1RNp3Vze+JtwXMFri5bBj/T5vWJA00ReLB0vnWkyeqx8lqaRWZpH7z4ap3f4tsy1Sr0bKiJNiwVmvdmHYKGwFAqYsTcIPhZxTVo+rZoNLKHQ5NNUCg5xEof+QP8SE20+q8vVmR80g2ZB3G4HLXKUPVI8RMlBcxiBmpu0HYVXTgcMLZxlSJxfhJ22bDIYQTpNGIHJCmp3b/6vAUYIDyRvQELx0jQ6CYVILChngZtLfAseej3Wz89BL6A/cx8/H1u6dBrsBFouQ5xWvjcYtZaqj5Ztw4bLTt2R+HiEsbKVxI5xWN16dt5wAqDH1uiGh7Oc/5jGr2U34CjQdXpCqvVNeVpHTSK76NNJCIWZSR8i4liD9k5jb3ZuKPu7mMS/8VcBmP05nEUDo3d87aC4BJJjyIje+w6C+zWBfE8epxARpYITEQGvNY4iZDMwW9g/k9N58hnjChqkVqF3HAARsnxT31NVKXNT3maKkunFjg8hECdSw7SJLzBDwrAss97CkZ5tMNh/yY0uZTb1Zfp8=
+    file_glob: true
+    file: build/libs/*.war
+    on:
+      repo: peh/errbuddy
+      tags: true
+  - provider: s3
+    access_key_id: AKIAJEFQRMTUREC2L4NA
+    secret_access_key:
+      secure: JRczi7fmXFxmJi6EIoVNfpApZuNisNlXttY7bawVeEPAFBXWz8LdvJHwIscpJkoMfoeVur052pkbtWkGJ8W3h8n2Jki2ttnR7cUb0ufWv4k4wnnucdEbUerSYbOO36UOZ2VsF5fPd+JE2fhuy5hb/fnbHipKRwwkLemRIbt82p1oeU0f9odSsZr7chPbvWUwRN0nBQFe0Tt0vNJqN6oiPcE83j5ZYQ8I59BcoVkMLRJ5VY+SMwGhxBBR7y8rjm+GKhiH3saOiuaOzHEoFLpmLIjPT5BUbFmQ4cjELuR+SIwsXwMSa5lBH1nXDP+pWHfZSgZX4op4lW2Dg6xUH4BLklXomRuqkI/WdkdUKaFn+8bP84Xrfbr26BKAIaGdQ9jkniuFtuyDOU9368vN8ltKw4DiNZeA+HhyfQigEayplShiPKv954N8x1VEbTYJVPn2/3VUf5PgKwCqjbcm4B7ICoHSlZHulMW/je8H1xW33fwc2pjaIi57u0X9fs3mJxOwECCYt/6Clyudc7pGOHleTa5hXlNv7yjLuuLV4kcQ8/SEoYQOHjwX7A8HUF/X+Q/MQXuTCsjBZkwRyixrd0yrfS0eXjXvrFgBrZ56ZcGznu5oblTwwtm1fQFTe2Vvf/7iwPNShC5PS0WWKZi3xIimVn6lGsPmGv2Y/oE4NUgeIu0=
+    bucket: errbuddy-devel
+    acl: public_read
+    file_glob: true
+    file: build/libs/*.war
+    on:
+      repo: peh/errbuddy
