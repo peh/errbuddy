@@ -1,6 +1,5 @@
 package errbuddy
 
-import grails.plugins.elasticsearch.ElasticSearchService
 import grails.transaction.Transactional
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.client.Client
@@ -15,25 +14,18 @@ import org.joda.time.DateTime
 @Transactional
 class EntryGroupService {
 
-	def entryService
 	def jesqueService
 	def elasticSearchHelper
-	def grailsApplication
 	def elasticSearchContextHolder
 
-	Map getEntryGroupHistogram(EntryGroup entryGroup, int dayOffset = 0) {
+	def getEntryGroupHistogram(EntryGroup entryGroup, int dayOffset = 0) {
 		def newest = getNewest(entryGroup)
 		def to = newest.time.minusDays(dayOffset)
 		def from = newest.time.minusDays(1 + dayOffset)
 
-		List result = doGetEntryGroupHistogram(entryGroup, from, to)
-		def times = []
-		def values = []
-		def results = [:]
-		result.each { agg ->
-			results << [(DateTime.parse(agg.key).millis): agg.docCount]
+		doGetEntryGroupHistogram(entryGroup, from, to).collect { agg ->
+			[time: DateTime.parse(agg.key).millis, value: agg.docCount]
 		}
-		results
 	}
 
 	private def doGetEntryGroupHistogram(EntryGroup entryGroup, DateTime from, DateTime to) {
@@ -111,7 +103,7 @@ class EntryGroupService {
 		}
 
 		QueryBuilder boolQuery = QueryBuilders.boolQuery()
-		if(entry.message) {
+		if (entry.message) {
 			boolQuery = boolQuery.should(QueryBuilders.moreLikeThisFieldQuery("message").likeText(entry.message.toLowerCase()).minTermFreq(1).maxQueryTerms(12).percentTermsToMatch(0.9F).minDocFreq(1).minWordLength(3)).minimumShouldMatch("1")
 		}
 
