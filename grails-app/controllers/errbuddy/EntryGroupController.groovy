@@ -1,5 +1,6 @@
 package errbuddy
 
+import grails.plugins.elasticsearch.ElasticSearchService
 import grails.transaction.Transactional
 import org.springframework.http.HttpStatus
 
@@ -16,9 +17,14 @@ class EntryGroupController extends AbstractApiController {
 		}
 	}
 
+	ElasticSearchService elasticSearchService
+
 	def refind() {
 		withEntryGroup(params.id.toString()) { EntryGroup entryGroup ->
-			entryGroupService.startRefind(entryGroup)
+			println("start")
+			elasticSearchService.index(Entry.findAllByEntryGroup(entryGroup))
+//			entryGroupService.startRefind(entryGroup)
+			println("done")
 			renderJson([success: true])
 		}
 	}

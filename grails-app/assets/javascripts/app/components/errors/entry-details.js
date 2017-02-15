@@ -298,7 +298,7 @@ export default class EntryDetails extends BaseComponent {
                 </div>
               </div>
             </section>
-            <section id="histogram">
+            <section id="histogram" className="entry-historgram">
               <h3>Histogram</h3>
               <div className="row">
                 <div className="col-sm-12">

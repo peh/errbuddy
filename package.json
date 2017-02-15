@@ -30,10 +30,8 @@
     "react-addons-create-fragment": "^15.4.2",
     "react-d3": "^0.4.0",
     "react-dom": "^15.4.2",
-    "react-measure": "^1.4.5",
     "react-mini-router": "git+https://git@github.com/saghul/react-mini-router.git#agp",
     "react-paginate": "^4.1.1",
-    "salad-ui.chart": "^1.1.37",
     "sweetalert": "^1.1.3",
     "whatwg-fetch": "^2.0.2"
   },
