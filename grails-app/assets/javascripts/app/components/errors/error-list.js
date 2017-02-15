@@ -73,8 +73,7 @@ export default class ErrorList extends BaseComponent {
     const {selectedApplication} = this.state;
     let offset = _.get(props, 'offset') || this.getOffset();
     let max = _.get(props, 'max') || this.getMax();
-    let query = _.get(this.props.urlParameters, 'query') || "";
-    this.getErrorService().list(max, offset, query, selectedApplication)
+    this.getErrorService().list(max, offset, this.getQuery(), selectedApplication)
       .then((json) => {
         let list = json.result;
         let total = json.total;
@@ -91,6 +90,10 @@ export default class ErrorList extends BaseComponent {
       });
   }
 
+  getQuery() {
+    return _.get(this.props.urlParameters, 'query') || "";
+  }
+
   toggleApplicationFilter(appId) {
     if (this.state.selectedApplication === appId) {
       appId = null
@@ -104,7 +107,8 @@ export default class ErrorList extends BaseComponent {
     if (!this.state.loading) {
       let max = this.getMax();
       let offset = pageObj.selected * max;
-      this.navigate(`/errors/?${querystring.stringify({max, offset})}`);
+      let query = this.getQuery()
+      this.navigate(`/?${querystring.stringify({max, offset, query})}`);
     }
   }
 

@@ -38,10 +38,15 @@ export default class AppSettings extends BaseComponent {
     return (
       <div className="app-settings">
         {alert}
-        <div className="reindex">
+        <div className="settings-item reindex">
           <h3>Elasticsearch Reindex</h3>
           <p>This is dangerous and can take some time</p>
           <button className="btn btn-danger" onClick={this.onReindex}>Start</button>
+        </div>
+        <div className="settings-item reindex">
+          <h3>Background Jobs</h3>
+          {/*<p>This is dangerous and can take some time</p>*/}
+          <a href="/admin/jesque" target="blank"><i className="fa fa-external-link-square"></i> Go</a>
         </div>
       </div>
     )

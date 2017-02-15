@@ -53,6 +53,7 @@ class EntryGroup implements HasJsonBody {
 	@Override
 	Map getJsonBody() {
 		[
+			id          : id,
 			entryGroupId: entryGroupId,
 			entries     : entryCount,
 			newest      : newest,

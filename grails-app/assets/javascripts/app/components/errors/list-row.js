@@ -15,7 +15,8 @@ export default class EntryGroupTableRow extends BaseComponent {
   onClick(e) {
     let entryGroup = this.props.entryGroup;
     let newest = entryGroup.newest;
-    let target = `/errors/${entryGroup.entryGroupId}/${newest.id}`
+    debugger
+    let target = `/errors/${entryGroup.entryGroupId}/${newest.id}`;
     if (e.metaKey || e.ctrlKey || e.which === 2) {
       window.open(target);
     } else {
