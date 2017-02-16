@@ -30,7 +30,7 @@ deploy:
       repo: peh/errbuddy
       tags: true
   - provider: s3
-    before_deploy: "rm -f build/libs/current.war.original"
+    before_deploy: "rm -f ./build/libs/current.war.original && mv ./build/libs/current.war mv ./build/libs/unstable.war"
     access_key_id: AKIAJEFQRMTUREC2L4NA
     secret_access_key:
       secure: JRczi7fmXFxmJi6EIoVNfpApZuNisNlXttY7bawVeEPAFBXWz8LdvJHwIscpJkoMfoeVur052pkbtWkGJ8W3h8n2Jki2ttnR7cUb0ufWv4k4wnnucdEbUerSYbOO36UOZ2VsF5fPd+JE2fhuy5hb/fnbHipKRwwkLemRIbt82p1oeU0f9odSsZr7chPbvWUwRN0nBQFe0Tt0vNJqN6oiPcE83j5ZYQ8I59BcoVkMLRJ5VY+SMwGhxBBR7y8rjm+GKhiH3saOiuaOzHEoFLpmLIjPT5BUbFmQ4cjELuR+SIwsXwMSa5lBH1nXDP+pWHfZSgZX4op4lW2Dg6xUH4BLklXomRuqkI/WdkdUKaFn+8bP84Xrfbr26BKAIaGdQ9jkniuFtuyDOU9368vN8ltKw4DiNZeA+HhyfQigEayplShiPKv954N8x1VEbTYJVPn2/3VUf5PgKwCqjbcm4B7ICoHSlZHulMW/je8H1xW33fwc2pjaIi57u0X9fs3mJxOwECCYt/6Clyudc7pGOHleTa5hXlNv7yjLuuLV4kcQ8/SEoYQOHjwX7A8HUF/X+Q/MQXuTCsjBZkwRyixrd0yrfS0eXjXvrFgBrZ56ZcGznu5oblTwwtm1fQFTe2Vvf/7iwPNShC5PS0WWKZi3xIimVn6lGsPmGv2Y/oE4NUgeIu0=
