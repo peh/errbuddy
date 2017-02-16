@@ -19,7 +19,6 @@ buildscript {
 
 version "2.0.0"
 group "errbuddy"
-war.archiveName "current.war"
 
 apply plugin: "eclipse"
 apply plugin: "idea"
@@ -160,5 +159,7 @@ node {
 tasks.withType(JavaExec).each { task ->
 	task.systemProperties System.properties
 }
+
+war.archiveName "current.war"
 
 // grails prod package -Dgradle.node.exec="/Users/philipp/.nvm/versions/node/v5.6.0/bin/node"
