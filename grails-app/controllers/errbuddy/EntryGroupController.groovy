@@ -57,7 +57,7 @@ class EntryGroupController extends AbstractApiController {
 					eq('collector', false)
 					eq('resolved', false)
 					order('lastUpdated', 'desc')
-					isNotNull('newest')
+					isNotNull('latest')
 				}
 				total = list.totalCount
 			}
@@ -67,7 +67,7 @@ class EntryGroupController extends AbstractApiController {
 				eq('collector', false)
 				eq('resolved', false)
 				order('lastUpdated', 'desc')
-				isNotNull('newest')
+				isNotNull('latest')
 			}
 			total = list.totalCount
 		}

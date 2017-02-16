@@ -22,7 +22,7 @@ class EntryGroup implements HasJsonBody {
 	boolean deleted
 
 	long entryCount = 0
-	Entry newest = null
+	Entry latest = null
 
 	User resolvedBy
 
@@ -32,10 +32,9 @@ class EntryGroup implements HasJsonBody {
 	def afterLoad() {
 		if (!entryCount)
 			entryCount = Entry.countByEntryGroup(this)
-		if (!newest) {
-			newest = Entry.findByEntryGroup(this, [order: 'desc', sort: 'time'])
+		if (!latest) {
+			latest = Entry.findByEntryGroup(this, [order: 'desc', sort: 'time'])
 		}
-
 	}
 
 	static constraints = {
@@ -52,11 +51,17 @@ class EntryGroup implements HasJsonBody {
 
 	@Override
 	Map getJsonBody() {
+		def latestEntry = [:]
+		if (latest) {
+			latestEntry.id = latest.id
+			latestEntry.exception = latest.exception ?: latest.message
+			latestEntry.message = latest.exception ? latest.message : (latest.stackTrace ? latest.stackTrace.first() : null)
+		}
 		[
 			id          : id,
 			entryGroupId: entryGroupId,
 			entries     : entryCount,
-			newest      : newest,
+			latest      : latestEntry,
 			dateCreated : dateCreated.millis,
 			lastUpdated : lastUpdated.millis,
 			resolved    : resolved,

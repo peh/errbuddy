@@ -100,7 +100,7 @@ class EntryService {
 			entry.entryGroup = entryGroup
 			entryGroup.lastUpdated = DateTime.now()
 			entryGroup.resolved = false
-			entryGroup.newest = entry
+			entryGroup.latest = entry
 			entryGroup.entryCount = entryGroup.entryCount + 1
 			entryGroup.save()
 			entry.save()

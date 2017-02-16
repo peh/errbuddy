@@ -14,8 +14,8 @@ export default class EntryGroupTableRow extends BaseComponent {
 
   onClick(e) {
     let entryGroup = this.props.entryGroup;
-    let newest = entryGroup.newest;
-    let target = `/errors/${entryGroup.entryGroupId}/${newest.id}`;
+    let latest = entryGroup.latest;
+    let target = `/errors/${entryGroup.entryGroupId}/${latest.id}`;
     if (e.metaKey || e.ctrlKey || e.which === 2) {
       window.open(target);
     } else {
@@ -25,19 +25,19 @@ export default class EntryGroupTableRow extends BaseComponent {
 
   render() {
     let entryGroup = this.props.entryGroup;
-    let newest = entryGroup.newest;
+    let latest = entryGroup.latest;
 
     let app = _.find(this.props.applications, a => {
       return entryGroup.application === a.id
     });
 
-    if (!newest) {
+    if (!latest) {
       return <div />
     }
 
     // let message = "";
-    let exception = newest.exception || newest.message
-    let message = newest.exception ? newest.message : newest.stackTrace[0];
+    let exception = latest.exception || latest.message
+    let message = latest.exception ? latest.message : latest.stackTrace[0];
     return (
       <div className="list-row" onClick={this.onClick}>
         <div className="body">
@@ -50,7 +50,7 @@ export default class EntryGroupTableRow extends BaseComponent {
         </div>
         <div className="head">
           <div className="time">
-            <FromNow time={entryGroup.lastUpdated}/> @ {app ? app.name : newest.hostname}
+            <FromNow time={entryGroup.lastUpdated}/> @ {app ? app.name : latest.hostname}
           </div>
           <div className="similar-column">
             <SimilarPill entryGroup={entryGroup}/>

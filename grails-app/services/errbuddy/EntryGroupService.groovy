@@ -19,9 +19,9 @@ class EntryGroupService {
 	def elasticSearchContextHolder
 
 	def getEntryGroupHistogram(EntryGroup entryGroup, int dayOffset = 0) {
-		def newest = getNewest(entryGroup)
-		def to = newest.time.minusDays(dayOffset)
-		def from = newest.time.minusDays(1 + dayOffset)
+		def latest = getLatest(entryGroup)
+		def to = latest.time.minusDays(dayOffset)
+		def from = latest.time.minusDays(1 + dayOffset)
 
 		doGetEntryGroupHistogram(entryGroup, from, to).collect { agg ->
 			[time: DateTime.parse(agg.key).millis, value: agg.docCount]
@@ -136,7 +136,7 @@ class EntryGroupService {
 		mapping.queryingIndex
 	}
 
-	Entry getNewest(EntryGroup entryGroup) {
+	Entry getLatest(EntryGroup entryGroup) {
 		Entry.findByEntryGroup(entryGroup, [order: 'desc', sort: 'time'])
 	}
 
@@ -161,7 +161,7 @@ class EntryGroupService {
 	def doDeleteGroup(Serializable entryGroupId, boolean deleteEntries) {
 		EntryGroup toDelete = EntryGroup.get(entryGroupId)
 		App app = toDelete.app
-		toDelete.newest = null
+		toDelete.latest = null
 		toDelete.deleted = true
 		toDelete.save(flush: true)
 		def entries = Entry.createCriteria().list() {
