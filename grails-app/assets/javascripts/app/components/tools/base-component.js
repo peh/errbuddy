@@ -138,10 +138,6 @@ export default class BaseComponent extends React.Component {
     return this.getApp().errorService;
   }
 
-  getConfigurationService() {
-    return this.getApp().configurationService
-  }
-
   getDeploymentService() {
     return this.getApp().deploymentService
   }

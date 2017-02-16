@@ -7,16 +7,31 @@ export default class LoginView extends BaseComponent {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      error: false
     };
 
     this._bindThis('onSubmit', 'onInputChange')
   }
 
+  componentDidMount() {
+    if(this.getMe()) {
+      setTimeout(()=>{
+        this.navigate("/")
+      }, 200)
+    }
+  }
+
   onSubmit(e) {
     e.preventDefault();
     const {username, password} = this.state;
-    this.props.onSubmit(username, password);
+    this.getUserService().login(username, password)
+      .then((user)=> {
+        this.props.onUserLoggedIn(user);
+      })
+      .catch((err)=> {
+        this.updateState({error: true})
+      });
   }
 
   onInputChange(e) {
@@ -25,8 +40,13 @@ export default class LoginView extends BaseComponent {
   }
 
   render() {
+    let alert = ""
+    if(this.state.error) {
+      alert = (<div className="alert alert-danger">Login Failed!</div>)
+    }
     return (
       <div className="row">
+        {alert}
         <div className="col-sm-6 col-sm-offset-3">
           <form method="POST" className="form" role="form" autoComplete={false} onSubmit={this.onSubmit}>
             <div className="form-group">

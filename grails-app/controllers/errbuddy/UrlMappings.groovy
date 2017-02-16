@@ -1,7 +1,8 @@
 class UrlMappings {
 
 	static mappings = {
-		"500"(view: '/error')
+		"500"(controller: 'error', action: 'error')
+		"401"(controller: 'error', action: 'notAllowed')
 
 		"/s/$identifier"(controller: 'site', action: 'byIdentifier')
 

@@ -21,4 +21,8 @@ class ErrorController {
 
 		render(contentType: 'application/json', text: ([error: errorMessage, errbuddyIdentifier: identifier] as JSON).toString())
 	}
+
+	def notAllowed() {
+		render(contentType: 'application/json', text: ([error: "not_allowed"] as JSON).toString())
+	}
 }

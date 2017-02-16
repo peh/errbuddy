@@ -11,8 +11,6 @@ export default class BaseService {
       throw(`${this.constructor.name} was initialized without a baseUrl`)
     }
 
-    this.configurationService = new ConfigurationService();
-
     this.emitter = emitter;
     this.baseUrl = baseUrl;
   }
@@ -62,7 +60,7 @@ export default class BaseService {
 
   getHeaders() {
     return new Headers({
-      Authorization: `Bearer:${this.configurationService.get('accessToken')}`,
+      Authorization: `Bearer:${ConfigurationService.get('accessToken')}`,
       Accept: 'application/json'
     });
   }

@@ -157,7 +157,7 @@ var Main = React.createClass({
 
   login: function () {
     this.setAction('login');
-    return <LoginView onSubmit={this.onUserLoginSubmit} urlParameters={this.getUrlParameters()} errbuddyApp={this.props.app}/>;
+    return <LoginView onUserLoggedIn={this.userLoggedIn} urlParameters={this.getUrlParameters()} errbuddyApp={this.props.app}/>;
   },
 
   notFound: function () {
@@ -186,20 +186,11 @@ var Main = React.createClass({
   },
 
   userLoggedIn: function (user) {
-    this.setState(_.assign(this.state, {currentUser: user}));
-  },
+    this.getApp().setCurrentUser(user);
+    this.setState(_.assign({}, this.state, {currentUser: user}), ()=>{
+      this.getApp().navigate("/")
+    })
 
-  onUserLoginSubmit: function (username, password) {
-    this.getApp().userService.login(username, password)
-      .then((user)=> {
-        this.userLoggedIn(user);
-        setTimeout(()=> {
-          this.getApp().navigate('/')
-        }, 200)
-      })
-      .catch((err)=> {
-        throw(err);
-      });
   },
 
   setAlert: function (message) {

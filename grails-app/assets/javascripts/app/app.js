@@ -4,7 +4,6 @@ import * as AppEvents from "./events/application-events";
 import UserService from "./services/user-service";
 import ApplicationService from "./services/application-service";
 import ErrorService from "./services/error-service";
-import ConfigurationService from "./services/configuration-service";
 import DeploymentService from "./services/deployment-service";
 import MonitoringService from "./services/monitoring-service";
 import SettingsService from "./services/settings-service";
@@ -41,32 +40,34 @@ export default class App {
     this.monitoringService = new MonitoringService(this.emitter, this.baseUrl);
     this.settingsService = new SettingsService(this.emitter, this.baseUrl);
 
-    this.configurationService = new ConfigurationService();
-
-    this.emitter.on(AppEvents.PAUSE_STATE_CHANGED, (paused)=> {
+    this.emitter.on(AppEvents.PAUSE_STATE_CHANGED, (paused) => {
       this.paused = paused;
     });
 
-    this.emitter.on(AppEvents.ACTION_CHANGED, (paused)=> {
-      setTimeout(()=> {
+    this.emitter.on(AppEvents.ACTION_CHANGED, (paused) => {
+      setTimeout(() => {
         this.emitter.emit(AppEvents.PAUSE_STATE_CHANGED, App.paused)
       }, 500);
     })
 
-    window.onerror = function(message, url, lineNumber) {
+    window.onerror = function (message, url, lineNumber) {
       console.log(arguments)
     };
   }
 
   getCurrentUser() {
-    return this._me
+    return this._me;
+  }
+
+  setCurrentUser(user) {
+    this._me = user;
   }
 
   start() {
-    this.userService.validate().then((user)=> {
-      this._me = user;
+    this.userService.validate().then((user) => {
+      this.setCurrentUser(user)
       this._doStart(user)
-    }).catch(()=> {
+    }).catch(() => {
       this._doStart(null)
     })
   }
@@ -80,16 +81,16 @@ export default class App {
   }
 
   navigate(path, updateUrlOnly, query) {
-    if(query) {
+    if (query) {
       path = `${path}?${querystring.stringify(query)}`
     }
     ReactMiniRouter.navigate(path, updateUrlOnly)
   }
 
   logout() {
-    this.userService.logout().then(()=> {
+    this.userService.logout().then(() => {
       this.navigate('/login');
-      setTimeout(()=> {
+      setTimeout(() => {
         window.location.reload()
       }, 500)
     })

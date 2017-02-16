@@ -1,30 +1,18 @@
 /* globals localStorage */
-const INSTANCE = null;
+const BASE_KEY = 'errbuddy:config:'
 
 export default class ConfigurationService {
-  constructor() {
-    if (INSTANCE === null) {
-      let fromStore = localStorage.getItem('errbuddy.config')
-      if (fromStore) {
-        this._config = JSON.parse(fromStore)
-      } else {
-        this._config = {}
-      }
-    }
-    return INSTANCE;
+
+  static get(key) {
+    return JSON.parse(localStorage.getItem(this._buildKey(key)))
   }
 
-  get(key) {
-    return this._config[key]
+  static set(key, value) {
+    localStorage.setItem(this._buildKey(key), JSON.stringify(value));
   }
 
-  set(key, value) {
-    this._config[key] = value;
-    this.persist()
-  }
-
-  persist() {
-    localStorage.setItem('errbuddy.config', JSON.stringify(this._config))
+  static _buildKey(key) {
+    return `${BASE_KEY}${key}`
   }
 
 }

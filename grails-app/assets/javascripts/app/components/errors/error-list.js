@@ -6,6 +6,7 @@ import BaseComponent from "../tools/base-component";
 import LoadingHero from "../tools/loading-hero";
 import EntryGroupTableRow from "./list-row";
 import ReactPaginate from "react-paginate";
+import ConfigurationService from "../../services/configuration-service";
 const cx = require('classnames');
 const querystring = require('querystring');
 
@@ -13,7 +14,7 @@ export default class ErrorList extends BaseComponent {
   constructor(props) {
     super(props);
 
-    let selectedApplication = this.getConfigurationService().get('errbuddy.applicaiton.selected');
+    let selectedApplication = ConfigurationService.get('errbuddy.applicaiton.selected');
 
     this.state = {
       list: [],
@@ -34,12 +35,6 @@ export default class ErrorList extends BaseComponent {
 
   }
 
-  componentWillMount() {
-    this.getApplicationService().list(0, 10000).then(applications => {
-      this.setState(_.assign({}, this.state, {applications: applications.applications}));
-    })
-  }
-
   componentWillReceiveProps(newProps) {
     if (
       !this.props.urlParameters ||
@@ -54,7 +49,9 @@ export default class ErrorList extends BaseComponent {
   }
 
   componentDidMount() {
-    this.loadObjectsFromServer(true);
+    this.getApplicationService().list(0, 10000).then(applications => {
+      this.updateState({applications: applications.applications}).then(this.loadObjectsFromServer);
+    });
     this.setInterval(this.loadObjectsFromServer, 2000);
   }
 
@@ -98,7 +95,7 @@ export default class ErrorList extends BaseComponent {
     if (this.state.selectedApplication === appId) {
       appId = null
     }
-    this.getConfigurationService().set('errbuddy.applicaiton.selected', appId);
+    ConfigurationService.set('errbuddy.applicaiton.selected', appId);
     this.setState(_.assign(this.state, {selectedApplication: appId}));
     this.loadObjectsFromServer(true)
   }
