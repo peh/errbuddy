@@ -1,5 +1,5 @@
 # errbuddy
-
+[![Build Status](https://travis-ci.org/peh/errbuddy.svg?branch=master)](https://travis-ci.org/peh/errbuddy)
 # Deployment
 
 ## Option 1: using docker
