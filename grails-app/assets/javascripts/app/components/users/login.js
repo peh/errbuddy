@@ -1,6 +1,6 @@
 import React from "react";
 import BaseComponent from "../tools/base-component";
-import * as  _ from 'lodash';
+import * as  _ from "lodash";
 
 export default class LoginView extends BaseComponent {
   constructor(props) {
@@ -15,8 +15,8 @@ export default class LoginView extends BaseComponent {
   }
 
   componentDidMount() {
-    if(this.getMe()) {
-      setTimeout(()=>{
+    if (this.getMe()) {
+      setTimeout(() => {
         this.navigate("/")
       }, 200)
     }
@@ -26,10 +26,10 @@ export default class LoginView extends BaseComponent {
     e.preventDefault();
     const {username, password} = this.state;
     this.getUserService().login(username, password)
-      .then((user)=> {
+      .then((user) => {
         this.props.onUserLoggedIn(user);
       })
-      .catch((err)=> {
+      .catch((err) => {
         this.updateState({error: true})
       });
   }
@@ -41,44 +41,42 @@ export default class LoginView extends BaseComponent {
 
   render() {
     let alert = ""
-    if(this.state.error) {
+    if (this.state.error) {
       alert = (<div className="alert alert-danger">Login Failed!</div>)
     }
     return (
-      <div className="row">
+      <section>
         {alert}
-        <div className="col-sm-6 col-sm-offset-3">
-          <form method="POST" className="form" role="form" autoComplete={false} onSubmit={this.onSubmit}>
-            <div className="form-group">
+          <form method="POST" role="form" autoComplete={false} onSubmit={this.onSubmit}>
+            <div className="group">
               <label htmlFor="username" className="col-sm-2 control-label">
                 Username
               </label>
 
-              <div className="col-sm-10">
-                <input type="text" className="form-control" value={this.state.username} name="username"
+              <div className="inputs">
+                <input type="text" value={this.state.username} name="username"
                        onChange={this.onInputChange} autoComplete={false}/>
               </div>
             </div>
-            <div className="form-group">
+            <div className="group">
               <label htmlFor="password" className="col-sm-2 control-label">
                 Password
               </label>
 
-              <div className="col-sm-10">
+              <div className="inputs">
                 <input type="password" className="form-control" value={this.state.password} name="password"
                        onChange={this.onInputChange} autoComplete={false}/>
               </div>
             </div>
-            <div className="form-group">
-              <div className="col-sm-offset-2 col-sm-10">
+            <div className="group">
+              <div className="inputs">
                 <button type="submit" className="btn btn-default">
                   Login
                 </button>
               </div>
             </div>
           </form>
-        </div>
-      </div>
+      </section>
 
     );
   }

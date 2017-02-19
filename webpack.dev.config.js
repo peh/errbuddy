@@ -52,10 +52,6 @@ module.exports = function (entry, outName, listenPort) {
     },
 
     plugins: [
-      new webpack.ProvidePlugin({
-        jQuery: 'jquery',
-        $: 'jquery'
-      }),
       new webpack.HotModuleReplacementPlugin()
     ]
   }

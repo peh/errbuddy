@@ -1,15 +1,45 @@
 @import "../variables";
 
-.details-body {
-  padding-top: 80px;
+.entry-details {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  section {
+    flex: 1 0 100%;
+    background: #fefefe;
+    margin: 10px 0;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    &#info, &#actions, &#session-parameter, &#request-parameter {
+      //@media screen and (max-width: 680px) {
+      //  flex: 1;
+      //}
+      flex: 0 0 calc(50% - 10px);
+      min-width: 500px;
+    }
+    &#actions {
+      & > div {
+        margin-bottom: 15px;
+        & > button {
+          width: 140px;
+        }
+        & > span {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
 }
+
+//.details-body {
+//  padding-top: 80px;
+//}
 
 .details-head {
   background-color: #fff;
-  z-index: 998;
-  position: fixed;
-  top: 70px;
-  width: calc(100% - 120px) !important;
+  width: calc(100%) !important;
   border-bottom: 2px solid $error-list-border-color;
   h3 {
     small {
@@ -52,6 +82,15 @@
     }
   }
 }
+
+//section {
+//  padding-top: 160px;
+//  margin-top: -160px;
+//  &#info {
+//    padding-top: 225px;
+//    margin-top: -225px;
+//  }
+//}
 
 #stacktrace {
   li {

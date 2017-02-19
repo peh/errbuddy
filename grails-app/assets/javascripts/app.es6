@@ -1,5 +1,5 @@
 import App from "./app/app";
 
-$(function () {
+window.onload = () => {
   new App().start();
-});
+};

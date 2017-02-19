@@ -49,38 +49,30 @@ export default class EntryDetailsTable extends BaseComponent {
       return this.getTableRow(e)
     });
     return (
-      <div className="col-sm-12">
-        <div className="row">
-          <div className="col-sm-12">
-            <table className="table table-hover table-condensed">
-              <thead>
-              <tr>
-                <th>Time</th>
-                <th>Hostname</th>
-                <th>Exception</th>
-                <th>Message</th>
-                <th>Location</th>
-              </tr>
-              </thead>
-              <tbody>{rows}</tbody>
-            </table>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <ReactPaginate
-              pageCount={Math.ceil(total / max)}
-              forceSelected={Math.floor(offset / max)}
-              onPageChange={this.props.changePage}
-              previousLabel="&laquo;"
-              nextLabel="&raquo;"
-              breakLabel={<a href="">...</a>}
-              marginPagesDisplayed={5}
-              activeClassName="active"
-              containerClassName="pagination"
-            />
-          </div>
-        </div>
+      <div >
+        <table className="table table-hover table-condensed">
+          <thead>
+          <tr>
+            <th>Time</th>
+            <th>Hostname</th>
+            <th>Exception</th>
+            <th>Message</th>
+            <th>Location</th>
+          </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+        <ReactPaginate
+          pageCount={Math.ceil(total / max)}
+          forceSelected={Math.floor(offset / max)}
+          onPageChange={this.props.changePage}
+          previousLabel="&laquo;"
+          nextLabel="&raquo;"
+          breakLabel={<a href="">...</a>}
+          marginPagesDisplayed={5}
+          activeClassName="active"
+          containerClassName="pagination"
+        />
 
       </div>
     );

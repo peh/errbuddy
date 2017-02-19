@@ -23,9 +23,9 @@ export default class ApplicationAdd extends BaseComponent {
   onFormSubmit(e) {
     e.preventDefault();
     if (this.state.application.dirty) {
-      this.getApplicationService().save(this.state.application).then((resp)=> {
+      this.getApplicationService().save(this.state.application).then((resp) => {
         this.navigate((`/applications/${resp.application.id}`))
-      }).catch((err)=> {
+      }).catch((err) => {
         this.showError("Could not save Application")
         throw err
       })
@@ -70,38 +70,34 @@ export default class ApplicationAdd extends BaseComponent {
     });
 
     return (
-      <div>
-        <div className="row mbottwenty" key="app-settings-header">
-          <div className="col-sm-12">
-            <div className="page-header">
-              <h3>Add Application</h3>
+      <section>
+        <div className="page-header">
+          <h3>Add Application</h3>
+        </div>
+        <div>
+          <form method="POST" onSubmit={this.onFormSubmit}>
+            <div className="group">
+              <label htmlFor="name">Name</label>
+              <div className="inputs">
+                <input type="text" name="name" id="name" className="form-control" onChange={(e) => {
+                  this.onValueChange('name', e.target.value)
+                }} required="required"/>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="row" key="app-row">
-          <div className="col-sm-12">
-            <form method="POST" onSubmit={this.onFormSubmit} className="form-horizontal">
-              <div className="form-group">
-                <label htmlFor="name" className="col-sm-2 control-label">Name</label>
-
-                <div className="col-sm-10">
-                  <input type="text" name="name" id="name" className="form-control" onChange={(e) => {
-                    this.onValueChange('name', e.target.value)
-                  }} required="required"/>
-                </div>
+            <div className="group">
+              <div className="inputs">
+                <button type="submit" className={classes}>
+                  <i className="fa fa-floppy-o"></i> Save
+                </button>
               </div>
-              <div className="form-group">
-                <div className="col-sm-offset-2 col-sm-10">
-                  <button type="submit" className={classes}>
-                    <i className="fa fa-floppy-o"></i>
-                    &nbsp;Save
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+            </div>
+            {/*<div className="form-group">*/}
+            {/*<div className="col-sm-offset-2 col-sm-10">*/}
+            {/*</div>*/}
+            {/*</div>*/}
+          </form>
         </div>
-      </div>
+      </section>
     );
   }
 

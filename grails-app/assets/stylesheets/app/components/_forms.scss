@@ -1,0 +1,58 @@
+@import "../variables";
+
+form {
+  display: flex;
+  flex-direction: column;
+  div.group {
+    display: flex;
+    flex: 1 1 100%;
+    max-width: calc(100% - 25px);
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding: 10px;
+    label {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex: 1 1 16%;
+      max-width: 300px;
+      padding-right: 20px;
+      font-size: 20px;
+    }
+    div.inputs {
+      flex: 10 1 84%;
+      max-width: 84%;
+      display: flex;
+      flex-direction: row;
+      input[type="text"], input[type="password"], textarea, select {
+        font-size: 15px;
+        outline: none;
+        flex: 1 1 100%;
+        color: #555555;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 7px;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.01);
+        transition: all 0.3s ease-in-out;
+        &:focus {
+          box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.075);
+        }
+        &:read-only, &:disabled {
+          cursor: not-allowed;
+          background-color: #ededed;
+          &:focus {
+            box-shadow: inherit;
+          }
+        }
+      }
+      input {
+        height: 34px;
+        padding: 6px 12px;
+        line-height: 1.42857;
+      }
+    }
+  }
+
+}

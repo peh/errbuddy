@@ -155,9 +155,7 @@ export default class UserDetails extends BaseComponent {
       'shake-rotate': saved || hasErorrs
     });
     return (
-      <div>
-        <div className="row">
-          <div className="col-sm-12">
+      <section>
             <form onSubmit={this.onFormSubmit} className="form-horizontal" autoComplete="false">
               <ValidateableInput errors={errors} bean={user} property="username" label="Username" placeholder="Username"
                                  required={true} onValueChange={this.onValueChange}/>
@@ -205,9 +203,7 @@ export default class UserDetails extends BaseComponent {
                 </div>
               </div>
             </form>
-          </div>
-        </div>
-      </div>
+      </section>
     );
   }
 

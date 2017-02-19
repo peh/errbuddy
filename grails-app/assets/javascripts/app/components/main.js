@@ -2,7 +2,6 @@
 
 const ReactMiniRouter = require('react-mini-router');
 const AppEvents = require('../events/application-events');
-
 // const EntryDetails = require('./entry-groups/entry-details.jsx');
 import React from "react";
 import AppSettings from "./settings/settings";
@@ -63,7 +62,7 @@ var Main = React.createClass({
 
 
   redirectToErrors() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.props.app.navigate('/')
     }, 500);
     return (<div>Redirecting</div>)
@@ -179,7 +178,7 @@ var Main = React.createClass({
 
   setAction: function (action) {
     if (this.state.action !== action) {
-      setTimeout(()=> {
+      setTimeout(() => {
         this.setState(_.assign(this.state, {action: action}))
       }, 500)
     }
@@ -187,7 +186,7 @@ var Main = React.createClass({
 
   userLoggedIn: function (user) {
     this.getApp().setCurrentUser(user);
-    this.setState(_.assign({}, this.state, {currentUser: user}), ()=>{
+    this.setState(_.assign({}, this.state, {currentUser: user}), () => {
       this.getApp().navigate("/")
     })
 
@@ -224,7 +223,7 @@ var Main = React.createClass({
   componentDidMount: function () {
     this.getApp().emitter.on(AppEvents.THROW_ERROR, this.setAlert);
     this.getApp().emitter.on(AppEvents.HIDE_ERROR, this.setAlert);
-    setTimeout(()=> {
+    setTimeout(() => {
       if (!this.state.currentUser) {
         this.getApp().navigate('/login')
       }
@@ -233,23 +232,24 @@ var Main = React.createClass({
 
   render: function () {
     return (
-      <div className="wrap">
-        <div className="content">
+      <div className="errbuddy-container">
+        <div className="sidebar-wrap">
           <Sidebar
             currentUser={this.state.currentUser}
             urlParameters={this.getUrlParameters()}
             errbuddyApp={this.getApp()}
             action={this.state.action}
             paused={this.state.paused}
-            onPauseChange={this.setPaused}/>
-          <div className="real-content">
-            <header>
-              <Navbar currentUser={this.state.currentUser} ref="navbar" urlParameters={this.getUrlParameters()} errbuddyApp={this.getApp()}/>
-            </header>
-            {this.getAlert()}
-            <div className="content-container">
-              {this.renderCurrentRoute()}
-            </div>
+            onPauseChange={this.setPaused}
+          />
+        </div>
+        <div className="content">
+          <header>
+            <Navbar currentUser={this.state.currentUser} ref="navbar" urlParameters={this.getUrlParameters()} errbuddyApp={this.getApp()}/>
+          </header>
+          {this.getAlert()}
+          <div className="content-container">
+            {this.renderCurrentRoute()}
           </div>
         </div>
       </div>

@@ -2,8 +2,7 @@
 
 import React from "react";
 import BaseComponent from "../tools/base-component";
-var ReactMiniRouter = require('react-mini-router');
-var cx = require('classnames');
+const cx = require('classnames');
 
 
 export default class NavbarItem extends BaseComponent {
@@ -14,7 +13,7 @@ export default class NavbarItem extends BaseComponent {
   }
 
   handleClick() {
-    ReactMiniRouter.navigate(this.props.path);
+    this.navigate(this.props.path)
   }
 
   render() {

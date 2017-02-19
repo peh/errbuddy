@@ -1,0 +1,99 @@
+@import "../variables";
+
+.sidebar {
+  z-index: 999;
+  .sidebar-brand {
+    display: block;
+    background: url("/images/sidebar-logo.png") no-repeat;
+    width: 80px;
+    background-size: 50px;
+    height: 50px;
+    filter: grayscale(100%);
+    margin-left: 5px;
+  }
+  display: flex;
+  position: fixed;
+  width: 80px;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $sidebar-background;
+  max-width: $sidebar-width;
+  flex: 1;
+  ul.side-nav {
+    flex: 0;
+
+    width: 100%;
+    margin-top: 25px;
+    list-style: none;
+    padding-left: 0;
+    li {
+      white-space: nowrap;
+      &.danger {
+        a {
+          color: darken($state-warning-border, 25%);
+          &:hover {
+            color: darken($state-warning-border, 25%);
+          }
+        }
+      }
+      &.active {
+        a {
+          color: $sidebar-button-active-color;
+          &:hover {
+            color: $sidebar-button-active-color;
+          }
+        }
+      }
+      a {
+        cursor: pointer;
+        width: 100%;
+        position: relative;
+        font-size: 2em;
+        text-align: center;
+        color: $sidebar-button-color;
+        i  {
+          width: 100%;
+        }
+        span {
+          color: $sidebar-color;
+          font-size: 25px;
+          position: absolute;
+          left: -300px;
+          top: -3px;
+          visibility: hidden;
+          padding: 3px 20px;
+          z-index: 999;
+          background-color: $sidebar-tooltip-background;
+          border-radius: 4px;
+          opacity: 0;
+        }
+        &:hover {
+          color: $sidebar-button-hover-color;
+          span {
+            transition: opacity 0.3s 1ms;
+            visibility: visible;
+            opacity: $sidebar-tooltip-opacity;
+            left: 88px;
+            &:after {
+              position: absolute;
+              display: inline-block;
+              border-top: 10px solid transparent;
+              border-right: 10px solid $sidebar-tooltip-background;
+              border-bottom: 10px solid transparent;
+              opacity: $sidebar-tooltip-opacity;
+              left: -10px;
+              top: 10px;
+              content: '';
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.real-content {
+  flex: 25;
+}

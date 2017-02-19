@@ -18,10 +18,10 @@ export default class UserList extends BaseComponent {
   getUserList() {
     if (this.iHaveAnyRole(['ROLE_ADMIN', 'ROLE_ROOT'])) {
       this.getUserService().list(50, 0)
-        .then((response)=> {
+        .then((response) => {
           this.setState({users: response.users})
         })
-        .catch((err)=> {
+        .catch((err) => {
           throw(err)
         })
     }
@@ -32,24 +32,28 @@ export default class UserList extends BaseComponent {
       return <LoadingHero />
     }
     var rows = [];
-    this.state.users.forEach((user)=> {
+    this.state.users.forEach((user) => {
       rows.push(<UserListRow user={user} key={user.username} errbuddyApp={this.getApp()}/>);
     });
     return (
-      <table className="table table-hover table-condensed">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Username</th>
-          <th>email</th>
-          <th>enabled</th>
-          <th><button className="btn btn-xl btn-success pull-right" onClick={()=> {
-            this.navigate('/users/add')
-          }}><i className="fa fa-plus"></i></button></th>
-        </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
+      <section>
+        <table className="table table-hover table-condensed">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>email</th>
+            <th>enabled</th>
+            <th>
+              <button className="btn btn-xl btn-success pull-right" onClick={() => {
+                this.navigate('/users/add')
+              }}><i className="fa fa-plus"></i></button>
+            </th>
+          </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      </section>
     );
   }
 

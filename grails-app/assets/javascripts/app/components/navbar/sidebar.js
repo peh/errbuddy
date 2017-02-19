@@ -74,13 +74,13 @@ export default class Sidebar extends BaseComponent {
 
     return (
       <div className={sideBarClasses}>
-        <ul className="side-nav pull-up">
+        <ul className="side-nav">
           <NavbarItem currentAction={this.props.action} errbuddyApp={this.getApp()} text="Errors" icon="list-alt" action="errors" path="/"/>
           {/*<NavbarItem currentAction={this.props.action} errbuddyApp={this.getApp()} text="Monitorings" icon="server" action="monitorings" path="/monitorings/1"/>*/}
           <NavbarItem currentAction={this.props.action} errbuddyApp={this.getApp()} text="Applications" icon="ship" action="applications" path="/applications"/>
           <NavbarItem currentAction={this.props.action} errbuddyApp={this.getApp()} text="Users" icon="users" action="users" path="/users"/>
         </ul>
-        <ul className="side-nav pull-down">
+        <ul className="side-nav">
           <WithRole user={this.getMe()} role="ROLE_ROOT">
             <NavbarItem currentAction={this.props.action} errbuddyApp={this.getApp()} text="Settings" icon="cogs" action="settings" path="/settings"/>
           </WithRole>

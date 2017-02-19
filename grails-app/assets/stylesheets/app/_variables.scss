@@ -62,8 +62,8 @@ $entry-details-resolved-background: lighten($similar-okay-bg, 30%);
 
 $sidebar-background: lighten($navbar-default-bg, 10%);
 $sidebar-color: #fff;
-$sidebar-button-color: lighten($sidebar-background, 10%);
-$sidebar-button-hover-color: lighten($sidebar-button-color, 20%);
+$sidebar-button-color: lighten($sidebar-background, 40%);
+$sidebar-button-hover-color: lighten($sidebar-button-color, 10%);
 $sidebar-button-active-color: lighten($sidebar-button-color, 40%);
 $sidebar-tooltip-background: $navbar-default-bg;
 $sidebar-tooltip-opacity: 0.95;
