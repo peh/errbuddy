@@ -105,7 +105,7 @@ class EntryGroupController extends AbstractApiController {
 	def similar() {
 		sanitizeParams()
 		params.order = params.order ?: 'desc'
-		params.sort = params.sort ?: 'time'
+		params.sort = params.sort ?: 'id'
 
 		// we are checking EntryGroup and Entry here.
 		withEntryGroup(params.id.toString()) { EntryGroup entryGroup ->
