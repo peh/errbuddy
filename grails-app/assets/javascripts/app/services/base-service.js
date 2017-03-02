@@ -1,5 +1,5 @@
 import ConfigurationService from "./configuration-service";
-const querystring = require('querystring')
+const querystring = require('querystring');
 
 export default class BaseService {
   constructor(emitter, baseUrl) {
@@ -33,7 +33,11 @@ export default class BaseService {
       reqUrl = `${url}?${querystring.stringify(query)}`
     }
     return fetch(this.getRequest(reqUrl)).then(resp=> {
-      return resp.json()
+      if(resp.status === 200) {
+        return resp.json()
+      } else {
+        throw resp;
+      }
     })
   }
 
@@ -45,16 +49,24 @@ export default class BaseService {
       method: obj.id ? 'PUT' : 'POST',
       body: JSON.stringify(obj)
     }).then((resp)=> {
-      return resp.json()
+      if(resp.status === 200) {
+        return resp.json()
+      } else {
+        throw resp;
+      }
     })
   }
 
   doDel(url) {
     return fetch(`${url}`, {
-      headers: headers,
+      headers: this.getHeaders(),
       method: 'DELETE'
     }).then((resp)=> {
-      return resp.json()
+      if(resp.status === 200) {
+        return resp.json()
+      } else {
+        throw resp;
+      }
     })
   }
 

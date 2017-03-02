@@ -72,16 +72,17 @@ export default class AppSettingsView extends BaseComponent {
     super(props);
 
     this.state = {
+      originalApplication: null,
       application: null,
       saved: false
     };
 
     this._bindThis('_onFormSubmit', '_onValueChange', '_onDelete', '_onClear');
 
-    this.getApplicationService().get(props.appId).then((response) => {
-      this.setState(_.assign(this.state, {application: response.application, saved: false}));
+    this.getApplicationService().get(props.appId).then(response => {
+      this.updateState({application: response.application, originalApplication: response.application, saved: false});
     }).catch((err) => {
-      this.showError("Could not get Application information from server")
+      this.showError("Could not get Application information from server");
       throw err
     });
   }
@@ -89,22 +90,22 @@ export default class AppSettingsView extends BaseComponent {
   _onFormSubmit(e) {
     e.preventDefault();
     if (this.state.application.dirty) {
-      this.getApplicationService().save(this.state.application, () => {
-        this.setState(_.assign(this.state, {saved: true}))
-      }, (response) => {
-        let state = this.state;
-        let app = state.application
-        app.errors = response.errors;
-        this.setState(_.assign(this.state, {applicaiton: app}))
-      });
+      this.getApplicationService().save(this.state.application)
+        .then(response => {
+          let application = response.application;
+          this.updateState({application, originalApplication: application, saved: true})
+        })
+        .catch((e) => {
+          debugger;
+        })
     }
   }
 
   _onValueChange(field, value) {
-    let app = _.assign(this.state.application)
-    app[field] = value;
-    app.dirty = true;
-    this.setState(_.assign(this.state, {application: app}));
+    let application = _.assign({}, this.state.application);
+    application[field] = value;
+    application.dirty = true;
+    this.updateState({application, saved: false});
   }
 
   _onDelete() {
@@ -134,7 +135,7 @@ export default class AppSettingsView extends BaseComponent {
   }
 
   _onClear() {
-    let app = this.state.application
+    let app = this.state.application;
     swal({
       title: 'You are about to clear ' + app.name,
       text: 'This cannot be undone!',
@@ -153,7 +154,7 @@ export default class AppSettingsView extends BaseComponent {
           })
         })
         .catch((err) => {
-          this.showError("Something went wrong while cleaning that application")
+          this.showError("Something went wrong while cleaning that application");
           throw(err)
         });
     });
@@ -166,7 +167,7 @@ export default class AppSettingsView extends BaseComponent {
     return (
       <section>
         <div className="page-header">
-          <h3>{this.state.application.name || 'Add Application'}</h3>
+          <h3>{this.state.originalApplication.name || 'Add Application'}</h3>
         </div>
         <AppSettingsForm
           errbuddyApp={this.props.errbuddyApp}
@@ -177,7 +178,7 @@ export default class AppSettingsView extends BaseComponent {
           onClear={this._onClear}
           saved={this.state.saved}
         />
-        <DeploymentList application={this.state.application} errbuddyApp={this.props.errbuddyApp}/>
+        <DeploymentList application={this.state.application} errbuddyApp={this.props.errbuddyApp} urlParameters={this.props.urlParameters}/>
       </section>
     )
   }

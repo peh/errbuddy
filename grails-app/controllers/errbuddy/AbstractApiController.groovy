@@ -29,7 +29,7 @@ abstract class AbstractApiController {
 		userService.currentUser
 	}
 
-	protected void withApplication(long id = params.getLong('id'), Closure c) {
+	protected void withApplication(Long id = params.getLong('id'), Closure c) {
 		if (!id) {
 			response.status = HttpStatus.NOT_FOUND.value()
 		} else {

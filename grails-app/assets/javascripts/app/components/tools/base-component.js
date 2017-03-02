@@ -159,11 +159,22 @@ export default class BaseComponent extends React.Component {
   }
 
   getMax() {
-    return _.get(this.props.urlParameters, 'max') || 20;
+    return this.getIntFromParams('max', 20)
   }
 
   getOffset() {
-    return _.get(this.props.urlParameters, 'offset') || 0;
+    return this.getIntFromParams('offset')
+  }
+
+  getIntFromParams(param, defaultValue = 0) {
+    let result = defaultValue;
+    try {
+      let parsed = parseInt(_.get(this.props.urlParameters, param));
+      result = !isNaN(parsed) ? parsed : result
+    } catch(e) {
+      // noop
+    }
+    return result;
   }
 
   updateState(stateAddition) {

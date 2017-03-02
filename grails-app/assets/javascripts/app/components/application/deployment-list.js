@@ -1,7 +1,7 @@
 'use strict'
 
 const moment = require('moment');
-
+const querystring = require('querystring');
 import React from "react";
 import BaseComponent from "../tools/base-component";
 import * as  _ from "lodash";
@@ -16,7 +16,7 @@ export default class DeploymentList extends BaseComponent {
       total: 0
     };
 
-    this._bindThis('loadObjectsFromServer')
+    this._bindThis('loadObjectsFromServer', 'changePage')
   }
 
   componentDidMount() {
@@ -25,18 +25,18 @@ export default class DeploymentList extends BaseComponent {
   }
 
   componentWillReceiveProps(newProps) {
-    if (!this.props.urlParameters || _.get(newProps.urlParameters, 'offset') !== `${this.getOffset()}`) {
-      this.loadObjectsFromServer(newProps.urlParameters)
+    try {
+      let offset = parseInt(_.get(newProps.urlParameters, 'offset'));
+      if (!isNaN(offset) && offset !== this.getOffset()) {
+        this.loadObjectsFromServer(newProps.urlParameters)
+      }
+    } catch (e) {
+      // noop
     }
   }
 
   componentWillUnmount() {
     this.stopInterval()
-  }
-
-  setPage(page) {
-    this.page = page;
-    this.loadObjectsFromServer();
   }
 
   loadObjectsFromServer(props) {
@@ -57,8 +57,7 @@ export default class DeploymentList extends BaseComponent {
     if (!this.state.loading) {
       let max = this.getMax();
       let offset = pageObj.selected * max;
-      let query = this.getQuery()
-      this.navigate(`/?${querystring.stringify({max, offset, query})}`);
+      this.navigate(`/applications/${this.props.application.id}?${querystring.stringify({max, offset})}`);
     }
   }
 

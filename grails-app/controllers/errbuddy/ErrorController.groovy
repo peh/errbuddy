@@ -16,7 +16,7 @@ class ErrorController {
 		String errorMessage = 'Something went wrong.'
 
 		if (Environment.current != Environment.PRODUCTION) {
-			errorMessage = "Error in $exception.className line $exception.lineNumber : ${exception.cause.toString()}"
+			errorMessage = "Error in ${exception?.className} line ${exception?.lineNumber} : ${exception?.cause?.toString()}"
 		}
 
 		render(contentType: 'application/json', text: ([error: errorMessage, errbuddyIdentifier: identifier] as JSON).toString())

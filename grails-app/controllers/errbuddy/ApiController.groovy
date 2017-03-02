@@ -53,8 +53,6 @@ class ApiController {
 	}
 
 	def ping() {
-		render([success: "ok"] as JSON)
-		return
 		render(contentType: 'application/json', text: (([success: 'ok']) as JSON).toString())
 	}
 
