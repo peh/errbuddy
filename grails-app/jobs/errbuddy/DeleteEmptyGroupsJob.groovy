@@ -2,19 +2,18 @@ package errbuddy
 
 class DeleteEmptyGroupsJob {
 
-//    static triggers = {
-//        // every 2 hours
-//        cron name: 'DeleteEmptyGroupsJob',
-//                jesqueJobName: DeleteEmptyGroupsJob.simpleName,
-//                jesqueQueue: "generic",
-//                cronExpression: "0 * * ? * * *",
-//                args: []
-//    }
+	static triggers = {
+		// 10 minutes after every hour
+		cron name: 'DeleteEmptyGroupsJob',
+			jesqueJobName: DeleteEmptyGroupsJob.simpleName,
+			jesqueQueue: "generic",
+			cronExpression: "0 10 * ? * * *",
+			args: []
+	}
 
-
-	def entryService
+	def entryGroupService
 
 	def perform() {
-		entryService.doDeleteEmpty()
+		entryGroupService.doDeleteEmpty()
 	}
 }
