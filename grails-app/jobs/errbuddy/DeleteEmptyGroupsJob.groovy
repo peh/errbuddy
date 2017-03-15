@@ -12,9 +12,9 @@ class DeleteEmptyGroupsJob {
 //    }
 
 
-	def entryService
+	def entryGroupService
 
 	def perform() {
-		entryService.doDeleteEmpty()
+		entryGroupService.doDeleteEmpty()
 	}
 }

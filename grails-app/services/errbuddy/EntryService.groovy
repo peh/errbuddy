@@ -107,18 +107,6 @@ class EntryService {
 		}
 	}
 
-	void doDeleteEmpty() {
-		def groups = EntryGroup.createCriteria().list {
-			sizeEq('entries', 0)
-			lt('lastUpdated', DateTime.now().minusHours(2))
-			eq("collector", false)
-		}
-		groups.each { EntryGroup entryGroup ->
-			log.info("deleting $entryGroup.entryGroupId")
-			entryGroup.delete()
-		}
-	}
-
 	/**
 	 * Adds an entry to the collector group of the given Application and sets the refindSimilar flag
 	 * @param app
