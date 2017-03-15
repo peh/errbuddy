@@ -7,7 +7,9 @@ class DataRetentionService {
 
 	def jesqueService
 
-	def handleDataRetentionForApplication(App app) {
+	void handleDataRetentionForApplication(long id) {
+		def app = App.read(id)
+		if (app) return
 
 		int max = 10000
 		def entries = Entry.createCriteria().list([max: max]) {
@@ -21,10 +23,8 @@ class DataRetentionService {
 		} as List
 
 		log.info "deleting ${entries.size()} entries for $app.name"
-		entries.each { long id ->
-			jesqueService.enqueue("put", EntryDeleteJob, [id, true])
+		entries.each { long entryId ->
+			jesqueService.enqueue("put", EntryDeleteJob, [entryId, true])
 		}
-
-
 	}
 }

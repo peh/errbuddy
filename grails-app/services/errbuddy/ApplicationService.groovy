@@ -39,13 +39,16 @@ class ApplicationService {
 
 	def clear(App app) {
 		app.clearUntil = DateTime.now()
-		app.save();
+		app.save()
+		// this will not clear all entries immediately
+		// the scheduled data retention will take care of cleaning the app bit by bit
+		jesqueService.enqueueAt(DateTime.now().plusSeconds(5), "put", DataRetentionJob, [app.id])
 	}
 
 	def delete(App app) {
 		app.enabled = false
-		app.save(flush: true)
-		jesqueService.enqueue("generic", ApplicationDeleteJob, [app.id])
+		app.save()
+		jesqueService.enqueueAt(DateTime.now().plusSeconds(5), "put", ApplicationDeleteJob, [app.id])
 	}
 
 	def doDelete(App app) {
