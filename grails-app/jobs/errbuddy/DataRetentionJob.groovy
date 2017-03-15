@@ -5,8 +5,8 @@ class DataRetentionJob {
 	static triggers = {
 		cron name: 'DataRetentionJob',
 			jesqueJobName: DataRetentionJob.simpleName,
-			jesqueQueue: "generic",
-			cronExpression: "0 /5 * ? * * *",
+			jesqueQueue: "put",
+			cronExpression: "0 */5 * * * ?",
 			args: []
 	}
 
