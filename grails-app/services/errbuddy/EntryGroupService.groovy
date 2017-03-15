@@ -158,6 +158,18 @@ class EntryGroupService {
 		}
 	}
 
+	void doDeleteEmpty() {
+		def groups = EntryGroup.createCriteria().list {
+			sizeEq('entries', 0)
+			lt('lastUpdated', DateTime.now().minusHours(2))
+			eq("collector", false)
+		}
+		groups.each { EntryGroup entryGroup ->
+			log.info("deleting $entryGroup.entryGroupId")
+			entryGroup.delete()
+		}
+	}
+
 	def doDeleteGroup(Serializable entryGroupId, boolean deleteEntries) {
 		EntryGroup toDelete = EntryGroup.get(entryGroupId)
 		App app = toDelete.app
