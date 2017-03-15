@@ -25,6 +25,8 @@ class BootStrap {
 			queueName: "put",
 			count    : 1,
 			jobs     : [
+				ApplicationDeleteJob,
+				DataRetentionJob,
 				EntryPutJob,
 				EntryDeleteJob
 			]
@@ -34,10 +36,7 @@ class BootStrap {
 			count    : 3,
 			jobs     : {
 				return [
-					ApplicationCleanupJob,
-					ApplicationDeleteJob,
 					ApplicationDeploymentJob,
-					DataRetentionJob,
 					DeleteEmptyGroupsJob,
 					DeleteEntryGroupJob,
 					FindSimilarEntriesJob,
