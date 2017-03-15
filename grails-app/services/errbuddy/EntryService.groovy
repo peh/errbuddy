@@ -162,6 +162,21 @@ class EntryService {
 		}
 	}
 
+	void delete(Serializable id, boolean doCheckLatest) {
+		Entry entry = Entry.get(id)
+		if (!entry) {
+			return // looks like this was done already
+		}
+
+		if (doCheckLatest) {
+			EntryGroup.findByLatest(entry).each {
+				it.latest = null
+				it.save()
+			}
+		}
+		entry.delete()
+	}
+
 	/**
 	 * Enqueues a new FindSimilarEntriesJob for all Entries that are in a collector group, and have the refindSimilar flag
 	 *
