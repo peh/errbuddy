@@ -3,7 +3,8 @@ services:
   app:
     container_name: errbuddy-app
     env_file: .env
-    mem_limit: 3g
+    mem_limit: 4g
+    hostname: ${HOSTNAME}
     image: openjdk:8-jdk
     ports:
     - 9000:9000
