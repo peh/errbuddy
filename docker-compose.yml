@@ -17,14 +17,10 @@ services:
      - redis
      - elasticsearch
     volumes:
-      - .:/opt/app
+      - ./download-latest-stable.sh:/opt/download-latest-stable.sh
       - ./default-config.groovy:/opt/errbuddy/errbuddy.groovy
-      - .data/.gradle:/root/.gradle:rw
-      - .data/build:/opt/app/build:rw
-      - .data/nodejs:/opt/app/.nodejs:rw
-      - .data/node_moudels:/opt/app/node_modules:rw
       #TODO: find out how to have a seperate volume for scaled servers
-    command: /bin/bash -c "cd /opt/app/ && mkdir -p build/nothing && rm -f .asscache && ./gradlew -Dgrails.env=prod -Derrbuddy.mysql.password=${MYSQL_PASSWORD} -Derrbuddy.serverUrl=${SERVER_URL} :npmInstall :bootRun"
+    command: /bin/bash -c "cd /opt/ && bash download-latest-stable.sh && java -Dgrails.env=prod -Derrbuddy.mysql.password=${MYSQL_PASSWORD} -Derrbuddy.serverUrl=${SERVER_URL} -jar errbuddy.war"
   redis:
     container_name: errbuddy_redis
     image: redis
@@ -37,8 +33,8 @@ services:
     container_name: errbuddy_mariadb
     env_file: .env
     image: mariadb:10.0
-    ports:
-      - 127.0.0.1:3306:3306 # makes it easier to create backups
+#    ports:
+#      - 127.0.0.1:3306:3306 # makes it easier to create backups
     volumes:
       - .data/mysql:/var/lib/mysql:rw
     environment:

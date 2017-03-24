@@ -160,6 +160,6 @@ tasks.withType(JavaExec).each { task ->
 	task.systemProperties System.properties
 }
 
-war.archiveName "current.war"
+war.archiveName "errbuddy.war"
 
 // grails prod package -Dgradle.node.exec="/Users/philipp/.nvm/versions/node/v5.6.0/bin/node"
