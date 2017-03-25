@@ -1,13 +1,14 @@
 import errbuddy.*
 import grails.converters.JSON
 import grails.plugins.errbuddy.ErrbuddyLogAppender
+import grails.plugins.jesque.JesqueService
 
 class BootStrap {
-
 
 	private static final List ROLES = ['ROLE_ROOT', 'ROLE_ADMIN', 'ROLE_USER']
 	def grailsApplication
 	ApplicationService applicationService
+	JesqueService jesqueService
 
 	def init = { servletContext ->
 		JSON.registerObjectMarshaller(HasJsonBody) { HasJsonBody b ->
@@ -48,6 +49,8 @@ class BootStrap {
 			)
 			applicationService.create(app)
 		}
+
+		jesqueService.enqueue(DataRetentionJob.queueName, DataRetentionJob)
 
 	}
 
