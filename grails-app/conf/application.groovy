@@ -1,4 +1,6 @@
+import errbuddy.*
 import grails.plugins.jesque.admin.JesqueJobStatisticsCollectingWorkerImpl
+import net.greghaines.jesque.worker.LoggingWorkerListener
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.password.algorithm = 'bcrypt'
@@ -46,6 +48,24 @@ grails.gorm.default.mapping = {
 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentDateTime, class: org.joda.time.DateTime
 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentLocalDate, class: org.joda.time.LocalDate
 }
+
+boolean isPuttingIntoGroup = Boolean.parseBoolean(System.getProperty('errbuddy.skipPutWorker', 'true'))
+
+def putJobs = [
+	ApplicationDeleteJob,
+	DataRetentionJob,
+	EntryPutJob,
+	EntryDeleteJob
+]
+def genericJobs = [
+	ApplicationDeploymentJob,
+	DeleteEmptyGroupsJob,
+	DeleteEntryGroupJob,
+	FindSimilarEntriesJob,
+	RefindFromCollectorJob,
+	ReindexJob,
+]
+
 grails {
 	redis {
 		poolConfig {
@@ -61,15 +81,35 @@ grails {
 		createWorkersOnStartup = true
 		schedulerThreadActive = true
 		delayedJobThreadActive = true
-		startPaused = true
 		autoFlush = true
 		statistics {
 			enabled = true
-			max = 100
+			max = 1000
 		}
 		custom {
 			worker.clazz = JesqueJobStatisticsCollectingWorkerImpl
-			listener.clazz = [net.greghaines.jesque.worker.LoggingWorkerListener]
+			listener.clazz = LoggingWorkerListener
+		}
+		workers {
+			if (isPuttingIntoGroup) {
+				// this should only be done by ONE worker (app wide) as we will run into concurrency issues otherwise
+				// it's a fairly simple and quick task so it one is enough for hundreds of put's per second
+				AddToGroupPool {
+					workers = 1
+					queueNames = PutIntoEntryGroupJob.queueName
+					jobTypes = [PutIntoEntryGroupJob.name]
+				}
+			}
+			PutPool {
+				workers = 2
+				queueNames = putJobs.collect { it.queueName }.unique()
+				jobTypes = putJobs.name
+			}
+			GenericPool {
+				workers = 3
+				queueNames = genericJobs.collect { it.queueName }.unique()
+				jobTypes = genericJobs.name
+			}
 		}
 	}
 	plugin {
