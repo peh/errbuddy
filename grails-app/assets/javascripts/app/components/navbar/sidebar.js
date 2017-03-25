@@ -32,11 +32,9 @@ export default class Sidebar extends BaseComponent {
   componentDidMount() {
     // this._interval = setInterval(()=>{
     // }, 5000)
-    this.getEmitter().on(AppEvents.SELECTED_APP_CHANGED, this._selectedAppChanged)
   }
 
   componentWillUnmount() {
-    this.getEmitter().removeListener(AppEvents.SELECTED_APP_CHANGED, this._selectedAppChanged)
     clearInterval(this._interval)
   }
 
