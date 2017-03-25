@@ -1,13 +1,8 @@
 package errbuddy
 
-import grails.plugins.redis.RedisService
-
 class ShortlinkController {
 
-	RedisService redisService
-
 	def redirect(String identifier) {
-
 		Entry entry = Entry.findByIdentifier(identifier)
 
 		if (entry) {

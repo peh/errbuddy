@@ -2,6 +2,8 @@ package errbuddy
 
 class ApplicationDeleteJob {
 
+	static queueName = "put"
+
 	def applicationService
 
 	def perform(Serializable id) {

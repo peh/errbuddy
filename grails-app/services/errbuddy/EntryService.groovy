@@ -88,7 +88,7 @@ class EntryService {
 
 		entry.refindSimilar = false
 		entry.save(flush: true)
-		jesqueService.enqueue("add_to_group", PutIntoEntryGroupJob, [entryGroup.id, entry.id])
+		jesqueService.enqueue(PutIntoEntryGroupJob.queueName, PutIntoEntryGroupJob, [entryGroup.id, entry.id])
 	}
 
 	void addToEntryGroup(long entryGroupId, long entryId) {

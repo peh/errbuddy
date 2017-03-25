@@ -60,32 +60,15 @@ export default class UserService extends BaseService {
   }
 
   save(user) {
-    let headers = this.getHeaders();
-    headers.set('Content-Type', 'application/json');
-    return fetch(`${this.baseUrl}${PATH}${user.id || ''}`, {
-      headers: headers,
-      method: user.id ? 'PUT' : 'POST',
-      body: JSON.stringify(user)
-    }).then((resp) => {
-      if (resp.status === 200) {
-        return resp.json()
-      } else {
-        throw resp
-      }
-    })
+    return this.doPostPut(`${this.baseUrl}${PATH}`, user);
   }
 
   del(user) {
-    return fetch(this.getRequest(`${this.baseUrl}${PATH}${user.id}`, 'DELETE'))
-      .then((resp) => {
-        return resp.json();
-      });
+    return this.doDel(`${this.baseUrl}${PATH}${user.id}`)
   }
 
   list(max, offset) {
-    return fetch(this.getRequest(`${this.baseUrl}${PATH}`)).then((resp) => {
-      return resp.json()
-    })
+    return this.doGet(`${this.baseUrl}${PATH}`, {max, offset})
   }
 
   _loggedIn(user) {

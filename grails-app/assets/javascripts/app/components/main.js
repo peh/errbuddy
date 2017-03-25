@@ -5,9 +5,6 @@ const AppEvents = require('../events/application-events');
 // const EntryDetails = require('./entry-groups/entry-details.jsx');
 import React from "react";
 import AppSettings from "./settings/settings";
-import MonitoringDetails from "./monitorings/monitoring-details";
-import MonitoringAdd from "./monitorings/monitoring-add";
-import MonitoringList from "./monitorings/monitoring-list";
 import EntryDetails from "./errors/entry-details";
 import ErrorList from "./errors/error-list";
 import AppSettingsForm from "./application/application-settings";
@@ -53,11 +50,7 @@ var Main = React.createClass({
     '/applications/:id': 'applicationDetails',
     '/users/': 'listUser',
     '/users/add': 'addUser',
-    '/users/:id': 'userDetails',
-    '/monitorings/add/:type': 'monitoringsAddType',
-    '/monitorings/add': 'monitoringsAdd',
-    '/monitorings/:id': 'monitoringsDetails',
-    '/monitorings': 'monitoringList',
+    '/users/:id': 'userDetails'
   },
 
 
@@ -129,29 +122,6 @@ var Main = React.createClass({
   errors: function () {
     this.setAction('errors');
     return <ErrorList urlParameters={this.getUrlParameters()} errbuddyApp={this.props.app}/>;
-  },
-
-  monitoringList: function () {
-    this.setAction('monitorings');
-    return <MonitoringList urlParameters={this.getUrlParameters()} errbuddyApp={this.props.app}/>;
-  },
-
-  monitoringsAdd: function () {
-    this.setAction('monitorings');
-    return <MonitoringAdd urlParameters={this.getUrlParameters()} errbuddyApp={this.props.app}/>;
-  },
-
-  monitoringsAddType: function (type) {
-    this.setAction('monitorings');
-    if (type !== 'server' && type !== 'service') {
-      return ('404');
-    }
-    return <MonitoringDetails id={-1} type={type} errbuddyApp={this.props.app}/>
-  },
-
-  monitoringsDetails: function (id) {
-    this.setAction('monitorings');
-    return <MonitoringDetails id={this.parsePage(id)} errbuddyApp={this.props.app}/>
   },
 
   login: function () {

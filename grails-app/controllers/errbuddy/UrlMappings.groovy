@@ -12,12 +12,6 @@ class UrlMappings {
 		"/api/app/users/$id/roles"(controller: 'user', action: 'roles')
 		"/api/app/users"(controller: 'user', action: [POST: 'create', GET: 'list'])
 
-		"/api/app/monitorings"(controller: 'monitoring', action: [POST: 'create', GET: 'list'])
-		"/api/app/monitorings/$id"(controller: 'monitoring', action: [GET: 'get', PUT: 'update', DELETE: 'delete'])
-		"/api/app/monitorings/$id/checks"(controller: 'monitoring', action: [GET: 'checks'])
-
-		"/api/app/monitorings/stats"(controller: 'monitoring', action: 'stats')
-
 		"/api/app/entries/$id/$entry"(controller: 'entryGroup', action: [GET: 'get', DELETE: 'delete'])
 
 		"/api/app/entries/$id"(controller: 'entryGroup', action: [DELETE: 'delete'])

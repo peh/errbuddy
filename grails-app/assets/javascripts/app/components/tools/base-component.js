@@ -142,10 +142,6 @@ export default class BaseComponent extends React.Component {
     return this.getApp().deploymentService
   }
 
-  getMonitoringService() {
-    return this.getApp().monitoringService
-  }
-
   getSettingsService() {
     return this.getApp().settingsService
   }

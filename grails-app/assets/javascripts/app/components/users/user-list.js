@@ -4,7 +4,10 @@ import React from "react";
 import BaseComponent from "../tools/base-component.js";
 import LoadingHero from "../tools/loading-hero";
 import UserListRow from "./user-list-row";
+import WithRole from "../tools/with-role";
+import Hero from "../tools/hero";
 
+const ROLES_NEEDED = ['ROLE_ROOT', 'ROLE_ADMIN'];
 export default class UserList extends BaseComponent {
 
   constructor(props) {
@@ -16,15 +19,13 @@ export default class UserList extends BaseComponent {
   }
 
   getUserList() {
-    if (this.iHaveAnyRole(['ROLE_ADMIN', 'ROLE_ROOT'])) {
-      this.getUserService().list(50, 0)
-        .then((response) => {
-          this.setState({users: response.users})
-        })
-        .catch((err) => {
-          throw(err)
-        })
-    }
+    this.getUserService().list(50, 0)
+      .then((response) => {
+        this.setState({users: response.users})
+      })
+      .catch((err) => {
+        throw(err)
+      })
   }
 
   render() {
@@ -36,24 +37,26 @@ export default class UserList extends BaseComponent {
       rows.push(<UserListRow user={user} key={user.username} errbuddyApp={this.getApp()}/>);
     });
     return (
-      <section>
-        <table className="table table-hover table-condensed">
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Username</th>
-            <th>email</th>
-            <th>enabled</th>
-            <th>
-              <button className="btn btn-xl btn-success pull-right" onClick={() => {
-                this.navigate('/users/add')
-              }}><i className="fa fa-plus"></i></button>
-            </th>
-          </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </table>
-      </section>
+      <WithRole roles={ROLES_NEEDED} notAllowed={<Hero><h2>You are not allowed to do this!</h2></Hero>}>
+        <section>
+          <table className="table table-hover table-condensed">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>email</th>
+              <th>enabled</th>
+              <th>
+                <button className="btn btn-xl btn-success pull-right" onClick={() => {
+                  this.navigate('/users/add')
+                }}><i className="fa fa-plus"></i></button>
+              </th>
+            </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </table>
+        </section>
+      </WithRole>
     );
   }
 

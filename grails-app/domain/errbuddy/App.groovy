@@ -6,7 +6,7 @@ import org.joda.time.DateTime
 class App implements HasJsonBody {
 
 	static searchable = {
-		except = ['filters', 'entryGroups', 'userAlertSettings', 'deployments', 'monitorings']
+		except = ['filters', 'entryGroups', 'userAlertSettings', 'deployments']
 		root false
 	}
 
@@ -20,7 +20,7 @@ class App implements HasJsonBody {
 		deployments sort: 'dateCreated', order: 'DESC'
 	}
 
-	static hasMany = [entryGroups: EntryGroup, filters: Filter, deployments: Deployment, monitorings: Monitoring]
+	static hasMany = [entryGroups: EntryGroup, filters: Filter, deployments: Deployment]
 
 	String name
 	String apiKey

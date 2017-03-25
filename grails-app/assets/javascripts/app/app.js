@@ -5,7 +5,6 @@ import UserService from "./services/user-service";
 import ApplicationService from "./services/application-service";
 import ErrorService from "./services/error-service";
 import DeploymentService from "./services/deployment-service";
-import MonitoringService from "./services/monitoring-service";
 import SettingsService from "./services/settings-service";
 
 const EventEmitter = require('events').EventEmitter;
@@ -37,7 +36,6 @@ export default class App {
     this.applicationService = new ApplicationService(this.emitter, this.baseUrl);
     this.errorService = new ErrorService(this.emitter, this.baseUrl);
     this.deploymentService = new DeploymentService(this.emitter, this.baseUrl);
-    this.monitoringService = new MonitoringService(this.emitter, this.baseUrl);
     this.settingsService = new SettingsService(this.emitter, this.baseUrl);
 
     this.emitter.on(AppEvents.PAUSE_STATE_CHANGED, (paused) => {

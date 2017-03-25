@@ -2,6 +2,7 @@ import React from "react";
 import BaseComponent from "../tools/base-component";
 import {LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid} from "recharts";
 import LoadingHero from "../tools/loading-hero";
+import Hero from "../tools/hero";
 const moment = require('moment');
 export default class EntryHistogram extends BaseComponent {
 
@@ -10,14 +11,15 @@ export default class EntryHistogram extends BaseComponent {
 
     this.state = {
       data: [],
-      first: true
+      first: true,
+      loading: true
     };
     this._bindThis('loadObjectsFromServer')
   }
 
   loadObjectsFromServer() {
     this.getErrorService().histogram(this.props.entryGroup).then(json => {
-      this.updateState({data: json.data, first: false})
+      this.updateState({data: json.data, first: false, loading: false})
     });
   }
 
@@ -31,21 +33,24 @@ export default class EntryHistogram extends BaseComponent {
   }
 
   render() {
-    const {data, first} = this.state;
-    if (data.length == 0) {
+    const {data, first, loading} = this.state;
+    if (loading) {
       return <LoadingHero />
+    } else if (data.length == 0) {
+      return <Hero><h2>No Data found</h2></Hero>
+    } else {
+      return (
+        <ResponsiveContainer width={"100%"} height={400}>
+          <LineChart data={data}>
+            <Line dataKey="value" animationDuration={500} isAnimationActive={first}/>
+            <XAxis tick={<CustomizedTick data={data}/>}/>
+            <YAxis />
+            <Tooltip isAnimationActive={false} content={<CustomTooltip/>}/>
+            <CartesianGrid vertical={false}/>
+          </LineChart>
+        </ResponsiveContainer>
+      )
     }
-    return (
-      <ResponsiveContainer width={"100%"} height={400}>
-        <LineChart data={data}>
-          <Line dataKey="value" animationDuration={500} isAnimationActive={first}/>
-          <XAxis tick={<CustomizedTick data={data}/>}/>
-          <YAxis />
-          <Tooltip isAnimationActive={false} content={<CustomTooltip/>}/>
-          <CartesianGrid vertical={false}/>
-        </LineChart>
-      </ResponsiveContainer>
-    )
 
   }
 

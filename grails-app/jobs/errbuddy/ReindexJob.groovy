@@ -2,6 +2,8 @@ package errbuddy
 
 class ReindexJob {
 
+	static queueName = "generic"
+
 	def elasticSearchService
 	def elasticSearchAdminService
 

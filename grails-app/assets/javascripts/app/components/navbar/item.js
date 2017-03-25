@@ -17,14 +17,18 @@ export default class NavbarItem extends BaseComponent {
   }
 
   render() {
+    const {danger, currentAction, action, roleNeeded, icon, text} = this.props;
     var classes = cx({
-      'danger': this.props.danger === true,
-      'active': this.props.currentAction == this.props.action && this.props.danger !== true
+      'danger': danger === true,
+      'active': currentAction == action && danger !== true
     });
-    var iconClass = 'fa fa-' + this.props.icon;
+    var iconClass = 'fa fa-' + icon;
     var shouldRender = false;
-    if (this.props.roleNeeded) {
-      if (this.iHaveRole(this.props.roleNeeded)) {
+    if (roleNeeded) {
+      let role = roleNeeded;
+      if (!Array.isArray(role))
+        role = [role];
+      if (this.iHaveAnyRole(role)) {
         shouldRender = true
       }
     } else {
@@ -34,7 +38,7 @@ export default class NavbarItem extends BaseComponent {
       return (
         <li className={classes}>
           <a onClick={this.handleClick}>
-            <i className={iconClass}></i><span>{this.props.text}</span>
+            <i className={iconClass}></i><span>{text}</span>
           </a>
         </li>
       )

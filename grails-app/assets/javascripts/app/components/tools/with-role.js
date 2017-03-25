@@ -1,5 +1,6 @@
 import React from "react";
 import * as _ from "lodash";
+import Hero from "./hero";
 
 export default class WithRole extends React.Component {
 
@@ -15,6 +16,6 @@ export default class WithRole extends React.Component {
     let user = this.props.user;
     let role = this.props.role;
     let roles = role ? [role] : this.props.roles;
-    return this.userHasAnyRole(user, roles) ? this.props.children : <div />;
+    return this.userHasAnyRole(user, roles) ? this.props.children : (this.props.notAllowed || <div />);
   }
 }

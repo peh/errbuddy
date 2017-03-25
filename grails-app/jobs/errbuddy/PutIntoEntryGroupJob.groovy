@@ -2,6 +2,8 @@ package errbuddy
 
 class PutIntoEntryGroupJob {
 
+	static queueName = "addToGroupQueue"
+
 	def entryService
 
 	def perform(entryGroupid, entryid) {

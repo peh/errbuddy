@@ -2,6 +2,8 @@ package errbuddy
 
 class FindSimilarEntriesJob {
 
+	static queueName = "generic"
+
 	def entryService
 
 	def perform(Serializable id) {
