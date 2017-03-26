@@ -58,13 +58,13 @@ def putJobs = [
 ]
 def genericJobs = [
 	ApplicationDeploymentJob,
-	DeleteEmptyGroupsJob,
 	DeleteEntryGroupJob,
 	FindSimilarEntriesJob,
 	ReindexJob
 ]
 
 def dbHeavyJobs = [
+	DeleteEmptyGroupsJob,
 	RefindFromCollectorJob,
 	DataRetentionJob
 ]
