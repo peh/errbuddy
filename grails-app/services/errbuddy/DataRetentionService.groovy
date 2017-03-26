@@ -9,7 +9,7 @@ class DataRetentionService {
 
 	void handleDataRetentionForApplication(long id) {
 		def app = App.read(id)
-		if (app) return
+		if (!app) return
 
 		int max = 10000
 		def entries = Entry.createCriteria().list([max: max]) {
