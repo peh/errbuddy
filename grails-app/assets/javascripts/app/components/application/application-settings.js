@@ -49,7 +49,7 @@ class AppSettingsForm extends BaseComponent {
                 <span><i className="fa fa-trash"></i > Delete</span>
               </button>
               <button onClick={this.props.onClear} className="warning">
-                <span><i className="fa fa-trash"></i > Clear</span>
+                <span><i className="fa fa-eraser"></i > Clear</span>
               </button>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default class AppSettingsView extends BaseComponent {
     this._bindThis('_onFormSubmit', '_onValueChange', '_onDelete', '_onClear');
 
     this.getApplicationService().get(props.appId).then(response => {
-      this.updateState({application: response.application, originalApplication: response.application, saved: false});
+      this.updateState({application: response.application, errorCount: response.errorCount, originalApplication: response.application, saved: false});
     }).catch((err) => {
       this.showError("Could not get Application information from server");
       throw err
@@ -159,7 +159,8 @@ export default class AppSettingsView extends BaseComponent {
     return (
       <section>
         <div className="page-header">
-          <h3>{this.state.originalApplication.name || 'Add Application'}</h3>
+          <h3>{this.state.originalApplication.name || 'Add Application'}&nbsp;<small>({this.state.errorCount} Entries)</small>
+          </h3>
         </div>
         <AppSettingsForm
           errbuddyApp={this.props.errbuddyApp}

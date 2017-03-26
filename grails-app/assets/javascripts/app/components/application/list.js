@@ -46,7 +46,6 @@ export default class ApplicationList extends BaseComponent {
         <tr key={app.id}>
           <td>{app.name}</td>
           <td>{app.latest}</td>
-          <td>{new Number(app.errors).toLocaleString()}</td>
           <td><a href="javascript: void(0)" className="btn btn-sm btn-default" onClick={() => {
             this.navigate(`/applications/${app.id}`)
           }}><i className="fa fa-cog"></i></a></td>
@@ -60,7 +59,6 @@ export default class ApplicationList extends BaseComponent {
           <tr>
             <th>Name</th>
             <th>Version</th>
-            <th>Errors</th>
             <th>
               <button className="btn btn-xl btn-success pull-right" onClick={() => {
                 this.navigate('/applications/add')

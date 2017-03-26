@@ -8,7 +8,7 @@ class ApplicationController extends AbstractApiController {
 
 	def details() {
 		withApplication { App app ->
-			renderJson([application: app])
+			renderJson([application: app, errorCount:  app.errorCount])
 		}
 	}
 

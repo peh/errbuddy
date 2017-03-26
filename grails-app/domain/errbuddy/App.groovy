@@ -49,7 +49,6 @@ class App implements HasJsonBody {
 			id    : id,
 			name  : name,
 			apiKey: apiKey,
-			errors: errorCount,
 			latest: appVersion
 		]
 	}
