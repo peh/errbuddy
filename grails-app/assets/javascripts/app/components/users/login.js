@@ -47,35 +47,22 @@ export default class LoginView extends BaseComponent {
     return (
       <section>
         {alert}
-          <form method="POST" role="form" autoComplete={false} onSubmit={this.onSubmit}>
-            <div className="group">
-              <label htmlFor="username" className="col-sm-2 control-label">
-                Username
-              </label>
+        <form method="POST" role="form" autoComplete={false} onSubmit={this.onSubmit}>
+          <div className="group">
 
-              <div className="inputs">
-                <input type="text" value={this.state.username} name="username"
-                       onChange={this.onInputChange} autoComplete={false}/>
-              </div>
+            <input type="text" value={this.state.username} name="username" onChange={this.onInputChange} autoComplete={false} required={true}/>
+            <label htmlFor="username"> Username </label>
+          </div>
+          <div className="group">
+            <input type="password" value={this.state.password} name="password" onChange={this.onInputChange} autoComplete={false} required={true}/>
+            <label htmlFor="password">Password </label>
+          </div>
+          <div className="group">
+            <div className="buttons">
+              <button type="submit" className="success"><span>Login</span></button>
             </div>
-            <div className="group">
-              <label htmlFor="password" className="col-sm-2 control-label">
-                Password
-              </label>
-
-              <div className="inputs">
-                <input type="password" className="form-control" value={this.state.password} name="password"
-                       onChange={this.onInputChange} autoComplete={false}/>
-              </div>
-            </div>
-            <div className="group">
-              <div className="inputs">
-                <button type="submit" className="btn btn-default">
-                  Login
-                </button>
-              </div>
-            </div>
-          </form>
+          </div>
+        </form>
       </section>
 
     );
