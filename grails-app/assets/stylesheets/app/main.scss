@@ -106,20 +106,18 @@ h1, h2, h3, h4, h5, h6 {
       a.item {
         vertical-align: middle;
         font-size: 20px;
-        i.fa {
-          color: lighten($errbuddy-blue, 50%);
-        }
         padding: 20px;
-        color: #fff;
-        //font-size: 15px;
+        color: lighten($errbuddy-blue, 50%);
         cursor: pointer;
         text-decoration: none !important;
         &:hover {
           text-decoration: none;
+          color: lighten($errbuddy-blue, 70%);
           background: lighten($errbuddy-blue, 20%);
         }
         &.active {
           padding-bottom: 14px;
+          color: lighten($errbuddy-blue, 70%);
           &:after {
             display: block;
             position: relative;
