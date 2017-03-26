@@ -56,7 +56,7 @@ String elasticsearchPort = "9300" // it is important to use the transport port o
 Download the latest war from [Releases](https://github.com/peh/errbuddy/releases) and start the war with:
 
 ```
-java -jar -Dgrails.env=production -Derrbuddy.config.location=/path/to/config.groovy errbuddy-2.x.x.war
+java -jar -Dgrails.env=production -Derrbuddy.config.location=/path/to/config.groovy errbuddy.war
 ```
 
 
