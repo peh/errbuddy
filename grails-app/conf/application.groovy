@@ -66,7 +66,7 @@ def genericJobs = [
 def dbHeavyJobs = [
 	DeleteEmptyGroupsJob,
 	RefindFromCollectorJob,
-	DataRetentionJob
+	EntryCleanupJob
 ]
 
 grails {

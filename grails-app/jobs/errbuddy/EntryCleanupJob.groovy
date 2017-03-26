@@ -3,13 +3,13 @@ package errbuddy
 import grails.core.GrailsApplication
 import org.joda.time.DateTime
 
-class DataRetentionJob {
+class EntryCleanupJob {
 
-	static queueName = "retention"
+	static queueName = "cleanup"
 
 	static triggers = {
-		cron name: 'DataRetentionJob',
-			jesqueJobName: DataRetentionJob.name,
+		cron name: 'EntryCleanupJob',
+			jesqueJobName: EntryCleanupJob.name,
 			jesqueQueue: queueName,
 			cronExpression: "0 */5 * * * ?",
 			args: [0]

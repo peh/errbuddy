@@ -50,7 +50,7 @@ class BootStrap {
 			applicationService.create(app)
 		}
 
-		jesqueService.enqueue(DataRetentionJob.queueName, DataRetentionJob)
+		jesqueService.enqueue(EntryCleanupJob.queueName, EntryCleanupJob)
 
 	}
 
