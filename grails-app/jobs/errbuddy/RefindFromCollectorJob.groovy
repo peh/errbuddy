@@ -7,7 +7,7 @@ class RefindFromCollectorJob {
     static triggers = {
         // every 2 hours
         cron name: 'RefindFromCollectorJob',
-                jesqueJobName: RefindFromCollectorJob.simpleName,
+                jesqueJobName: RefindFromCollectorJob.name,
                 jesqueQueue: queueName,
                 cronExpression: "0 * * ? * * *",
                 args: []

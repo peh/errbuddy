@@ -7,7 +7,7 @@ class DeleteEmptyGroupsJob {
 	static triggers = {
 		// 10 minutes after every hour
 		cron name: 'DeleteEmptyGroupsJob',
-			jesqueJobName: DeleteEmptyGroupsJob.simpleName,
+			jesqueJobName: DeleteEmptyGroupsJob.name,
 			jesqueQueue: queueName,
 			cronExpression: "0 10 * ? * * *",
 			args: []
