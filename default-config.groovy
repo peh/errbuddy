@@ -86,3 +86,14 @@ elasticSearch {
 	cluster.name = 'elasticsearch'
 	bulkIndexOnStartup = false
 }
+
+grails {
+	plugin {
+		errbuddy {
+			enabled = false
+			host = System.getProperty('errbuddy.serverUrl')
+			apiKey = "9hSsjixHbPI64bjgwkUPXrxVXfpitxM6f9ZRyT06OGdxjDumNhD4gemO3cN6vDr"
+			exceptionsOnly = false
+		}
+	}
+}

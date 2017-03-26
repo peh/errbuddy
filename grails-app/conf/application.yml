@@ -16,7 +16,7 @@ dataSource:
 grails:
     plugin:
         errbuddy:
-            enabled: true
+            enabled: false
             host: http://localhost:9000
             apiKey: 9hSsjixHbPI64bjgwkUPXrxVXfpitxM6f9ZRyT06OGdxjDumNhD4gemO3cN6vDr
             exceptionsOnly: false
