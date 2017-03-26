@@ -90,7 +90,7 @@ dependencies {
 	compile "org.grails.plugins:errbuddy:2.1.0"
 	compile "com.uberall.plugins:uber-doc:2.0.4"
 	compile 'org.grails.plugins:elasticsearch:1.0.0.2'
-	compile 'org.grails.plugins:grails-jesque-admin:0.1.5'
+	compile 'org.grails.plugins:jesque-admin:0.6.5'
 	compile 'org.grails.plugins:jesque:1.2.1-UBERALL'
 
 	assets 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'

@@ -1,5 +1,8 @@
 package errbuddy
 
+import grails.core.GrailsApplication
+import org.joda.time.DateTime
+
 class DataRetentionJob {
 
 	static queueName = "put"
@@ -13,17 +16,30 @@ class DataRetentionJob {
 	}
 
 	def dataRetentionService
+	GrailsApplication grailsApplication
 
 	def perform(long id = 0) {
 		if (id) {
-			dataRetentionService.handleDataRetentionForApplication(id)
+			App app = App.get(id)
+			if (app) {
+				handle(app)
+			}
 		} else {
 			App.createCriteria().list {
 				eq('enabled', true)
-				projections { property('id') }
-			}.each { long appId ->
-				dataRetentionService.handleDataRetentionForApplication(appId)
+			}.each { App app ->
+				handle(app)
 			}
 		}
 	}
+
+	void handle(App app) {
+		DateTime until = DateTime.now().minusDays(grailsApplication.config.errbuddy.retentionDays ?: 90)
+		if (!app.clearUntil || app.clearUntil.isBefore(until)) {
+			app.clearUntil = until
+			app.save()
+		}
+		dataRetentionService.handleDataRetentionForApplication(app)
+	}
+
 }

@@ -7,10 +7,7 @@ class DataRetentionService {
 
 	def jesqueService
 
-	void handleDataRetentionForApplication(long id) {
-		def app = App.read(id)
-		if (!app) return
-
+	void handleDataRetentionForApplication(App app) {
 		int max = 10000
 		def entries = Entry.createCriteria().list([max: max]) {
 			entryGroup {

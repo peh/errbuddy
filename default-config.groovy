@@ -69,6 +69,7 @@ errbuddy {
 	maximumMax = 100
 	supportedLanguages = ['en']
 	defaultLanguage = 'en'
+	retentionDays = 90
 }
 
 elasticSearch {
