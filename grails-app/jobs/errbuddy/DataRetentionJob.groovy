@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 
 class DataRetentionJob {
 
-	static queueName = "put"
+	static queueName = "retention"
 
 	static triggers = {
 		cron name: 'DataRetentionJob',

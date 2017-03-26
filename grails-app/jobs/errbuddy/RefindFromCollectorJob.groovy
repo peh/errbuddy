@@ -2,7 +2,7 @@ package errbuddy
 
 class RefindFromCollectorJob {
 
-	static queueName = "generic"
+	static queueName = "refind"
 
     static triggers = {
         // every 2 hours

@@ -53,7 +53,6 @@ boolean isPuttingIntoGroup = Boolean.parseBoolean(System.getProperty('errbuddy.s
 
 def putJobs = [
 	ApplicationDeleteJob,
-	DataRetentionJob,
 	EntryPutJob,
 	EntryDeleteJob
 ]
@@ -62,8 +61,12 @@ def genericJobs = [
 	DeleteEmptyGroupsJob,
 	DeleteEntryGroupJob,
 	FindSimilarEntriesJob,
+	ReindexJob
+]
+
+def dbHeavyJobs = [
 	RefindFromCollectorJob,
-	ReindexJob,
+	DataRetentionJob
 ]
 
 grails {
@@ -109,6 +112,11 @@ grails {
 				workers = 3
 				queueNames = genericJobs.collect { it.queueName }.unique()
 				jobTypes = genericJobs.name
+			}
+			DBHeavyPool {
+				workers = 1
+				queueNames = dbHeavyJobs.collect { it.queueName }.unique()
+				jobTypes = dbHeavyJobs.name
 			}
 		}
 	}
