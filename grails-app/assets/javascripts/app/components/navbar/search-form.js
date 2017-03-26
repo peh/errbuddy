@@ -1,8 +1,7 @@
-'use strict';
-
 import React from "react";
 import BaseComponent from "../tools/base-component";
 import * as querystring from "querystring";
+const cx = require('classnames');
 
 export default class NavbarSearchForm extends BaseComponent {
   constructor(props) {
@@ -28,19 +27,19 @@ export default class NavbarSearchForm extends BaseComponent {
   render() {
     const placeHolder = 'use * as a wildcard and combine terms with AND / OR';
     return (
-      <form onSubmit={this.handleFormSubmit} className="navbar-form" role="search">
-        <div className="form-group navbar-search-container">
-          <div className="input-group">
-            <label className="control-label sr-only" htmlFor="query">
-              {placeHolder}
-            </label>
-            <input type="text" name="query" id="query" className="form-control" autoComplete="off"
-                   autoFocus={true} value={this.state.query || ""}
-                   onChange={this.onValueChange}
-                   placeholder={placeHolder}/>
-            <span className="input-group-addon"><i className="fa fa-search"></i></span>
-          </div>
-        </div>
+      <form onSubmit={this.handleFormSubmit} role="search">
+        <input
+          type="text"
+          name="query"
+          id="query"
+          className={cx({'has-value': !!this.state.query})}
+          autoComplete="off"
+          autoFocus={true} value={this.state.query || ""}
+          onChange={this.onValueChange}
+        />
+        <label htmlFor="query">
+          {placeHolder}
+        </label>
       </form>
     )
   }

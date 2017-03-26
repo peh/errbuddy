@@ -6,17 +6,15 @@ var cx = require('classnames');
 export default class MeItem extends React.Component {
 
   render() {
-    var classes = cx({
+    var classes = cx('item', {
       'active': this.props.currentAction == 'users'
     });
     return (
-      <li className={classes}>
-        <a onClick={()=> {
-          navigate('/users/' + this.props.currentUser.id)
-        }}>
-          <i className="fa fa-user"></i><NavbarItemText text="Profile"/>
-        </a>
-      </li>
+      <a className={classes} onClick={() => {
+        navigate('/users/' + this.props.currentUser.id)
+      }}>
+        <i className="fa fa-user"></i>
+      </a>
     )
   }
 

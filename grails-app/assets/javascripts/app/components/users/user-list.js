@@ -37,7 +37,7 @@ export default class UserList extends BaseComponent {
       rows.push(<UserListRow user={user} key={user.username} errbuddyApp={this.getApp()}/>);
     });
     return (
-      <WithRole roles={ROLES_NEEDED} notAllowed={<Hero><h2>You are not allowed to do this!</h2></Hero>}>
+      <WithRole user={this.getMe()} roles={ROLES_NEEDED} notAllowed={<section><Hero><h2>You are not allowed to do this!</h2></Hero></section>}>
         <section>
           <table className="table table-hover table-condensed">
             <thead>

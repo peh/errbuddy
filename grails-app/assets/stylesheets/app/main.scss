@@ -28,29 +28,145 @@ h1, h2, h3, h4, h5, h6 {
 
 .errbuddy-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   min-height: 100vh;
-  .sidebar-wrap {
-    min-height: 100%;
-    max-height: 100%;
-    flex: 0 0 $sidebar-width;
-    background-color: $sidebar-background;
-    z-index: 1000;
-  }
-  .content {
-    flex: 1 1 100%;
-    min-height: calc(100vh);
-    max-height: 100%;
-    max-width: calc(100vw - 80px);
-    z-index: 0;
-    background: #f0f0f0;
-    .content-container {
-      padding: 0 10px;
-      box-sizing: border-box;
-      width: 100%;
+  min-width: 100vw;
+  & > .nav {
+    flex: 0 1 60px;
+    background: $errbuddy-blue;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    & > .search {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-content: stretch;
+      form {
+        flex: 1;
+        display: flex;
+        height: 60px;
+        flex-direction: column;
+        align-items: stretch;
+        align-content: stretch;
+        justify-content: center;
+        position: relative;
+        &:before {
+          content: "\F002";
+          font: normal normal normal 14px/1 FontAwesome;
+          display: block;
+          position: absolute;
+          color: lighten($errbuddy-blue, 40%);
+          font-size: 18px;
+        }
+        label {
+          color: lighten($errbuddy-blue, 60%);
+          font-size: 18px;
+          font-weight: normal;
+          position: absolute;
+          pointer-events: none;
+          left: 20px;
+          top: 17px;
+          transition: 0.2s;
+        }
+        input {
+          &:focus, &.has-value {
+            & ~ label {
+              top: 2px;
+              font-size: 14px;
+              color: lighten($errbuddy-blue, 40%);
+            }
+            border-bottom: 2px solid lighten($errbuddy-blue, 40%);
+          }
+          padding-left: 20px;
+          outline: none;
+          color: #fafafa;
+          font-size: 18px;
+          background: transparent;
+          border: none;
+          border-bottom: 2px solid lighten($errbuddy-blue, 20%);
+          transition: border 0.4s;
+        }
+      }
+    }
+    & > .left, & > .right {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      align-items: center;
+      &.left {
+        min-width: 440px;
+        justify-content: flex-start;
+      }
+      &.right {
+        justify-content: flex-end;
+      }
+      a.item {
+        vertical-align: middle;
+        font-size: 20px;
+        i.fa {
+          color: lighten($errbuddy-blue, 50%);
+        }
+        padding: 20px;
+        color: #fff;
+        //font-size: 15px;
+        cursor: pointer;
+        text-decoration: none !important;
+        &:hover {
+          text-decoration: none;
+          background: lighten($errbuddy-blue, 20%);
+        }
+        &.active {
+          padding-bottom: 14px;
+          &:after {
+            display: block;
+            position: relative;
+            content: ' ';
+            height: 6px;
+            left: -20px;
+            width: calc(100% + 40px);
+            bottom: -10px;
+            background: lighten($errbuddy-blue, 40%);
+          }
+        }
+      }
     }
   }
+  & > .body {
+    flex: 1;
+    min-height: calc(100vh - 60px);
+    background: #f0f0f0;
+  }
+
 }
+
+//.errbuddy-container {
+//  display: flex;
+//  flex-direction: row;
+//  min-height: 100vh;
+//  .sidebar-wrap {
+//    min-height: 100%;
+//    max-height: 100%;
+//    flex: 0 0 $sidebar-width;
+//    background-color: $sidebar-background;
+//    z-index: 1000;
+//  }
+//  .content {
+//    flex: 1 1 100%;
+//    min-height: calc(100vh);
+//    max-height: 100%;
+//    max-width: calc(100vw - 80px);
+//    z-index: 0;
+//    background: #f0f0f0;
+//    .content-container {
+//      padding: 0 10px;
+//      box-sizing: border-box;
+//      width: 100%;
+//    }
+//  }
+//}
 
 .navbar-default {
   .navbar-nav {

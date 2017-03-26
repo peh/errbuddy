@@ -156,16 +156,16 @@ export default class UserDetails extends BaseComponent {
     });
     return (
       <section>
-            <form onSubmit={this.onFormSubmit} className="form-horizontal" autoComplete="false">
-              <ValidateableInput errors={errors} bean={user} property="username" label="Username" placeholder="Username"
+            <form onSubmit={this.onFormSubmit} className="form-horizontal" autoComplete="new-password">
+              <ValidateableInput errors={errors} bean={user} property="username" label="Username" placeholder=""
                                  required={true} onValueChange={this.onValueChange}/>
-              <ValidateableInput errors={errors} type="email" bean={user} property="email" label="Email" placeholder="Email"
+              <ValidateableInput errors={errors} type="email" bean={user} property="email" label="Email" placeholder=""
                                  required={true} onValueChange={this.onValueChange}/>
-              <ValidateableInput errors={errors} bean={user} property="name" label="Name" placeholder="Name"
+              <ValidateableInput errors={errors} bean={user} property="name" label="Name" placeholder=""
                                  required={true} onValueChange={this.onValueChange}/>
               <ValidateableInput errors={errors} type="password" bean={user} property="password" label="Password"
-                                 placeholder="leave blank if password you don't want to change"
-                                 required={user.id ? false : true} onValueChange={this.onValueChange}/>
+                                 placeholder={!user.id ? '' : "leave blank if you don't want to change"}
+                                 required={!user.id} onValueChange={this.onValueChange}/>
 
               <div className="form-group">
                 <label htmlFor="enabled" className="col-sm-2 control-label">Enabled</label>

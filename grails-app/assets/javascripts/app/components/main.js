@@ -4,15 +4,14 @@ const ReactMiniRouter = require('react-mini-router');
 const AppEvents = require('../events/application-events');
 // const EntryDetails = require('./entry-groups/entry-details.jsx');
 import React from "react";
+import Nav from "./navbar/index";
 import AppSettings from "./settings/settings";
 import EntryDetails from "./errors/entry-details";
 import ErrorList from "./errors/error-list";
 import AppSettingsForm from "./application/application-settings";
 import ApplicationAdd from "./application/application-add";
 import DeploymentList from "./application/deployment-list";
-import Navbar from "./navbar/navbar";
 import LoginView from "./users/login";
-import Sidebar from "./navbar/sidebar";
 import UserList from "./users/user-list";
 import UserDetails from "./users/user-details";
 import ApplicationList from "./application/list";
@@ -203,27 +202,37 @@ var Main = React.createClass({
   render: function () {
     return (
       <div className="errbuddy-container">
-        <div className="sidebar-wrap">
-          <Sidebar
-            currentUser={this.state.currentUser}
-            urlParameters={this.getUrlParameters()}
-            errbuddyApp={this.getApp()}
-            action={this.state.action}
-            paused={this.state.paused}
-            onPauseChange={this.setPaused}
-          />
-        </div>
-        <div className="content">
-          <header>
-            <Navbar currentUser={this.state.currentUser} ref="navbar" urlParameters={this.getUrlParameters()} errbuddyApp={this.getApp()}/>
-          </header>
-          {this.getAlert()}
-          <div className="content-container">
-            {this.renderCurrentRoute()}
-          </div>
+
+        <Nav
+          errbuddyApp={this.getApp()}
+          urlParameters={this.getUrlParameters()}
+          action={this.state.action}
+          paused={this.state.paused}
+          onPauseChange={this.setPaused}
+        />
+        <div className="body">
+          {this.renderCurrentRoute()}
         </div>
       </div>
     );
+    // {/*<div className="errbuddy-container">*/}
+    //   {/*<div className="sidebar-wrap">*/}
+    //     {/*<Sidebar*/}
+    //       {/*currentUser={this.state.currentUser}*/}
+    //       {/*urlParameters={this.getUrlParameters()}*/}
+    //       {/*errbuddyApp={this.getApp()}*/}
+    //     {/*/>*/}
+    //   {/*</div>*/}
+    //   {/*<div className="content">*/}
+    //     {/*<header>*/}
+    //       {/*<Navbar currentUser={this.state.currentUser} ref="navbar" urlParameters={this.getUrlParameters()} errbuddyApp={this.getApp()}/>*/}
+    //     {/*</header>*/}
+    //     {/*{this.getAlert()}*/}
+    //     {/*<div className="content-container">*/}
+    //       {/*{this.renderCurrentRoute()}*/}
+    //     {/*</div>*/}
+    //   {/*</div>*/}
+    // {/*</div>*/}
   },
 
   getApp: function () {

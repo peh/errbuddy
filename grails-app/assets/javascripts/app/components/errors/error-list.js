@@ -7,6 +7,7 @@ import LoadingHero from "../tools/loading-hero";
 import EntryGroupTableRow from "./list-row";
 import ReactPaginate from "react-paginate";
 import ConfigurationService from "../../services/configuration-service";
+import Hero from "../tools/hero";
 const cx = require('classnames');
 const querystring = require('querystring');
 
@@ -39,7 +40,7 @@ export default class ErrorList extends BaseComponent {
     if (
       !this.props.urlParameters ||
       _.get(newProps.urlParameters, 'offset') !== `${this.getOffset()}` ||
-      _.get(this.props.urlParameters, 'query') != _.get(newProps.urlParameters, 'query')) {
+      _.get(this.props.urlParameters, 'query') !== _.get(newProps.urlParameters, 'query')) {
       this.loadObjectsFromServer(newProps.urlParameters)
     }
   }
@@ -117,15 +118,23 @@ export default class ErrorList extends BaseComponent {
       return <LoadingHero />
     }
 
-    let rows = _.map(list, (entryGroup) => {
-      return <EntryGroupTableRow
-        applications={this.state.applications}
-        ref={entryGroup.entryGroupId}
-        entryGroup={entryGroup}
-        key={entryGroup.entryGroupId}
-        errbuddyApp={this.props.errbuddyApp}
-      />
-    });
+    let rows = ""
+
+    if (list && list.length === 0 && _.get(this.props.urlParameters, 'query')) {
+      rows = <Hero><h3>No Results found for "{_.get(this.props.urlParameters, 'query')}. Try searching for something different!"</h3></Hero>;
+    } else if (list && list.length === 0) {
+      rows = <Hero><h3>No Errors. Yeah!</h3></Hero>;
+    } else if (list && list.length > 0) {
+      rows = _.map(list, (entryGroup) => {
+        return <EntryGroupTableRow
+          applications={this.state.applications}
+          ref={entryGroup.entryGroupId}
+          entryGroup={entryGroup}
+          key={entryGroup.entryGroupId}
+          errbuddyApp={this.props.errbuddyApp}
+        />
+      });
+    }
 
     let toggledApplication = this.state.selectedApplication;
     let buttons = _.map(this.state.applications, (app) => {
@@ -140,28 +149,26 @@ export default class ErrorList extends BaseComponent {
       )
     });
     return (
-      <section>
-        <div className="entry-list-container">
-          <div className="head">
-            <div className="btn-group application-chooser" role="group">
-              {buttons}
-            </div>
-            <ReactPaginate
-              pageCount={Math.ceil(total / max)}
-              pageRangeDisplayed={4}
-              marginPagesDisplayed={1}
-              forceSelected={Math.floor(offset / max)}
-              onPageChange={this.changePage}
-              previousLabel="&laquo;"
-              nextLabel="&raquo;"
-              breakLabel={<a href="">...</a>}
-              activeClassName="active"
-              containerClassName="pagination"
-            />
+      <section className="entry-list-container">
+        <div className="head">
+          <div className="btn-group application-chooser" role="group">
+            {buttons}
           </div>
-          <div className="list">
-            {rows}
-          </div>
+          <ReactPaginate
+            pageCount={Math.ceil(total / max)}
+            pageRangeDisplayed={4}
+            marginPagesDisplayed={1}
+            forceSelected={Math.floor(offset / max)}
+            onPageChange={this.changePage}
+            previousLabel="&laquo;"
+            nextLabel="&raquo;"
+            breakLabel={<a href="">...</a>}
+            activeClassName="active"
+            containerClassName="pagination"
+          />
+        </div>
+        <div className="list">
+          {rows}
         </div>
       </section>
     );

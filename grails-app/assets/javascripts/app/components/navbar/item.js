@@ -5,10 +5,9 @@ import BaseComponent from "../tools/base-component";
 const cx = require('classnames');
 
 
-export default class NavbarItem extends BaseComponent {
+export default class NavItem extends BaseComponent {
   constructor(props) {
-    super(props)
-
+    super(props);
     this._bindThis('handleClick')
   }
 
@@ -17,13 +16,12 @@ export default class NavbarItem extends BaseComponent {
   }
 
   render() {
-    const {danger, currentAction, action, roleNeeded, icon, text} = this.props;
-    var classes = cx({
-      'danger': danger === true,
-      'active': currentAction == action && danger !== true
+    const {currentAction, action, roleNeeded, icon, text} = this.props;
+    let classes = cx("item", {
+      'active': currentAction === action
     });
-    var iconClass = 'fa fa-' + icon;
-    var shouldRender = false;
+    let iconClass = 'fa fa-' + icon;
+    let shouldRender = false;
     if (roleNeeded) {
       let role = roleNeeded;
       if (!Array.isArray(role))
@@ -36,14 +34,12 @@ export default class NavbarItem extends BaseComponent {
     }
     if (shouldRender) {
       return (
-        <li className={classes}>
-          <a onClick={this.handleClick}>
-            <i className={iconClass}></i><span>{text}</span>
-          </a>
-        </li>
+        <a onClick={this.handleClick} className={classes}>
+          <i className={iconClass}></i>&nbsp;{text}
+        </a>
       )
     } else {
-      return <li></li>;
+      return <div></div>;
     }
 
   }

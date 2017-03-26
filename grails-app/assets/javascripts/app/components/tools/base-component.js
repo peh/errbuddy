@@ -110,9 +110,9 @@ export default class BaseComponent extends React.Component {
   }
 
   iHaveAnyRole(roles) {
-    let me = this.getMe()
+    let me = this.getMe();
     if (!me) {
-      console.error("iHaveAnyRole was called without any 'me' set");
+      this.error("iHaveAnyRole was called without any 'me' set");
       return false;
     }
     return _.intersection(me.roles, roles).length > 0
@@ -177,6 +177,14 @@ export default class BaseComponent extends React.Component {
     return new Promise(res => {
       this.setState(_.assign({}, this.state, stateAddition), res)
     })
+  }
+
+  log(msg) {
+    console.log(`[${this.constructor.name}] ${msg}`)
+  }
+
+  error(msg) {
+    console.log(`[${this.constructor.name}] ${msg}`)
   }
 
 }

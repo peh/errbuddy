@@ -5,7 +5,7 @@ services:
     hostname: ${HOSTNAME}
     env_file: .env
     mem_limit: 3g
-    image: openjdk:8-jdk
+    image: gradle:3.4-jdk8-alpine
     ports:
     - 9000:9000
     depends_on:
@@ -24,4 +24,4 @@ services:
       - .data/build:/opt/app/build:rw
       - .data/nodejs:/opt/app/.nodejs:rw
       - .data/node_moudels:/opt/app/node_modules:rw
-    command: /bin/bash -c "cd /opt/errbuddy/ && wget https://s3.eu-central-1.amazonaws.com/errbuddy-devel/current.war && java -Dgrails.env=prod -Derrbuddy.mysql.password=${MYSQL_PASSWORD} -Derrbuddy.serverUrl=${SERVER_URL} -jar current.war"
+    command: /bin/bash -c "cd /opt/app/ && gradle bootRun -Dgrails.env=prod -Derrbuddy.mysql.password=${MYSQL_PASSWORD} -Derrbuddy.serverUrl=${SERVER_URL}"

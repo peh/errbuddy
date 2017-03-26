@@ -13,13 +13,11 @@ export default class LogoutItem extends BaseComponent {
 
   render() {
     return (
-      <li>
-        <a onClick={()=> {
+        <a className="item" onClick={()=> {
           this.getApp().logout()
         }}>
-          <i className="fa fa-power-off"></i><NavbarItemText text="Logout"/>
+          <i className="fa fa-power-off"></i>
         </a>
-      </li>
     )
   }
 

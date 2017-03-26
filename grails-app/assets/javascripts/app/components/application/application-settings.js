@@ -4,6 +4,7 @@ import LoadingHero from "../tools/loading-hero";
 import BaseComponent from "../tools/base-component.js";
 import * as  _ from "lodash";
 import DeploymentList from "./deployment-list";
+import WithRole from "../tools/with-role";
 var ApplicationService = require('../../services/application-service');
 var cx = require('classnames');
 var swal = require('sweetalert');
@@ -15,55 +16,46 @@ class AppSettingsForm extends BaseComponent {
   }
 
   render() {
-    if (this.iHaveRole('ROLE_ADMIN') || this.iHaveRole('ROLE_ROOT')) {
-      let {application, onValueChange, onFormSubmit, saved} = this.props
+    let {application, onValueChange, onFormSubmit, saved} = this.props
 
-      var hasErorrs = typeof errors !== 'undefined' && errors && errors.length > 0;
-      var classes = cx({
-        'btn': true,
-        'btn-default': true,
-        'disabled': !application.dirty,
-        'btn-success': saved && !hasErorrs,
-        'btn-danger': saved && hasErorrs,
-        'shake': saved && hasErorrs,
-        'freez': saved && hasErorrs,
-        'shake-rotate': saved && hasErorrs
-      });
-      return (
+    var hasErorrs = typeof errors !== 'undefined' && errors && errors.length > 0;
+    var classes = cx('success', {
+      'danger': saved && hasErorrs,
+      'shake': saved && hasErorrs,
+      'freez': saved && hasErorrs,
+      'shake-rotate': saved && hasErorrs
+    });
+    return (
+      <WithRole user={this.getMe()} roles={['ROLE_ADMIN', 'ROLE_ROOT']} notAllowed="You are not Allowed to access this page!">
         <form onSubmit={onFormSubmit}>
           <div className="group">
-            <label htmlFor="name" className="col-sm-2 control-label">Name</label>
-            <div className="inputs">
-              <input type="text" name="name" id="name" value={application.name} onChange={(e) => {
-                onValueChange('name', e.target.value)
-              }} required="required"/>
-            </div>
+            <input type="text" name="name" id="name" value={application.name} onChange={(e) => {
+              onValueChange('name', e.target.value)
+            }} required="required"/>
+            <label htmlFor="name">Name</label>
           </div>
           <div className="group">
-            <label htmlFor="apiKey" className="col-sm-2 control-label">ApiKey</label >
-            <div className="inputs">
-              <input type="text" value={application.apiKey} readOnly={true}/>
-            </div>
+            <input type="text" value={application.apiKey} readOnly={true} onClick={(e) => {
+              e.target.select()
+            }}/>
+            <label htmlFor="apiKey">ApiKey</label >
           </div>
           <div className="group">
-            <div className="inputs">
-              <button type="submit" className={classes}>
-                <i className="fa fa-floppy-o"></i > Save
+            <div className="buttons">
+              <button type="submit" className={classes} disabled={!application.dirty}>
+                <span><i className="fa fa-floppy-o"></i > Save</span>
               </button>
-              <button onClick={this.props.onDelete} className="btn btn-danger">
-                <i className="fa fa-trash"></i > Delete
+              <button onClick={this.props.onDelete} className="danger">
+                <span><i className="fa fa-trash"></i > Delete</span>
               </button>
-              <button onClick={this.props.onClear} className="btn btn-warning">
-                <i className="fa fa-trash"></i > Clear
+              <button onClick={this.props.onClear} className="warning">
+                <span><i className="fa fa-trash"></i > Clear</span>
               </button>
             </div>
           </div>
         </form>
-      )
-    }
-    else {
-      return <div></div>
-    }
+      </WithRole>
+    )
   }
 }
 

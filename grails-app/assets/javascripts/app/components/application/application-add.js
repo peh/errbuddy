@@ -57,13 +57,9 @@ export default class ApplicationAdd extends BaseComponent {
   }
 
   render() {
-    var hasErorrs = typeof errors !== 'undefined' && errors && errors.length > 0;
-    var classes = cx({
-      'btn': true,
-      'btn-default': true,
-      'disabled': !this.state.application.dirty,
-      'btn-success': this.state.saved && !hasErorrs,
-      'btn-danger': this.state.saved && hasErorrs,
+    const hasErorrs = typeof errors !== 'undefined' && errors && errors.length > 0;
+    const classes = cx({
+      'success': true,
       'shake': this.state.saved && hasErorrs,
       'freez': this.state.saved && hasErorrs,
       'shake-rotate': this.state.saved && hasErorrs
@@ -75,26 +71,20 @@ export default class ApplicationAdd extends BaseComponent {
           <h3>Add Application</h3>
         </div>
         <div>
-          <form method="POST" onSubmit={this.onFormSubmit}>
+          <form onSubmit={this.onFormSubmit}>
             <div className="group">
+              <input type="text" name="name" id="name" onChange={(e) => {
+                this.onValueChange('name', e.target.value)
+              }} required="required"/>
               <label htmlFor="name">Name</label>
-              <div className="inputs">
-                <input type="text" name="name" id="name" className="form-control" onChange={(e) => {
-                  this.onValueChange('name', e.target.value)
-                }} required="required"/>
-              </div>
             </div>
             <div className="group">
-              <div className="inputs">
-                <button type="submit" className={classes}>
-                  <i className="fa fa-floppy-o"></i> Save
+              <div className="buttons">
+                <button type="submit" className={classes} disabled={!this.state.application.dirty}>
+                  <span><i className="fa fa-floppy-o"></i> Save</span>
                 </button>
               </div>
             </div>
-            {/*<div className="form-group">*/}
-            {/*<div className="col-sm-offset-2 col-sm-10">*/}
-            {/*</div>*/}
-            {/*</div>*/}
           </form>
         </div>
       </section>

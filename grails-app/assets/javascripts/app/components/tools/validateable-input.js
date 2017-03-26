@@ -20,7 +20,7 @@ export default class ValidateableInput extends React.Component {
 
     errors = errors || bean.errors // backwards compatible
     if (errors) {
-      let fieldErrors = _.filter(errors, (e)=> {
+      let fieldErrors = _.filter(errors, (e) => {
         return e.field === property
       });
       if (fieldErrors && fieldErrors.length > 0) {
@@ -33,17 +33,15 @@ export default class ValidateableInput extends React.Component {
     }
 
     var classes = cx({
-      'form-group': true,
+      'group': true,
       'has-error': hasError
     });
     return (
       <div className={classes}>
-        <label htmlFor={property} className="col-sm-2 control-label">{label}</label>
 
-        <div className="col-sm-10">
-          <input type={type} className="form-control" id={property} name={property} placeholder={placeholder}
-                 value={value || ""} required={required} onChange={this.props.onValueChange}/>
-        </div>
+        <input type={type} id={property} name={property} placeholder={placeholder}
+               value={value || ""} required={required} onChange={this.props.onValueChange}/>
+        <label htmlFor={property}>{label}</label>
       </div>
     )
   }
