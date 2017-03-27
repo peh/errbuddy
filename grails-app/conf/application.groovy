@@ -13,6 +13,8 @@ grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugin.springsecurity.interceptUrlMap = [
 	[pattern: '/jesqueManager/**', access: ['ROLE_ROOT']],
+	[pattern: '/admin/jesque', access: ['ROLE_ROOT']],
+	[pattern: '/admin/jesque/**', access: ['ROLE_ROOT']],
 	[pattern: '/**', access: ['permitAll']],
 	[pattern: '/**/js/**', access: ['permitAll']],
 	[pattern: '/**/css/**', access: ['permitAll']],
