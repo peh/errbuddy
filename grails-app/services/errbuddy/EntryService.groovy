@@ -169,8 +169,8 @@ class EntryService {
 		}
 
 		if (doCheckLatest) {
-			EntryGroup.findByLatest(entry).each {
-				it.latest = null
+			EntryGroup.findAllByLatest(entry).each { // this should really never be more then one, but we saw it happen so lets go for each ...
+				it.latest = Entry.findByEntryGroupAndIdNotEqual(it, id, [sort: 'id', order: 'desc'])
 				it.save()
 			}
 		}

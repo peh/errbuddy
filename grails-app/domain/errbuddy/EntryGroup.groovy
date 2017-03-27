@@ -42,6 +42,7 @@ class EntryGroup implements HasJsonBody {
 		issueUrl nullable: true
 		resolveDate nullable: true
 		resolvedBy nullable: true
+		latest nullable: true
 	}
 
 	def beforeValidate() {

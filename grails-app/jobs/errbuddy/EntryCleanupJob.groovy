@@ -15,7 +15,7 @@ class EntryCleanupJob {
 			args: [0]
 	}
 
-	def dataRetentionService
+	EntryCleanupService entryCleanupService
 	GrailsApplication grailsApplication
 
 	def perform(long id = 0) {
@@ -39,7 +39,7 @@ class EntryCleanupJob {
 			app.clearUntil = until
 			app.save()
 		}
-		dataRetentionService.handleDataRetentionForApplication(app)
+		entryCleanupService.handleEntryCleanupForApplication(app)
 	}
 
 }

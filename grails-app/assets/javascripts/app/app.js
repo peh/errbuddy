@@ -16,8 +16,7 @@ const querystring = require('querystring');
 export default class App {
   constructor() {
 
-    this.baseUrl = window.upstream;
-    this.showRefind = LocalStore.get('errbuddy.refind.show') === 'true';
+    this.baseUrl = window.backend;
     this.action = null;
     this.paused = false;
 
@@ -28,7 +27,7 @@ export default class App {
       showRefind: false
     };
 
-    this._me = null
+    this._me = null;
     this.emitter = new EventEmitter();
     this.emitter.setMaxListeners(0);
 
