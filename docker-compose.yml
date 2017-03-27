@@ -38,6 +38,7 @@ services:
 #      - 127.0.0.1:3306:3306 # makes it easier to create backups
     volumes:
       - .data/mysql:/var/lib/mysql:rw
+      - ./etc/mysql/:/etc/mysql/conf.d
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=errbuddy
