@@ -106,7 +106,7 @@ grails {
 				}
 			}
 			PutPool {
-				workers = 2
+				workers = 3
 				queueNames = putJobs.collect { it.queueName }.unique()
 				jobTypes = putJobs.name
 			}

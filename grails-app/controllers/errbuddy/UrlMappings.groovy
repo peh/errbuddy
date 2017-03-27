@@ -4,8 +4,6 @@ class UrlMappings {
 		"500"(controller: 'error', action: 'error')
 		"401"(controller: 'error', action: 'notAllowed')
 
-		"/s/$identifier"(controller: 'site', action: 'byIdentifier')
-
 		// AppApi
 		'/api/app/me'(controller: 'user', action: 'me')
 		"/api/app/users/$id"(controller: 'user', action: [GET: 'get', PUT: 'update', DELETE: 'delete'])
@@ -59,6 +57,8 @@ class UrlMappings {
 		"/api/ping"(controller: 'api', action: 'ping')
 
 		"/s/$identifier"(controller: 'shortlink', action: 'redirect')
+		"/login/$action"(controller: 'login')
+		"/logout"(controller: 'logout')
 
 		// everything goes to "the app"
 		"/**"(view: "/page/app")
