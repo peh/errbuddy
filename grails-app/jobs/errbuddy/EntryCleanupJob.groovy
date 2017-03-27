@@ -11,7 +11,7 @@ class EntryCleanupJob {
 		cron name: 'EntryCleanupJob',
 			jesqueJobName: EntryCleanupJob.name,
 			jesqueQueue: queueName,
-			cronExpression: "0 */5 * * * ?",
+			cronExpression: "*/30 * * * * ?",
 			args: [0]
 	}
 

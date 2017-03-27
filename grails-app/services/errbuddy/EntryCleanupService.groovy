@@ -8,7 +8,7 @@ class EntryCleanupService {
 	def jesqueService
 
 	void handleEntryCleanupForApplication(App app) {
-		int max = 10000
+		int max = 500
 		def entries = Entry.createCriteria().list([max: max]) {
 			entryGroup {
 				eq('app', app)

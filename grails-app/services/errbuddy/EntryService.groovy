@@ -182,11 +182,14 @@ class EntryService {
 	 *
 	 */
 	void doRefindFromCollector() {
-		Entry.createCriteria().list {
+		Entry.createCriteria().list(max: 100) {
 			inList('entryGroup', EntryGroup.findAllByCollector(true))
 			eq('refindSimilar', true)
-		}?.each { Entry entry ->
-			jesqueService.enqueue("generic", FindSimilarEntriesJob, [entry.id])
+			projections {
+				property('id')
+			}
+		}?.each { it
+			jesqueService.enqueue("generic", FindSimilarEntriesJob, [it])
 		}
 	}
 
