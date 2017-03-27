@@ -7,35 +7,33 @@ class EntryCleanupService {
 
 	def jesqueService
 
+	@Transactional(readOnly = true)
 	void handleEntryCleanupForApplication(App app) {
-		int max = 500
-		List oldest = Entry.createCriteria().list([max: 1, order: 'asc', sort: 'id']) {
-			entryGroup {
-				eq('app', app)
-			}
-		} as List
-
-		if (oldest && oldest.first().dateCreated.isBefore(app.clearUntil)) {
-			log.info
-			def entries = Entry.createCriteria().list([max: max, order: 'asc', sort: 'id']) {
-				entryGroup {
-					eq('app', app)
-				}
-				projections {
-					property('id')
-					property('dateCreated')
-				}
-			} as List
-
-			def toDelete = entries.findAll { it[1].isBefore(app.clearUntil) }.collect { it[0] }.flatten()
-			if (!toDelete) {
-				return
-			}
-
-			log.info "deleting ${toDelete.size()} entries for $app.name"
-			toDelete.each { long entryId ->
-				jesqueService.enqueue(EntryDeleteJob.queueName, EntryDeleteJob, [entryId, true])
+		// get all group id's
+		def groupsIds = EntryGroup.createCriteria().list {
+			eq('app', app)
+			ne('collector', true)
+			projections {
+				property('id')
 			}
 		}
+
+		groupsIds.each { long entryGroupId ->
+			EntryGroup group = EntryGroup.read(entryGroupId)
+			def entryIds = Entry.createCriteria().list {
+				eq('entryGroup', group)
+				lt('dateCreated', app.clearUntil)
+				projections {
+					property('id')
+				}
+			}
+			if (entryIds) {
+				log.info "deleting ${entryIds.size()} for $group.entryGroupId of $app.name"
+				entryIds.each {
+					jesqueService.enqueue(EntryDeleteJob.queueName, EntryDeleteJob, [it, true])
+				}
+			}
+		}
+
 	}
 }
