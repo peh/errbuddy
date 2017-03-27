@@ -60,12 +60,12 @@ def genericJobs = [
 	ApplicationDeploymentJob,
 	DeleteEntryGroupJob,
 	FindSimilarEntriesJob,
-	ReindexJob
+	ReindexJob,
+	RefindFromCollectorJob
 ]
 
 def dbHeavyJobs = [
 	DeleteEmptyGroupsJob,
-	RefindFromCollectorJob,
 	EntryCleanupJob
 ]
 

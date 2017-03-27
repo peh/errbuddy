@@ -188,7 +188,7 @@ class EntryService {
 			projections {
 				property('id')
 			}
-		}?.each { it
+		}?.each {
 			jesqueService.enqueue("generic", FindSimilarEntriesJob, [it])
 		}
 	}

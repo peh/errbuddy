@@ -1,6 +1,7 @@
 package errbuddy
 
 import grails.core.GrailsApplication
+import grails.plugins.jesque.JesqueService
 import org.joda.time.DateTime
 
 class EntryCleanupJob {
@@ -17,6 +18,7 @@ class EntryCleanupJob {
 
 	EntryCleanupService entryCleanupService
 	GrailsApplication grailsApplication
+	JesqueService jesqueService
 
 	def perform(long id = 0) {
 		if (id) {
@@ -27,8 +29,11 @@ class EntryCleanupJob {
 		} else {
 			App.createCriteria().list {
 				eq('enabled', true)
-			}.each { App app ->
-				handle(app)
+				projections {
+					property('id')
+				}
+			}.each {
+				jesqueService.enqueue(queueName, EntryCleanupJob, [it])
 			}
 		}
 	}
