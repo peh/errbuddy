@@ -9,7 +9,7 @@ class EntryCleanupService {
 
 	void handleEntryCleanupForApplication(App app) {
 		int max = 500
-		def entries = Entry.createCriteria().list([max: max]) {
+		def entries = Entry.createCriteria().list([max: max, order: 'asc', sort: 'id']) {
 			entryGroup {
 				eq('app', app)
 			}
