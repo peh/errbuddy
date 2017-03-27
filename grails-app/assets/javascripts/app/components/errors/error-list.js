@@ -19,7 +19,7 @@ export default class ErrorList extends BaseComponent {
 
     this.state = {
       list: [],
-      total: 0,
+      total: -1,
       applications: null,
       selectedApplication: selectedApplication || null,
       loading: false
@@ -41,7 +41,9 @@ export default class ErrorList extends BaseComponent {
       !this.props.urlParameters ||
       _.get(newProps.urlParameters, 'offset') !== `${this.getOffset()}` ||
       _.get(this.props.urlParameters, 'query') !== _.get(newProps.urlParameters, 'query')) {
-      this.loadObjectsFromServer(newProps.urlParameters)
+      this.updateState({list: [], total: -1}).then(() => {
+        this.loadObjectsFromServer(newProps.urlParameters)
+      })
     }
   }
 
@@ -61,8 +63,7 @@ export default class ErrorList extends BaseComponent {
   }
 
   loadObjectsFromServer(props) {
-    this.setState(_.assign(this.state, {loading: true}), () => {
-      // debugger
+    this.updateState({loading: true}).then(() => {
       this.doLoad(props)
     });
   }
@@ -79,11 +80,11 @@ export default class ErrorList extends BaseComponent {
           // we are clearly on a page where we should not be, reset the state and load again
           this.navigate("/errors/")
         } else {
-          this.setState(_.assign(this.state, {list: list, total: total, loading: false}))
+          this.updateState({list: list, total: total, loading: false})
         }
       })
       .catch((err) => {
-        this.setState(_.assign(this.state, {loading: false}));
+        this.updateState({loading: false});
         throw err
       });
   }
@@ -97,8 +98,9 @@ export default class ErrorList extends BaseComponent {
       appId = null
     }
     ConfigurationService.set('errbuddy.applicaiton.selected', appId);
-    this.setState(_.assign(this.state, {selectedApplication: appId}));
-    this.loadObjectsFromServer(true)
+    this.updateState({selectedApplication: appId, total: -1}).then(() => {
+      this.loadObjectsFromServer(true)
+    });
   }
 
   changePage(pageObj) {
@@ -111,16 +113,14 @@ export default class ErrorList extends BaseComponent {
   }
 
   render() {
-    const {list, total} = this.state;
+    const {list, loading, total} = this.state;
     let offset = this.getOffset();
     let max = this.getMax();
-    if (!list) {
-      return <LoadingHero />
-    }
+    let rows = "";
 
-    let rows = ""
-
-    if (list && list.length === 0 && _.get(this.props.urlParameters, 'query')) {
+    if (total === -1 && loading) {
+      rows = <LoadingHero />;
+    } else if (list && list.length === 0 && _.get(this.props.urlParameters, 'query')) {
       rows = <Hero><h3>No Results found for "{_.get(this.props.urlParameters, 'query')}. Try searching for something different!"</h3></Hero>;
     } else if (list && list.length === 0) {
       rows = <Hero><h3>No Errors. Yeah!</h3></Hero>;

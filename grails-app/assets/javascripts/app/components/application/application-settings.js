@@ -5,7 +5,6 @@ import BaseComponent from "../tools/base-component.js";
 import * as  _ from "lodash";
 import DeploymentList from "./deployment-list";
 import WithRole from "../tools/with-role";
-var ApplicationService = require('../../services/application-service');
 var cx = require('classnames');
 var swal = require('sweetalert');
 
