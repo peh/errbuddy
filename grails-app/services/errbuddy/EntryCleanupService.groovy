@@ -9,17 +9,14 @@ class EntryCleanupService {
 
 	void handleEntryCleanupForApplication(App app) {
 		int max = 500
-		List oldest = Entry.createCriteria().list([max: max, order: 'asc', sort: 'id']) {
+		List oldest = Entry.createCriteria().list([max: 1, order: 'asc', sort: 'id']) {
 			entryGroup {
 				eq('app', app)
-			}
-			projections {
-				property('id')
-				property('dateCreated')
 			}
 		} as List
 
 		if (oldest && oldest.first().dateCreated.isBefore(app.clearUntil)) {
+			log.info
 			def entries = Entry.createCriteria().list([max: max, order: 'asc', sort: 'id']) {
 				entryGroup {
 					eq('app', app)
@@ -39,8 +36,6 @@ class EntryCleanupService {
 			toDelete.each { long entryId ->
 				jesqueService.enqueue(EntryDeleteJob.queueName, EntryDeleteJob, [entryId, true])
 			}
-		} else {
-			log.info "skipping search for outdated errors as oldest is not old enough for $app.name"
 		}
 	}
 }
