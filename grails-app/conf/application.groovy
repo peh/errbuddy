@@ -60,18 +60,15 @@ def putJobs = [
 
 def deletingJobs = [
 	DeleteEntryGroupJob,
-	DeleteEmptyGroupsJob
+	DeleteEmptyGroupsJob,
+	EntryDeleteJob,
 ]
 
 def genericJobs = [
-	EntryDeleteJob,
 	ApplicationDeploymentJob,
 	FindSimilarEntriesJob,
 	ReindexJob,
-	RefindFromCollectorJob
-]
-
-def dbHeavyJobs = [
+	RefindFromCollectorJob,
 	EntryCleanupJob
 ]
 
@@ -123,11 +120,6 @@ grails {
 				workers = 3
 				queueNames = genericJobs.collect { it.queueName }.unique()
 				jobTypes = genericJobs.name
-			}
-			DBHeavyPool {
-				workers = 1
-				queueNames = dbHeavyJobs.collect { it.queueName }.unique()
-				jobTypes = dbHeavyJobs.name
 			}
 		}
 	}

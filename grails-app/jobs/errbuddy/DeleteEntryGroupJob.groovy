@@ -2,7 +2,7 @@ package errbuddy
 
 class DeleteEntryGroupJob {
 
-	static queueName = "generic"
+	static queueName = EntryDeleteJob.queueName
 
 	def entryGroupService
 
