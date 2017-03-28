@@ -26,7 +26,7 @@ class ApiController {
 		}
 		json.hostname = json.hostname ?: requestSource
 
-		jesqueService.enqueue("put", EntryPutJob, [request.app.id, json.toString()])
+		jesqueService.enqueue(EntryPutJob.queueName, EntryPutJob, [request.app.id, json.toString()])
 		resp.message = 'ok'
 
 		render(contentType: 'application/json') {
@@ -41,7 +41,7 @@ class ApiController {
 			resp.message = 'missing parameter: [version]'
 		} else {
 			def hostname = json.hostname ?: requestSource
-			jesqueService.enqueue("generic", ApplicationDeploymentJob, [request.app.id, json.version, hostname])
+			jesqueService.enqueue(ApplicationDeploymentJob.queueName, ApplicationDeploymentJob, [request.app.id, json.version, hostname])
 			resp.success = true
 		}
 		if (!resp.success) {

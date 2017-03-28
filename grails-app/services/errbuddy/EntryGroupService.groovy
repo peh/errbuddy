@@ -185,18 +185,18 @@ class EntryGroupService {
 
 		entries.each { long id ->
 			if (deleteEntries) {
-				jesqueService.enqueue("put", EntryDeleteJob, [id, true])
+				jesqueService.enqueue(EntryDeleteJob.queueName, EntryDeleteJob, [id, true])
 			} else {
-				jesqueService.enqueue("generic", FindSimilarEntriesJob, [id])
+				jesqueService.enqueue(FindSimilarEntriesJob.queueName, FindSimilarEntriesJob, [id])
 			}
 		}
 	}
 
 	def startRefind(EntryGroup entryGroup) {
-		jesqueService.enqueue("generic", DeleteEntryGroupJob, [entryGroup.id, false])
+		jesqueService.enqueue(DeleteEntryGroupJob.queueName, DeleteEntryGroupJob, [entryGroup.id, false])
 	}
 
 	def deleteGroup(EntryGroup entryGroup) {
-		jesqueService.enqueue("generic", DeleteEntryGroupJob, [entryGroup.id, true])
+		jesqueService.enqueue(DeleteEntryGroupJob.queueName, DeleteEntryGroupJob, [entryGroup.id, true])
 	}
 }

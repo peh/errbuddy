@@ -158,7 +158,7 @@ class EntryService {
 			log.error("could not validate entry: $entry.errors.allErrors")
 		} else {
 			entry.save(flush: true)
-			jesqueService.enqueue("generic", FindSimilarEntriesJob, [entry.id])
+			jesqueService.enqueue(FindSimilarEntriesJob.queueName, FindSimilarEntriesJob, [entry.id])
 		}
 	}
 
@@ -189,7 +189,7 @@ class EntryService {
 				property('id')
 			}
 		}?.each {
-			jesqueService.enqueue("generic", FindSimilarEntriesJob, [it])
+			jesqueService.enqueue(FindSimilarEntriesJob.queueName, FindSimilarEntriesJob, [it])
 		}
 	}
 
