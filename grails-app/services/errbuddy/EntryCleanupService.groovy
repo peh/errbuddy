@@ -10,15 +10,14 @@ class EntryCleanupService {
 	@Transactional(readOnly = true)
 	void handleEntryCleanupForApplication(App app) {
 		// get all group id's
-		def groupsIds = EntryGroup.createCriteria().list {
+		def groupIds = EntryGroup.createCriteria().list {
 			eq('app', app)
-			ne('collector', true)
 			projections {
 				property('id')
 			}
 		}
 
-		groupsIds.each { long entryGroupId ->
+		groupIds.each { long entryGroupId ->
 			EntryGroup group = EntryGroup.read(entryGroupId)
 			def entryIds = Entry.createCriteria().list {
 				eq('entryGroup', group)
