@@ -19,7 +19,7 @@ class EntryCleanupService {
 
 		groupIds.each { long entryGroupId ->
 			EntryGroup group = EntryGroup.read(entryGroupId)
-			def entryIds = Entry.createCriteria().list {
+			def entryIds = Entry.createCriteria().list(max: 10000) {
 				eq('entryGroup', group)
 				lt('dateCreated', app.clearUntil)
 				projections {
