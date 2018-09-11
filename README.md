@@ -7,8 +7,8 @@ The quickest and easiest way is do use the docker-compose file that comes with t
 
 ### First time starter
 ```
-git clone https://github.com/errbuddy/deploy.git
-cd deploy
+git clone https://github.com/errbuddy/deploy.git errbuddy
+cd errbuddy
 echo MYSQL_PASSWORD=i-changed-this > .env
 echo SERVER_URL=https://app.errbuddy.net >> .env
 echo HOSTNAME=app.errbuddy.net >> .env
