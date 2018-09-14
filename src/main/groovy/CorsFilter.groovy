@@ -17,7 +17,7 @@ class CorsFilter extends OncePerRequestFilter {
 
 		String origin = req.getHeader("Origin")
 
-		boolean options = "OPTIONS".equals(req.getMethod())
+		boolean options = req.method.equalsIgnoreCase("OPTIONS")
 		if (options) {
 			if (origin == null) return
 			resp.addHeader("Access-Control-Allow-Headers", "key, origin, authorization, accept, content-type, x-requested-with")

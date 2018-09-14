@@ -1,0 +1,28 @@
+version: '2'
+services:
+  redis:
+    image: redis
+    expose:
+      - 6379
+    ports:
+      - 127.0.0.1:6379:6379
+  elasticsearch:
+    image: elasticsearch:1.7.5
+    volumes:
+      - .data/elasticsearch:/usr/share/elasticsearch/data
+    expose:
+      - 9300
+      - 9200
+    ports:
+      - 127.0.0.1:9200:9200
+      - 127.0.0.1:9300:9300
+    command: "--cluster.name=elasticsearch"
+  mariadb:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_USER=errbuddy
+      - MYSQL_PASSWORD=123456
+      - MYSQL_DATABASE=errbuddy
+    ports:
+      - 127.0.0.1:3306:3306
