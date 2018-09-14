@@ -1,5 +1,6 @@
 package errbuddy
 
+import grails.converters.JSON
 import org.springframework.http.HttpStatus
 
 
@@ -30,9 +31,7 @@ class ApiInterceptor {
 		}
 
 		if (!cont) {
-			render(contentType: 'application/json') {
-				resp
-			}
+			render(contentType: 'application/json', text: (resp as JSON).toString())
 		}
 		return cont
 	}

@@ -6,7 +6,7 @@ class ShortlinkController {
 		Entry entry = Entry.findByIdentifier(identifier)
 
 		if (entry) {
-			redirect(url: "$serverUrl/$entry.entryGroup.entryGroupId/$entry.id")
+			redirect(url: "$serverUrl/errors/$entry.entryGroup.entryGroupId/$entry.id")
 		} else {
 			redirect(url: serverUrl)
 		}

@@ -77,7 +77,7 @@ dependencies {
 	runtime 'mysql:mysql-connector-java:5.1.36'
 	assets "com.bertramlabs.plugins:less-asset-pipeline:2.7.4"
 
-	compile 'org.grails.plugins:redis:2.0.4'
+	compile 'redis.clients:jedis:2.6.0'
 	compile "org.grails.plugins:spring-security-rest-redis:2.0.0.M2"
 	compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
 	compile "org.grails.plugins:spring-security-core:3.0.4"
@@ -85,12 +85,11 @@ dependencies {
 	compile 'org.jodd:jodd-http:3.6.6'
 	compile 'org.grails.plugins:joda-time:2.0.0'
 
-//	runtime "org.grails.plugins:spring-session:2.0.0-RC1"
-//
 	compile "org.grails.plugins:errbuddy:2.1.0"
 	compile "com.uberall.plugins:uber-doc:2.0.4"
 	compile 'org.grails.plugins:elasticsearch:1.0.0.2'
 	compile 'org.grails.plugins:jesque-admin:0.6.5'
+	compile 'org.grails.plugins:redis:2.0.4'
 	compile 'org.grails.plugins:jesque:1.2.1-UBERALL'
 
 	assets 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
@@ -146,7 +145,7 @@ buildscript {
 }
 
 bootRun {
-	jvmArgs = ["-Xms2G", "-Xmx2G"]
+	jvmArgs("-Xms2G", "-Xmx2G")
 }
 
 node {

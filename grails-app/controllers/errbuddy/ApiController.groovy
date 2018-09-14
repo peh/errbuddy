@@ -29,9 +29,7 @@ class ApiController {
 		jesqueService.enqueue(EntryPutJob.queueName, EntryPutJob, [request.app.id, json.toString()])
 		resp.message = 'ok'
 
-		render(contentType: 'application/json') {
-			resp
-		}
+		render(contentType: 'application/json', text: (resp as JSON).toString())
 	}
 
 	def deploy() {
@@ -47,9 +45,7 @@ class ApiController {
 		if (!resp.success) {
 			response.status = HttpStatus.BAD_REQUEST.value()
 		}
-		render(contentType: 'application/json') {
-			resp
-		}
+		render(contentType: 'application/json', text: (resp as JSON).toString())
 	}
 
 	def ping() {
@@ -60,9 +56,7 @@ class ApiController {
 	 * render the latest version string of the requests application
 	 */
 	def latest() {
-		render(contentType: 'application/json') {
-			[version: request.app.appVersion]
-		}
+		render(contentType: 'application/json', text: ([version: request.app.appVersion] as JSON).toString())
 	}
 
 	private getRequestSource() {
