@@ -5,11 +5,11 @@ before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:
-  - $HOME/.gradle/caches/
-  - $HOME/.gradle/wrapper/
-  - .gradle/
-  - .nodejs/
-  - .npm/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+  - ".gradle/"
+  - ".nodejs/"
+  - ".npm/"
   - node_modules/
 jdk:
 - oraclejdk8
@@ -34,11 +34,9 @@ deploy:
       repo: peh/errbuddy
       tags: true
   - provider: s3
-    access_key_id: AKIAJEFQRMTUREC2L4NA
+    access_key_id: AKIAJIR44F5SBGMXXLNQ
     secret_access_key:
-        secure: D5fA/BNsBRGQqzR0wsX3SZ8LQ825WSglNDHce1etKUnNmT7eBPh9TIGA9n7R3Ny9OIwp3Xw5mohg/JLXrQmJbLyEbu0wYdRnwTeCke7vgtZwBUgVhoYhraTbJQzPRNegVnMD2fXB/mEjGIy1uNJTi30zidfjFeq0/Z4kJD9RjuWqy/1hKcsRTh44sKXEkxBo7x+tE0w/mpU6ceM9vxWjrOsWtptrCEuaWnd1er6Qk7E5nOJOFmDN9fzKGG6Xjyb1xbf7iYkdcdcZTekWgjHopKqlLpFH+JWeUDmU2COCeADhb6LwgCb8Chu/Q368OhI0IF9EFVogzn0EK6ux32B9ku0jI+SSHKpTdDxZeFh1ajaQs8mNZ03UV7aencuzfeDLrd07b1cAGVaY/EgtCZymzzfiPF41vyZWDpQSnDkz/QnlTSrIjtLmuEpEJpQGgbj+ZQ283ZV4gj7rBHXehkmCxWVz32q+ii7hushAjNmij6dKZAgalR4BgNs/1G3kqEkrWklHV9FYqM53R+b6+tGxpLxH2mc22Rk5hmUuf/ECvr6LFvgZalffEtRT3UyM5HKUpKPKfOcQ3zuzsXhZy+HNS3cBSuGxOApXk6iMKGuc68Q2gy0IKFOKA7CJNQRL6X4XycpAjfZusd5bXE0mNr2r83DJI84DR5wZuWi7o1iz9Bo=
-#    secret_access_key:
-#      secure: JRczi7fmXFxmJi6EIoVNfpApZuNisNlXttY7bawVeEPAFBXWz8LdvJHwIscpJkoMfoeVur052pkbtWkGJ8W3h8n2Jki2ttnR7cUb0ufWv4k4wnnucdEbUerSYbOO36UOZ2VsF5fPd+JE2fhuy5hb/fnbHipKRwwkLemRIbt82p1oeU0f9odSsZr7chPbvWUwRN0nBQFe0Tt0vNJqN6oiPcE83j5ZYQ8I59BcoVkMLRJ5VY+SMwGhxBBR7y8rjm+GKhiH3saOiuaOzHEoFLpmLIjPT5BUbFmQ4cjELuR+SIwsXwMSa5lBH1nXDP+pWHfZSgZX4op4lW2Dg6xUH4BLklXomRuqkI/WdkdUKaFn+8bP84Xrfbr26BKAIaGdQ9jkniuFtuyDOU9368vN8ltKw4DiNZeA+HhyfQigEayplShiPKv954N8x1VEbTYJVPn2/3VUf5PgKwCqjbcm4B7ICoHSlZHulMW/je8H1xW33fwc2pjaIi57u0X9fs3mJxOwECCYt/6Clyudc7pGOHleTa5hXlNv7yjLuuLV4kcQ8/SEoYQOHjwX7A8HUF/X+Q/MQXuTCsjBZkwRyixrd0yrfS0eXjXvrFgBrZ56ZcGznu5oblTwwtm1fQFTe2Vvf/7iwPNShC5PS0WWKZi3xIimVn6lGsPmGv2Y/oE4NUgeIu0=
+      secure: ryc2dvWlGPfjUmSGaBblhhIbduJH+v7z/W7BrqKB72PlX0mW2Ry7hfnTgkOTEhpSYx+9rzm8ckgFgOCKVdU0rJ1ECDKjyatxbrAwg6HUE9xm/r4gpj/uBFJOE07/OTjQuN3VpWRqcpU5mgsfabfa1WWOgvsGsFwet9q/wOG2Xctrmwezffc8ScWVhPVj9hG3OFsjafP7FhqoY/IJ/E+DSgFYXHua3EXNy70me2fIFwT8RPd9O/MXx08r2ltnc3eDbpwdgBNFN3/VwobNEEkSw6wyB7wmZd762EFalQaqRd9Qv1fXSvT2vXfUkOQobutZ4kAZIA6Nkytlj5+UK2qTYggGjg4k4B1SGLJTE29NTgSKM6rW0C3g5G5oUkDscSiiicRkBCpdKXkvTJhzgaYIuQ3agDy6TvtRmuJKHJGobbNJ396DaEPPld+rWrPk/tlvUGvLnp9XBrRuMN0Z31MlqJqgpX0ePnIo7wsASAJDYzy5Dmi0fQ+zL4DGzzjez03AVYX5W7m4/stwZ9HDEN98PK76rictCXtHuSggXzJxYVfay2dpCPcGTNsWH10OO55qy5rZWQ7ZC16XjxkkCWJBj3G1Is43qah4+hhxYtdtv6xxUAFZyTDVlRanx8bU/74xcaPXt9hkM2Vm6FVVKETJLm5g6c8fLVNFhBKSLrSUmys=
     bucket: "errbuddy-devel"
     acl: public_read
     local_dir: ./build/libs/
