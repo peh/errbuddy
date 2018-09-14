@@ -1,0 +1,47 @@
+POST http://localhost:9000/api/error/
+Content-Type: application/json
+key: 9hSsjixHbPI64bjgwkUPXrxVXfpitxM6f9ZRyT06OGdxjDumNhD4gemO3cN6vDr
+
+{
+ "identifier": "7WBCGianK1z6eM0zP1BmbiEf367fwkXP",
+ "time": 0,
+ "message": "Division by zero",
+ "controller": "home",
+ "action": "index",
+ "path": "http://localhost:8080/en",
+ "hostname": "uberall.com",
+ "requestParameters": {
+   "controller": "home",
+   "action": "index",
+   "language": "en"
+ },
+ "sessionParameters": {
+   "org.grails.FLASH_SCOPE": {},
+   "org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE": "en_DE"
+ },
+ "type": "ERROR",
+ "exception": "java.lang.ArithmeticException",
+ "level": "ERROR",
+ "stacktrace": [
+   "java.math.BigDecimal.divide(BigDecimal.java:1742)",
+   "uberall.HomeController.index(HomeController.groovy:38)",
+   "org.grails.core.DefaultGrailsControllerClass$ReflectionInvoker.invoke(DefaultGrailsControllerClass.java:210)",
+   "org.grails.core.DefaultGrailsControllerClass.invoke(DefaultGrailsControllerClass.java:187)",
+   "org.grails.web.mapping.mvc.UrlMappingsInfoHandlerAdapter.handle(UrlMappingsInfoHandlerAdapter.groovy:90)",
+   "org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:961)",
+   "org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:895)",
+   "org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:967)",
+   "org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:858)",
+   "org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:843)",
+   "org.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:77)",
+   "org.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:67)",
+   "org.grails.plugins.springsession.web.http.HttpSessionSynchronizer.doFilterInternal(HttpSessionSynchronizer.java:33)",
+   "org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:164)",
+   "org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)",
+   "java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)",
+   "java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)",
+   "java.lang.Thread.run(Thread.java:748)"
+ ]
+}
+
+###
