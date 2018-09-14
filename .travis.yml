@@ -39,6 +39,7 @@ deploy:
       secure: ryc2dvWlGPfjUmSGaBblhhIbduJH+v7z/W7BrqKB72PlX0mW2Ry7hfnTgkOTEhpSYx+9rzm8ckgFgOCKVdU0rJ1ECDKjyatxbrAwg6HUE9xm/r4gpj/uBFJOE07/OTjQuN3VpWRqcpU5mgsfabfa1WWOgvsGsFwet9q/wOG2Xctrmwezffc8ScWVhPVj9hG3OFsjafP7FhqoY/IJ/E+DSgFYXHua3EXNy70me2fIFwT8RPd9O/MXx08r2ltnc3eDbpwdgBNFN3/VwobNEEkSw6wyB7wmZd762EFalQaqRd9Qv1fXSvT2vXfUkOQobutZ4kAZIA6Nkytlj5+UK2qTYggGjg4k4B1SGLJTE29NTgSKM6rW0C3g5G5oUkDscSiiicRkBCpdKXkvTJhzgaYIuQ3agDy6TvtRmuJKHJGobbNJ396DaEPPld+rWrPk/tlvUGvLnp9XBrRuMN0Z31MlqJqgpX0ePnIo7wsASAJDYzy5Dmi0fQ+zL4DGzzjez03AVYX5W7m4/stwZ9HDEN98PK76rictCXtHuSggXzJxYVfay2dpCPcGTNsWH10OO55qy5rZWQ7ZC16XjxkkCWJBj3G1Is43qah4+hhxYtdtv6xxUAFZyTDVlRanx8bU/74xcaPXt9hkM2Vm6FVVKETJLm5g6c8fLVNFhBKSLrSUmys=
     bucket: "errbuddy-devel"
     acl: public_read
+    region: eu-central-1
     local_dir: ./build/libs/
     skip_cleanup: true
     on:
