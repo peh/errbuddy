@@ -6,26 +6,41 @@ import LoadingHero from "../tools/loading-hero";
 import UserListRow from "./user-list-row";
 import WithRole from "../tools/with-role";
 import Hero from "../tools/hero";
+import ReactPaginate from "react-paginate";
 
 const ROLES_NEEDED = ['ROLE_ROOT', 'ROLE_ADMIN'];
 export default class UserList extends BaseComponent {
 
   constructor(props) {
     super(props);
-    this.state = {users: []};
+    this.state = {
+      users: [],
+      total: 0,
+      max: 20,
+      offset: 0
+    };
 
     this._bindThis('getUserList');
     setTimeout(this.getUserList, 1000)
   }
 
   getUserList() {
-    this.getUserService().list(50, 0)
+    let {max, offset} = this.state;
+    this.getUserService().list(max, offset)
       .then((response) => {
-        this.setState({users: response.users})
+        let {users, total} = response;
+        this.setState({...this.state, users: users, total: total})
       })
       .catch((err) => {
         throw(err)
       })
+  }
+
+  changePage(pageObj) {
+    let offset = pageObj.selected * this.state.max;
+    this.setState({...this.state, offset: offset}, () => {
+      this.getUserList()
+    });
   }
 
   render() {
@@ -33,6 +48,7 @@ export default class UserList extends BaseComponent {
       return <LoadingHero />
     }
     var rows = [];
+    const {total, max, offset} = this.state;
     this.state.users.forEach((user) => {
       rows.push(<UserListRow user={user} key={user.username} errbuddyApp={this.getApp()}/>);
     });
@@ -55,6 +71,18 @@ export default class UserList extends BaseComponent {
             </thead>
             <tbody>{rows}</tbody>
           </table>
+          <ReactPaginate
+            pageCount={Math.ceil(total / max)}
+            pageRangeDisplayed={4}
+            marginPagesDisplayed={1}
+            forceSelected={Math.floor(offset / max)}
+            onPageChange={::this.changePage}
+            previousLabel="&laquo;"
+            nextLabel="&raquo;"
+            breakLabel={<a href="">...</a>}
+            activeClassName="active"
+            containerClassName="pagination"
+          />
         </section>
       </WithRole>
     );

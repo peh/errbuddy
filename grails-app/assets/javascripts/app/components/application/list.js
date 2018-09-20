@@ -2,21 +2,26 @@ import React from "react";
 import BaseComponent from "../tools/base-component";
 import * as  _ from "lodash";
 import LoadingHero from "../tools/loading-hero";
+import ReactPaginate from "react-paginate";
 
 export default class ApplicationList extends BaseComponent {
   constructor(props) {
     super(props)
     this.state = {
       applications: [],
-      total: 0
-    }
+      total: 0,
+      max: 20,
+      offset: 0
+    };
+  }
 
-    this._bindThis('getApplicationList')
-    setTimeout(this.getApplicationList, 250)
+  componentDidMount() {
+    this.getApplicationList();
   }
 
   getApplicationList() {
-    this.getApplicationService().list(0, 10)
+    let {max, offset} = this.state;
+    this.getApplicationService().list(offset, max)
       .then((json) => {
         this.setState(_.assign(this.state, {applications: json.applications, total: json.total}))
       })
@@ -27,16 +32,15 @@ export default class ApplicationList extends BaseComponent {
 
   }
 
-  componentDidMount() {
-    this.setInterval(this.getApplicationList, 5000)
-  }
-
-  componentWillUnmount() {
-    this.stopInterval()
+  changePage(pageObj) {
+    let offset = pageObj.selected * this.state.max;
+    this.setState({...this.state, offset: offset}, () => {
+      this.getApplicationList()
+    });
   }
 
   render() {
-    const {applications, total} = this.state;
+    const {applications, total, max, offset} = this.state;
     if (applications.length === 0) {
       return <LoadingHero />
     }
@@ -70,6 +74,18 @@ export default class ApplicationList extends BaseComponent {
           {rows}
           </tbody>
         </table>
+        <ReactPaginate
+          pageCount={Math.ceil(total / max)}
+          pageRangeDisplayed={4}
+          marginPagesDisplayed={1}
+          forceSelected={Math.floor(offset / max)}
+          onPageChange={::this.changePage}
+          previousLabel="&laquo;"
+          nextLabel="&raquo;"
+          breakLabel={<a href="">...</a>}
+          activeClassName="active"
+          containerClassName="pagination"
+        />
       </section>
     )
   }

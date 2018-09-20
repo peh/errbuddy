@@ -18,7 +18,7 @@ class UserController extends AbstractApiController {
 
 	def list() {
 		sanitizeParams()
-		renderJson([users: User.list(params)])
+		renderJson([users: User.list(params), total: User.count()])
 	}
 
 	def get() {

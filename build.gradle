@@ -85,7 +85,7 @@ dependencies {
 	compile 'org.jodd:jodd-http:3.6.6'
 	compile 'org.grails.plugins:joda-time:2.0.0'
 
-	compile "org.grails.plugins:errbuddy:2.1.0"
+	compile "org.grails.plugins:errbuddy:2.2.0"
 	compile "com.uberall.plugins:uber-doc:2.0.4"
 	compile 'org.grails.plugins:elasticsearch:1.0.0.2'
 	compile 'org.grails.plugins:jesque-admin:0.6.5'
