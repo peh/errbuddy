@@ -18,7 +18,17 @@ class UserController extends AbstractApiController {
 
 	def list() {
 		sanitizeParams()
-		renderJson([users: User.list(params), total: User.count()])
+		def list = User.createCriteria().list([max: params.max, offset: params.offset]) {
+			if (params.query) {
+				or {
+					like("username", "%$params.query%")
+					like("name", "%$params.query%")
+					like("email", "%$params.query%")
+				}
+			}
+		}
+		def total = list.totalCount
+		renderJson([users: list, total: total])
 	}
 
 	def get() {

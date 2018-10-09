@@ -21,14 +21,6 @@ export default class ErrorService extends BaseService {
       .then((resp) => {
         return resp.json()
       })
-    // this.superagent.get(this.baseUrl + PATH + entryGroupId + '/' + entryId)
-    //   .end(function (err, response) {
-    //     if (response.status === 200) {
-    //       successCallback(response.body)
-    //     } else {
-    //       errorCallback(err, response)
-    //     }
-    //   });
   }
 
   similar(entryGroup, params) {

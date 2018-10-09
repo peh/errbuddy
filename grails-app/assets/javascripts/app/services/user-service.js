@@ -3,6 +3,7 @@
 import "whatwg-fetch";
 import BaseService from "./base-service";
 import ConfigurationService from "./configuration-service";
+
 const AppEvents = require('../events/application-events');
 const PATH = '/api/app/users/';
 
@@ -67,8 +68,8 @@ export default class UserService extends BaseService {
     return this.doDel(`${this.baseUrl}${PATH}${user.id}`)
   }
 
-  list(max, offset) {
-    return this.doGet(`${this.baseUrl}${PATH}`, {max, offset})
+  list(max, offset, query = "") {
+    return this.doGet(`${this.baseUrl}${PATH}`, {max, offset, query})
   }
 
   _loggedIn(user) {

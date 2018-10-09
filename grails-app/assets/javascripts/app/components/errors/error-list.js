@@ -8,22 +8,18 @@ import EntryGroupTableRow from "./list-row";
 import ReactPaginate from "react-paginate";
 import ConfigurationService from "../../services/configuration-service";
 import Hero from "../tools/hero";
+import {observer} from "mobx-react"
+import {observable} from "mobx";
+
 const cx = require('classnames');
 const querystring = require('querystring');
 
+@observer
 export default class ErrorList extends BaseComponent {
   constructor(props) {
     super(props);
 
-    let selectedApplication = ConfigurationService.get('errbuddy.applicaiton.selected');
-
-    this.state = {
-      list: [],
-      total: -1,
-      applications: null,
-      selectedApplication: selectedApplication || null,
-      loading: false
-    };
+    this.selectedApplication = ConfigurationService.get('errbuddy.applicaiton.selected') || null;
 
     this._bindThis('loadObjectsFromServer',
       'handlePausedChange',
@@ -34,27 +30,33 @@ export default class ErrorList extends BaseComponent {
       'doLoad'
     );
 
+    this.offset = this.offset || this.getOffset();
+    this.max = this.max || this.getMax();
+
   }
 
-  componentWillReceiveProps(newProps) {
-    if (
-      !this.props.urlParameters ||
-      _.get(newProps.urlParameters, 'offset') !== `${this.getOffset()}` ||
-      _.get(this.props.urlParameters, 'query') !== _.get(newProps.urlParameters, 'query')) {
-      this.updateState({list: [], total: -1}).then(() => {
-        this.loadObjectsFromServer(newProps.urlParameters)
-      })
-    }
+  @observable selectedApplication;
+  @observable applications = [];
+  @observable total = -1;
+  @observable loading = false;
+  @observable errors = [];
+  @observable offset = null;
+  @observable max = null;
+
+  async componentWillReceiveProps(newProps) {
+    this.offset = this.offset || this.getOffset();
+    this.max = this.max || this.getMax();
+    await this.loadObjectsFromServer();
   }
 
   componentWillUnmount() {
     this.stopInterval();
   }
 
-  componentDidMount() {
-    this.getApplicationService().list(0, 10000).then(applications => {
-      this.updateState({applications: applications.applications}).then(this.loadObjectsFromServer);
-    });
+  async componentDidMount() {
+    let resp = await this.getApplicationService().list(100, 0);
+    this.applications = resp.applications;
+    this.loadObjectsFromServer();
     this.setInterval(this.loadObjectsFromServer, 2000);
   }
 
@@ -62,72 +64,72 @@ export default class ErrorList extends BaseComponent {
     this.loadObjectsFromServer(!paused)
   }
 
-  loadObjectsFromServer(props) {
-    this.updateState({loading: true}).then(() => {
-      this.doLoad(props)
-    });
-  }
-
-  doLoad(props) {
-    const {selectedApplication} = this.state;
-    let offset = _.get(props, 'offset') || this.getOffset();
-    let max = _.get(props, 'max') || this.getMax();
-    this.getErrorService().list(max, offset, this.getQuery(), selectedApplication)
-      .then((json) => {
-        let list = json.result;
-        let total = json.total;
-        if (list.length < 1 && offset > 0) {
-          // we are clearly on a page where we should not be, reset the state and load again
-          this.navigate("/errors/")
-        } else {
-          this.updateState({list: list, total: total, loading: false})
-        }
-      })
-      .catch((err) => {
-        this.updateState({loading: false});
-        throw err
-      });
+  async loadObjectsFromServer(props) {
+    this.loading = true;
+    try {
+      let resp = await this.getErrorService().list(this.max, this.offset, this.getQuery(), this.selectedApplication);
+      let list = resp.result;
+      this.total = resp.total;
+      if (list.length < 1 && offset > 0) {
+        // we are clearly on a page where we should not be, reset the state and load again
+        this.navigate("/errors/")
+      } else {
+        this.errors = list;
+        this.loading = false;
+      }
+    } catch (err) {
+      this.loading = false;
+      throw err
+    }
   }
 
   getQuery() {
     return _.get(this.props.urlParameters, 'query') || "";
   }
 
-  toggleApplicationFilter(appId) {
-    if (this.state.selectedApplication === appId) {
+  async toggleApplicationFilter(appId) {
+    if (this.selectedApplication === appId) {
       appId = null
     }
     ConfigurationService.set('errbuddy.applicaiton.selected', appId);
-    this.updateState({selectedApplication: appId, total: -1}).then(() => {
-      this.loadObjectsFromServer(true)
-    });
+    this.selectedApplication = appId;
+    this.total = -1;
+    await this.loadObjectsFromServer(true)
   }
 
-  changePage(pageObj) {
-    if (!this.state.loading) {
-      let max = this.getMax();
-      let offset = pageObj.selected * max;
-      let query = this.getQuery()
-      this.navigate(`/?${querystring.stringify({max, offset, query})}`);
-    }
+  async changePage(pageObj) {
+    this.offset = pageObj.selected * this.max;
+    this.navigate(`/?${querystring.stringify({max: this.max, offset: this.offset, query: this.getQuery()})}`, true);
+    await this.loadObjectsFromServer();
+  }
+
+  getApplicationButtons() {
+    return this.applications.map(app => {
+      let buttonClasses = cx('btn', {
+        'btn-default': app.id !== this.selectedApplication,
+        'active': app.id === this.selectedApplication,
+      });
+      return (
+        <button key={`app-choose-${app.id}`} type="button" className={buttonClasses} onClick={() => {
+          this.toggleApplicationFilter(app.id)
+        }}>{app.name}</button>
+      )
+    })
   }
 
   render() {
-    const {list, loading, total} = this.state;
-    let offset = this.getOffset();
-    let max = this.getMax();
     let rows = "";
 
-    if (total === -1 && loading) {
+    if (this.total === -1 && this.loading) {
       rows = <LoadingHero />;
-    } else if (list && list.length === 0 && _.get(this.props.urlParameters, 'query')) {
-      rows = <Hero><h3>No Results found for "{_.get(this.props.urlParameters, 'query')}. Try searching for something different!"</h3></Hero>;
-    } else if (list && list.length === 0) {
+    } else if (this.errors && this.errors.length === 0 && _.get(this.props.urlParameters, 'query')) {
+      rows = <Hero><h3>No Results found for "{_.get(this.props.urlParameters, 'query')}".</h3></Hero>;
+    } else if (this.errors && this.errors.length === 0) {
       rows = <Hero><h3>No Errors. Yeah!</h3></Hero>;
-    } else if (list && list.length > 0) {
-      rows = _.map(list, (entryGroup) => {
+    } else if (this.errors && this.errors.length > 0) {
+      rows = _.map(this.errors, (entryGroup) => {
         return <EntryGroupTableRow
-          applications={this.state.applications}
+          applications={this.applications}
           ref={entryGroup.entryGroupId}
           entryGroup={entryGroup}
           key={entryGroup.entryGroupId}
@@ -136,30 +138,20 @@ export default class ErrorList extends BaseComponent {
       });
     }
 
-    let toggledApplication = this.state.selectedApplication;
-    let buttons = _.map(this.state.applications, (app) => {
-      let buttonClasses = cx('btn', {
-        'btn-default': app.id !== toggledApplication,
-        'active': app.id === toggledApplication,
-      });
-      return (
-        <button key={`app-choose-${app.id}`} type="button" className={buttonClasses} onClick={() => {
-          this.toggleApplicationFilter(app.id)
-        }}>{app.name}</button>
-      )
-    });
     return (
       <section className="entry-list-container">
         <div className="head">
           <div className="btn-group application-chooser" role="group">
-            {buttons}
+            {this.getApplicationButtons()}
           </div>
           <ReactPaginate
-            pageCount={Math.ceil(total / max)}
+            disabled={true}
+            pageCount={Math.ceil(this.total / this.max)}
             pageRangeDisplayed={4}
             marginPagesDisplayed={1}
-            forceSelected={Math.floor(offset / max)}
-            onPageChange={this.changePage}
+            initialPage={Math.floor(this.offset / this.max)}
+            forceSelected={Math.floor(this.offset / this.max)}
+            onPageChange={::this.changePage}
             previousLabel="&laquo;"
             nextLabel="&raquo;"
             breakLabel={<a href="">...</a>}

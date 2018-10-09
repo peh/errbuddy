@@ -7,54 +7,68 @@ import UserListRow from "./user-list-row";
 import WithRole from "../tools/with-role";
 import Hero from "../tools/hero";
 import ReactPaginate from "react-paginate";
+import {observer} from "mobx-react/index";
+import {observable} from "mobx/lib/mobx";
 
 const ROLES_NEEDED = ['ROLE_ROOT', 'ROLE_ADMIN'];
+
+@observer
 export default class UserList extends BaseComponent {
 
   constructor(props) {
     super(props);
-    this.state = {
-      users: [],
-      total: 0,
-      max: 20,
-      offset: 0
-    };
-
-    this._bindThis('getUserList');
-    setTimeout(this.getUserList, 1000)
   }
 
-  getUserList() {
-    let {max, offset} = this.state;
-    this.getUserService().list(max, offset)
-      .then((response) => {
-        let {users, total} = response;
-        this.setState({...this.state, users: users, total: total})
-      })
-      .catch((err) => {
-        throw(err)
-      })
+  componentDidMount() {
+    this.changePage({selected: 0})
+  }
+
+  @observable total = 0;
+  @observable max = 20;
+  @observable offset = 0;
+  @observable users = [];
+  @observable loading = false;
+  @observable query = "";
+  @observable initialized = false;
+
+  async getUserList() {
+    this.loading = true;
+    try {
+      let response = await this.getUserService().list(this.max, this.offset, this.query);
+      this.users = response.users;
+      this.total = response.total;
+      this.loading = false;
+      this.initialized = true;
+
+    } catch (e) {
+      this.loading = false;
+      throw e
+    }
   }
 
   changePage(pageObj) {
-    let offset = pageObj.selected * this.state.max;
-    this.setState({...this.state, offset: offset}, () => {
-      this.getUserList()
-    });
+    this.offset = pageObj.selected * this.max;
+    this.getUserList()
+  }
+
+  getUserRows() {
+    return this.users.map(user => <UserListRow query={this.query} user={user} key={user.username} errbuddyApp={this.getApp()}/>)
+  }
+
+  async onQueryChange(e) {
+    this.query = e.target.value;
+    this.offset = 0;
+    await this.getUserList();
   }
 
   render() {
-    if (this.state.users.length === 0) {
+    if (!this.initialized) {
       return <LoadingHero />
     }
-    var rows = [];
-    const {total, max, offset} = this.state;
-    this.state.users.forEach((user) => {
-      rows.push(<UserListRow user={user} key={user.username} errbuddyApp={this.getApp()}/>);
-    });
     return (
       <WithRole user={this.getMe()} roles={ROLES_NEEDED} notAllowed={<section><Hero><h2>You are not allowed to do this!</h2></Hero></section>}>
         <section>
+          <input type="search" className="form-control" placeholder="Search" onChange={::this.onQueryChange} value={this.query}/>
           <table className="table table-hover table-condensed">
             <thead>
             <tr>
@@ -63,19 +77,22 @@ export default class UserList extends BaseComponent {
               <th>email</th>
               <th>enabled</th>
               <th>
-                <button className="btn btn-xl btn-success pull-right" onClick={() => {
-                  this.navigate('/users/add')
-                }}><i className="fa fa-plus"></i></button>
+                <button
+                  className="btn btn-xl btn-success pull-right"
+                  onClick={() => {
+                    this.navigate('/users/add')
+                  }}
+                ><i className="fa fa-plus"></i></button>
               </th>
             </tr>
             </thead>
-            <tbody>{rows}</tbody>
+            <tbody>{this.getUserRows()}</tbody>
           </table>
           <ReactPaginate
-            pageCount={Math.ceil(total / max)}
+            pageCount={Math.ceil(this.total / this.max)}
             pageRangeDisplayed={4}
             marginPagesDisplayed={1}
-            forceSelected={Math.floor(offset / max)}
+            forceSelected={Math.floor(this.offset / this.max)}
             onPageChange={::this.changePage}
             previousLabel="&laquo;"
             nextLabel="&raquo;"

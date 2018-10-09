@@ -4,6 +4,7 @@ var webpack = require('webpack');
 module.exports = function (entry, outName, listenPort) {
   return {
     entry: [
+      'babel-polyfill',
       'bootstrap-loader',
       'webpack-dev-server/client?http://0.0.0.0:' + listenPort,
       'webpack/hot/only-dev-server',

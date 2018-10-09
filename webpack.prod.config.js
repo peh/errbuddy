@@ -8,6 +8,7 @@ module.exports = function (entry, output) {
   // console.log(outName)
   return {
     entry: [
+      'babel-polyfill',
       'bootstrap-loader',
       entry
     ],

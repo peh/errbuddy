@@ -16,6 +16,12 @@ $fa-font-path: "~font-awesome/fonts";
   box-sizing: border-box;
 }
 
+mark.query-match  {
+  background-color: #d9c065;
+  padding: .1em 0;
+  border-radius: 0.2em;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
@@ -31,8 +37,12 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   min-height: 100vh;
   min-width: 100vw;
+  max-width: 100vw;
+  align-items: center;
   & > .nav {
     flex: 0 1 60px;
+    min-width: 100vw;
+    max-width: 100vw;
     background: $errbuddy-blue;
     color: #fff;
     display: flex;
@@ -136,35 +146,12 @@ h1, h2, h3, h4, h5, h6 {
     flex: 1;
     min-height: calc(100vh - 60px);
     background: #f0f0f0;
+    max-width: 100vw;
+    min-width: 100vw;
+
   }
 
 }
-
-//.errbuddy-container {
-//  display: flex;
-//  flex-direction: row;
-//  min-height: 100vh;
-//  .sidebar-wrap {
-//    min-height: 100%;
-//    max-height: 100%;
-//    flex: 0 0 $sidebar-width;
-//    background-color: $sidebar-background;
-//    z-index: 1000;
-//  }
-//  .content {
-//    flex: 1 1 100%;
-//    min-height: calc(100vh);
-//    max-height: 100%;
-//    max-width: calc(100vw - 80px);
-//    z-index: 0;
-//    background: #f0f0f0;
-//    .content-container {
-//      padding: 0 10px;
-//      box-sizing: border-box;
-//      width: 100%;
-//    }
-//  }
-//}
 
 .navbar-default {
   .navbar-nav {

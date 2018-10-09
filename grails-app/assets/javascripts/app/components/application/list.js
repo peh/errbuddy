@@ -1,63 +1,80 @@
 import React from "react";
 import BaseComponent from "../tools/base-component";
-import * as  _ from "lodash";
 import LoadingHero from "../tools/loading-hero";
 import ReactPaginate from "react-paginate";
+import {observer} from "mobx-react"
+import {observable} from "mobx";
+import Highlighter from "react-highlight-words";
 
+@observer
 export default class ApplicationList extends BaseComponent {
   constructor(props) {
     super(props)
-    this.state = {
-      applications: [],
-      total: 0,
-      max: 20,
-      offset: 0
-    };
   }
+
+  @observable total = 0;
+  @observable max = 20;
+  @observable offset = 0;
+  @observable applications = [];
+  @observable loading = false;
+  @observable query = "";
 
   componentDidMount() {
     this.getApplicationList();
   }
 
-  getApplicationList() {
-    let {max, offset} = this.state;
-    this.getApplicationService().list(offset, max)
-      .then((json) => {
-        this.setState(_.assign(this.state, {applications: json.applications, total: json.total}))
-      })
-      .catch((err) => {
-        this.showError('Failed to fetch Applications from Server');
-        throw err;
-      });
-
+  async getApplicationList() {
+    this.loading = true;
+    try {
+      let response = await this.getApplicationService().list(this.max, this.offset, this.query);
+      this.total = response.total;
+      this.applications = response.applications;
+      this.loading = false;
+    } catch (e) {
+      this.showError('Failed to fetch Applications from Server');
+      this.loading = false;
+      throw e;
+    }
   }
 
   changePage(pageObj) {
-    let offset = pageObj.selected * this.state.max;
-    this.setState({...this.state, offset: offset}, () => {
-      this.getApplicationList()
-    });
+    this.offset = pageObj.selected * this.max;
+    this.getApplicationList();
+  }
+
+  getTableRows() {
+    return this.applications.map(app => {
+      return (<tr key={app.id}>
+        <td>
+          <Highlighter
+            highlightClassName="query-match"
+            searchWords={[this.query]}
+            autoEscape={true}
+            textToHighlight={app.name}
+          />
+        </td>
+        <td>{app.latest}</td>
+        <td><a href="javascript: void(0)" className="btn btn-sm btn-default" onClick={() => {
+          this.navigate(`/applications/${app.id}`)
+        }}><i className="fa fa-cog"></i></a></td>
+      </tr>)
+    })
+  }
+
+  async onQueryChange(e) {
+    this.query = e.target.value;
+    this.offset = 0;
+    await this.getApplicationList();
   }
 
   render() {
-    const {applications, total, max, offset} = this.state;
-    if (applications.length === 0) {
-      return <LoadingHero />
+    if (this.applications.length === 0) {
+      return <LoadingHero/>
     }
 
-    let rows = _.map(this.state.applications, (app) => {
-      return (
-        <tr key={app.id}>
-          <td>{app.name}</td>
-          <td>{app.latest}</td>
-          <td><a href="javascript: void(0)" className="btn btn-sm btn-default" onClick={() => {
-            this.navigate(`/applications/${app.id}`)
-          }}><i className="fa fa-cog"></i></a></td>
-        </tr>
-      )
-    })
     return (
       <section className="application-list">
+        <input type="search" className="form-control" placeholder="Search" onChange={::this.onQueryChange} value={this.query}/>
         <table className="table table-hover">
           <thead>
           <tr>
@@ -71,14 +88,14 @@ export default class ApplicationList extends BaseComponent {
           </tr>
           </thead>
           <tbody>
-          {rows}
+          {this.getTableRows()}
           </tbody>
         </table>
         <ReactPaginate
-          pageCount={Math.ceil(total / max)}
+          pageCount={Math.ceil(this.total / this.max)}
           pageRangeDisplayed={4}
           marginPagesDisplayed={1}
-          forceSelected={Math.floor(offset / max)}
+          forceSelected={Math.floor(this.offset / this.max)}
           onPageChange={::this.changePage}
           previousLabel="&laquo;"
           nextLabel="&raquo;"

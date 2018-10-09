@@ -14,8 +14,11 @@ class ApplicationController extends AbstractApiController {
 
 	def list() {
 		sanitizeParams()
-		def applications = App.createCriteria().list(params) {
+		def applications = App.createCriteria().list([max: params.max, offset: params.offset]) {
 			eq('enabled', true)
+			if (params.query) {
+				like("name", "%$params.query%")
+			}
 		}
 		renderJson([applications: applications, total: applications.totalCount])
 	}

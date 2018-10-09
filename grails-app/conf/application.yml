@@ -105,7 +105,7 @@ environments:
                     enabled: true
                     processor: 'webpack-dev-server'
                     processJsFiles: false
-                    nodeExec: ./.nodejs/node-v7.4.0-darwin-x64/bin/node
+                    nodeExec: ./.nodejs/node-v10.10.0-darwin-x64/bin/node
                     externalWebpackConfig: webpack.dev.config.js
     production:
             grails:
@@ -114,7 +114,7 @@ environments:
                         enabled: true
                         processor: 'webpack'
                         processJsFiles: false
-                        nodeExec: ./.nodejs/node-v7.4.0-linux-x64/bin/node
+                        nodeExec: ./.nodejs/node-v10.10.0-linux-x64/bin/node
                         externalWebpackConfig: webpack.prod.config.js
                 resources:
                     cachePeriod: 21600

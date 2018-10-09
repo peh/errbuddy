@@ -45,7 +45,7 @@ export default class App {
       setTimeout(() => {
         this.emitter.emit(AppEvents.PAUSE_STATE_CHANGED, App.paused)
       }, 500);
-    })
+    });
 
     window.onerror = function (message, url, lineNumber) {
       console.log(arguments)
@@ -62,7 +62,7 @@ export default class App {
 
   start() {
     this.userService.validate().then((user) => {
-      this.setCurrentUser(user)
+      this.setCurrentUser(user);
       this._doStart(user)
     }).catch(() => {
       this._doStart(null)

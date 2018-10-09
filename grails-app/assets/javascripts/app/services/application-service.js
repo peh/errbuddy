@@ -10,8 +10,8 @@ export default class ApplicationService extends BaseService {
     super(emitter, baseUrl);
   }
 
-  list(offset, max) {
-    return this.doGet(`${this.baseUrl}${PATH}`, {max: max, offset: offset});
+  list(max, offset, query = "") {
+    return this.doGet(`${this.baseUrl}${PATH}`, {max, offset, query});
   }
 
   get(id) {

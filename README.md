@@ -72,7 +72,7 @@ See Option 2 for general Database setup needed
 * Clone the repo `git clone https://github.com/peh/errbuddy.git`
 * in build.gradle change `compile "org.springframework.boot:spring-boot-starter-tomcat"` to `provided "org.springframework.boot:spring-boot-starter-tomcat"`
 * if you have build the project before: `rm -f .asscache && rm -f build/`
-* run `./gradlew -Dgrails.babel.node.path=.nodejs/node-v7.4.0-linux-x64/bin/node -Dgrails.env=prod :clean :npmInstall :assetCompile :package`
+* run `./gradlew -Dgrails.babel.node.path=.nodejs/node-v10.10.0-linux-x64/bin/node -Dgrails.env=prod :clean :npmInstall :assetCompile :package`
 * you might have to adjust the node path depending on your system. If you are on macOS it would be `.nodejs/node-v7.4.0-linux-x64/bin/node`. You can find out what to use here by first just running `./gradlew npmSetup` and then check what's in `./.nodejs/` 
 * you will find the created warfile in `./builds/libs`
 * Follow the instructions in configuration step of Option 2

@@ -85,14 +85,14 @@ dependencies {
 	compile 'org.jodd:jodd-http:3.6.6'
 	compile 'org.grails.plugins:joda-time:2.0.0'
 
-	compile "org.grails.plugins:errbuddy:2.2.0"
+	compile "org.grails.plugins:errbuddy:2.2.1"
 	compile "com.uberall.plugins:uber-doc:2.0.4"
 	compile 'org.grails.plugins:elasticsearch:1.0.0.2'
 	compile 'org.grails.plugins:jesque-admin:0.6.5'
 	compile 'org.grails.plugins:redis:2.0.4'
 	compile 'org.grails.plugins:jesque:1.2.1-UBERALL'
 
-	assets 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
+	compile 'net.errbuddy.plugins:babel-asset-pipeline:2.1.0'
 
 	compile 'org.jadira.usertype:usertype.jodatime:2.0.1'
 
@@ -126,7 +126,7 @@ assets {
 			processor            : 'webpack',
 			processJsFiles       : false,
 			externalWebpackConfig: "webpack.prod.config.js",
-			nodeExec             : System.getProperty('grails.babel.node.path') ?: ".nodejs/node-v7.4.0-linux-x64/bin/node"
+			nodeExec             : System.getProperty('grails.babel.node.path') ?: ".nodejs/node-v10.10.0-linux-x64/bin/node"
 		]
 	]
 }
@@ -149,15 +149,11 @@ bootRun {
 }
 
 node {
-	version = '7.4.0'
+	version = '10.10.0'
 	download = true
 	workDir = file("${project.projectDir}/.nodejs")
 	npmWorkDir = file("${project.projectDir}/.npm")
 	nodeModulesDir = file("${project.projectDir}")
-}
-
-tasks.withType(JavaExec).each { task ->
-	task.systemProperties System.properties
 }
 
 war.archiveName "errbuddy.war"
