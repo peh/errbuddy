@@ -26,3 +26,5 @@ services:
       - MYSQL_DATABASE=errbuddy
     ports:
       - 127.0.0.1:3306:3306
+    volumes:
+    - .data/mysql:/var/lib/mysql:rw

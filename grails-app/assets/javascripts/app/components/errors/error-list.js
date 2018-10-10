@@ -70,9 +70,10 @@ export default class ErrorList extends BaseComponent {
       let resp = await this.getErrorService().list(this.max, this.offset, this.getQuery(), this.selectedApplication);
       let list = resp.result;
       this.total = resp.total;
-      if (list.length < 1 && offset > 0) {
+      if (list.length < 1 && this.offset > 0) {
         // we are clearly on a page where we should not be, reset the state and load again
         this.navigate("/errors/")
+        this.errors = [];
       } else {
         this.errors = list;
         this.loading = false;

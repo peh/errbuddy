@@ -31,7 +31,6 @@ class EntryCleanupService {
 			}
 			log.debug "$app: $group: found ${entryIds.size()} entries"
 			if (entryIds) {
-//				log.info "deleting ${entryIds.size()} for $group.entryGroupId of $app.name"
 				entryIds.each {
 					jesqueService.enqueue(EntryDeleteJob.queueName, EntryDeleteJob, [it, true])
 				}
